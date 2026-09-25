@@ -58,6 +58,8 @@ $router->group([
     $r->get('/subscriptions/edit/{id}', 'App\Controllers\Admin\SubscriptionsController@edit');
     $r->post('/subscriptions/update/{id}', 'App\Controllers\Admin\SubscriptionsController@update');
     $r->get('/subscriptions/grant-logs', 'App\Controllers\Admin\SubscriptionsController@grantLogs');
+    $r->get('/payments', 'App\Controllers\Admin\SubscriptionsController@payments');
+    $r->post('/payments/approve-utr/{id}', 'App\Controllers\Admin\SubscriptionsController@approveUtr');
 
     // Promotions & Launch Mode
     $r->get('/promotions', 'App\Controllers\Admin\PromotionsController@index');

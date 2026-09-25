@@ -138,4 +138,68 @@ class SubscriptionsController extends Controller
             'logs'       => $logs
         ]);
     }
+
+    public function payments(Request $request)
+    {
+        $status = $request->query('status', '');
+        $sql = "SELECT p.*, u.matrimony_id, u.email as user_email, u.phone as user_phone, 
+                       pr.first_name, pr.last_name, sp.title as plan_title
+                FROM `payments` p
+                LEFT JOIN `users` u ON u.id = p.user_id
+                LEFT JOIN `profiles` pr ON pr.user_id = u.id
+                LEFT JOIN `subscription_plans` sp ON sp.id = p.plan_id";
+        
+        $params = [];
+        if (!empty($status)) {
+            $sql .= " WHERE p.status = :st";
+            $params['st'] = $status;
+        }
+        $sql .= " ORDER BY p.id DESC LIMIT 100";
+
+        $payments = Database::fetchAll($sql, $params);
+
+        // Revenue Stats
+        $stats = Database::fetch("SELECT 
+            COUNT(id) as total_count,
+            COALESCE(SUM(CASE WHEN status = 'successful' THEN amount_inr ELSE 0 END), 0) as total_revenue,
+            COALESCE(SUM(CASE WHEN status = 'successful' AND DATE(created_at) = CURDATE() THEN amount_inr ELSE 0 END), 0) as today_revenue,
+            COUNT(CASE WHEN status = 'pending' THEN 1 END) as pending_count
+            FROM `payments`");
+
+        $this->view('admin/payments/index', [
+            'page_title' => 'ऑनलाइन पेमेंट्स एवं वित्तीय लेजर (Payment Transactions)',
+            'payments'   => $payments,
+            'stats'      => $stats,
+            'status'     => $status
+        ]);
+    }
+
+    public function approveUtr(Request $request, array $params = [])
+    {
+        $id = (int)($params['id'] ?? $request->query('id', 0));
+        $payment = Database::fetch("SELECT * FROM `payments` WHERE id = :id", ['id' => $id]);
+        
+        if ($payment) {
+            Database::query("UPDATE `payments` SET `status` = 'successful' WHERE id = :id", ['id' => $id]);
+            
+            $plan = Database::fetch("SELECT duration_days, title FROM `subscription_plans` WHERE id = :pid", ['pid' => $payment['plan_id']]);
+            $days = (int)($plan['duration_days'] ?? 90);
+            $expiresAt = date('Y-m-d H:i:s', strtotime("+{$days} days"));
+
+            Database::query("INSERT INTO `user_subscriptions` 
+                (`user_id`, `plan_id`, `starts_at`, `expires_at`, `is_free_grant`, `grant_notes`, `status`, `created_at`)
+                VALUES (:uid, :pid, NOW(), :exp, 0, :notes, 'active', NOW())", [
+                    'uid'   => $payment['user_id'],
+                    'pid'   => $payment['plan_id'],
+                    'exp'   => $expiresAt,
+                    'notes' => "Admin approved payment #" . $payment['id']
+                ]
+            );
+
+            Database::query("UPDATE `users` SET `is_vip` = 1 WHERE `id` = :uid", ['uid' => $payment['user_id']]);
+            $this->flash('success', "Payment #{$id} approved and subscription granted successfully.");
+        }
+
+        Response::redirect('/admin/payments');
+    }
 }

@@ -336,6 +336,124 @@ $router->post('/matches/shortlist', function (Request $request) {
     ]);
 });
 
+// Membership & Online Payment Gateway Routes
+$router->get('/membership', function (Request $request) {
+    Response::view('home/membership', [
+        'page_title'   => 'Dheeraja Royal Matrimony™ | सदस्यता एवं VIP अपग्रेड प्लान्स',
+        'flashSuccess' => \App\Core\Session::get('_flash')['success'] ?? null,
+        'flashError'   => \App\Core\Session::get('_flash')['error'] ?? null,
+    ], null);
+    unset($_SESSION['_flash']);
+});
+
+$router->post('/membership/create-order', function (Request $request) {
+    $userId = (int)\App\Core\Session::get('auth_user_id', 3);
+    $planId = (int)$request->input('plan_id', 3);
+    
+    $plan = Database::fetch("SELECT * FROM `subscription_plans` WHERE id = :id AND is_active = 1", ['id' => $planId]);
+    if (!$plan) {
+        return Response::json(['status' => 'error', 'message' => 'अमान्य सदस्यता प्लान'], 400);
+    }
+
+    $orderId = 'ORD_' . date('YmdHis') . '_' . rand(100, 999);
+    $tempTxnId = 'PENDING_' . $orderId;
+
+    Database::query("INSERT INTO `payments` (`transaction_id`, `order_id`, `user_id`, `plan_id`, `amount_inr`, `status`, `created_at`)
+                    VALUES (:tx, :ord, :uid, :pid, :amt, 'pending', NOW())", [
+        'tx'  => $tempTxnId,
+        'ord' => $orderId,
+        'uid' => $userId,
+        'pid' => $planId,
+        'amt' => $plan['price_inr']
+    ]);
+
+    return Response::json([
+        'status'   => 'success',
+        'order_id' => $orderId,
+        'amount'   => $plan['price_inr'],
+        'currency' => 'INR',
+        'key_id'   => setting('razorpay_key_id', 'rzp_test_placeholder')
+    ]);
+});
+
+$router->post('/membership/verify-payment', function (Request $request) {
+    $userId        = (int)\App\Core\Session::get('auth_user_id', 3);
+    $planId        = (int)$request->input('plan_id', 3);
+    $transactionId = trim($request->input('transaction_id', 'PAY_' . time()));
+    $orderId       = trim($request->input('order_id', 'ORD_' . time()));
+    $amount        = (float)$request->input('amount', 4999);
+    $gateway       = trim($request->input('gateway', 'razorpay'));
+    $method        = trim($request->input('method', 'upi'));
+    $utrNumber     = trim($request->input('utr_number', ''));
+
+    $plan = Database::fetch("SELECT * FROM `subscription_plans` WHERE id = :id", ['id' => $planId]);
+    $durationDays = (int)($plan['duration_days'] ?? 180);
+    $planTitle    = $plan['title'] ?? 'Dheeraja Royal VIP Pro';
+
+    // 1. Record / Update Payment Record
+    Database::query("INSERT INTO `payments` 
+        (`transaction_id`, `order_id`, `user_id`, `plan_id`, `amount_inr`, `payment_gateway`, `payment_method`, `utr_number`, `status`, `gateway_response`, `created_at`)
+        VALUES (:tx, :ord, :uid, :pid, :amt, :gw, :mth, :utr, 'successful', :resp, NOW())
+        ON DUPLICATE KEY UPDATE `status` = 'successful', `payment_gateway` = :gw, `payment_method` = :mth, `utr_number` = :utr, `amount_inr` = :amt",
+        [
+            'tx'   => $transactionId,
+            'ord'  => $orderId,
+            'uid'  => $userId,
+            'pid'  => $planId,
+            'amt'  => $amount,
+            'gw'   => $gateway,
+            'mth'  => $method,
+            'utr'  => $utrNumber ?: null,
+            'resp' => json_encode(['verified_at' => date('c'), 'gateway' => $gateway, 'method' => $method])
+        ]
+    );
+
+    // 2. Grant / Activate Subscription
+    $expiresAt = date('Y-m-d H:i:s', strtotime("+{$durationDays} days"));
+    Database::query("INSERT INTO `user_subscriptions` 
+        (`user_id`, `plan_id`, `starts_at`, `expires_at`, `is_free_grant`, `grant_notes`, `status`, `created_at`)
+        VALUES (:uid, :pid, NOW(), :exp, 0, :notes, 'active', NOW())", [
+            'uid'   => $userId,
+            'pid'   => $planId,
+            'exp'   => $expiresAt,
+            'notes' => "Online Payment via {$gateway} (Txn: {$transactionId})"
+        ]
+    );
+
+    // 3. Mark User as VIP in Users table
+    Database::query("UPDATE `users` SET `is_vip` = 1 WHERE `id` = :uid", ['uid' => $userId]);
+
+    // 4. Trigger Notifications via PHPMailer
+    try {
+        $userRow = Database::fetch("SELECT email, matrimony_id FROM `users` WHERE `id` = :uid", ['uid' => $userId]);
+        $userEmail = $userRow['email'] ?? '';
+        $userMid = $userRow['matrimony_id'] ?? ('DM' . $userId);
+
+        // Alert Admin
+        \App\Helpers\MailerHelper::alertAdmin(
+            "💰 नया ऑनलाइन पेमेंट प्राप्त: ₹" . number_format($amount) . " ({$planTitle})",
+            "धीरजा मैट्रिमोनी पर नया सफल भुगतान प्राप्त हुआ है:\n\n• यूजर ID: {$userMid}\n• प्लान: {$planTitle}\n• राशि: ₹" . number_format($amount) . "\n• गेटवे: " . strtoupper($gateway) . "\n• माध्यम: " . strtoupper($method) . "\n• ट्रांजैक्शन ID: {$transactionId}\n• UTR/Ref: " . ($utrNumber ?: 'Auto Verified') . "\n• वैधता: {$durationDays} दिन (समाप्ति: {$expiresAt})"
+        );
+
+        // Send Confirmation Email to User
+        if (!empty($userEmail) && filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+            \App\Helpers\MailerHelper::sendFreeVipGranted(
+                ['email' => $userEmail, 'first_name' => 'सम्मानित सदस्य'],
+                $planTitle,
+                $durationDays
+            );
+        }
+    } catch (\Throwable $e) {}
+
+    return Response::json([
+        'status'         => 'success',
+        'message'        => 'भुगतान सफल हुआ! आपका प्लान तुरंत सक्रिय कर दिया गया है।',
+        'transaction_id' => $transactionId,
+        'plan_title'     => $planTitle,
+        'expires_at'     => date('d M Y', strtotime($expiresAt))
+    ]);
+});
+
 // Full Web Portal Showcase
 $router->get('/portal', function (Request $request) {
     $featuredMatches = Database::fetchAll("SELECT u.id, u.matrimony_id, u.is_vip, u.is_kyc_verified, u.is_photo_verified,

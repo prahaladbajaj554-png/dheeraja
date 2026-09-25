@@ -54,6 +54,11 @@ function isActive(string $route, string $currentUri): string {
       <span>VIP Grant Ledger</span>
     </a>
 
+    <a href="/admin/payments" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm transition <?= isActive('/admin/payments', $currentUri) ?>">
+      <i class="fa-solid fa-credit-card w-5 text-emerald-600"></i>
+      <span>ऑनलाइन पेमेंट्स (Transactions)</span>
+    </a>
+
     <a href="/admin/promotions" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm transition <?= isActive('/admin/promotions', $currentUri) ?>">
       <i class="fa-solid fa-bullhorn w-5 text-amber-500"></i>
       <span>Launch Promo Engine</span>

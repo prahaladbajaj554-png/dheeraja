@@ -222,7 +222,11 @@
       </a>
       <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
       <span class="font-cinzel font-bold text-emerald-900 tracking-wider">DHEERAJA ROYAL MATRIMONY™</span>
-      <span class="text-stone-400 font-bold">| 4. तालिका / रिश्ते</span>
+      <span class="text-stone-400 font-bold">| 4. तालिका</span>
+      <a href="/membership" class="ml-1 px-2 py-0.5 rounded-lg bg-gradient-to-r from-amber-400 to-amber-500 text-maroon-950 font-extrabold text-[11px] transition flex items-center space-x-1 shadow-xs border border-amber-300">
+        <i class="fa-solid fa-crown text-[9px] text-amber-950"></i>
+        <span>VIP प्लान्स</span>
+      </a>
     </div>
     <div class="flex items-center space-x-3">
       <span class="text-stone-500 font-medium">Viewport:</span>
@@ -284,14 +288,18 @@
         </div>
       </div>
 
-      <!-- Right: Search & Notification with Badge '3' -->
-      <div class="flex items-center space-x-1.5">
-        <button onclick="toggleSearchModal()" class="w-8 h-8 flex items-center justify-center text-white/90 hover:text-white rounded-full hover:bg-white/10 transition" title="खोजें (Search)">
-          <i class="fa-solid fa-magnifying-glass text-sm"></i>
+      <!-- Right: VIP Upgrade + Search & Notification with Badge '3' -->
+      <div class="flex items-center space-x-1.5 shrink-0">
+        <a href="/membership" class="px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-[#064E3B] font-extrabold text-[10px] flex items-center space-x-1 shadow-xs transition transform active:scale-95 border border-amber-200" title="VIP सदस्यता प्लान्स">
+          <i class="fa-solid fa-crown text-[8.5px] text-amber-900"></i>
+          <span class="tracking-tight text-amber-950">VIP</span>
+        </a>
+        <button onclick="toggleSearchModal()" class="w-7 h-7 flex items-center justify-center text-white/90 hover:text-white rounded-full hover:bg-white/10 transition" title="खोजें (Search)">
+          <i class="fa-solid fa-magnifying-glass text-xs"></i>
         </button>
-        <button onclick="toggleNotificationsModal()" class="relative w-8 h-8 flex items-center justify-center text-white/90 hover:text-white rounded-full hover:bg-white/10 transition" title="सूचनाएं (Notifications)">
-          <i class="fa-solid fa-bell text-sm"></i>
-          <span class="absolute top-1 right-1 w-4 h-4 bg-red-600 text-white rounded-full text-[9px] font-extrabold flex items-center justify-center border border-[#064E3B] shadow-sm animate-pulse">3</span>
+        <button onclick="toggleNotificationsModal()" class="relative w-7 h-7 flex items-center justify-center text-white/90 hover:text-white rounded-full hover:bg-white/10 transition" title="सूचनाएं (Notifications)">
+          <i class="fa-solid fa-bell text-xs"></i>
+          <span class="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-red-600 text-white rounded-full text-[8.5px] font-extrabold flex items-center justify-center border border-[#064E3B] shadow-sm animate-pulse">3</span>
         </button>
       </div>
     </header>
@@ -1547,7 +1555,7 @@
     }
 
     function toggleSideMenu() {
-      alert("धीरजा रॉयल मैट्रिमोनी मेनू:\n\n• 1. कवर पेज (/cover)\n• 2. वेलकम स्क्रीन (/welcome)\n• 3. बायोडाटा फॉर्म (/biodata)\n• 4. तालिका / रिश्ते (/matches)\n• मेरी सेटिंग्स\n• हेल्प & सपोर्ट");
+      alert("धीरजा रॉयल मैट्रिमोनी मेनू:\n\n• 1. कवर पेज (/cover)\n• 2. वेलकम स्क्रीन (/welcome)\n• 3. बायोडाटा फॉर्म (/biodata)\n• 4. तालिका / रिश्ते (/matches)\n• 👑 VIP सदस्यता एवं पेमेंट (/membership)\n• हेल्प & सपोर्ट");
     }
   </script>
 
