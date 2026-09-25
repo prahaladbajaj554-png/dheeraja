@@ -170,7 +170,7 @@ CREATE TABLE `partner_preferences` (
   `marital_status` VARCHAR(255) DEFAULT 'never_married' COMMENT 'Comma-separated values',
   `religion` VARCHAR(100) DEFAULT 'Hindu',
   `caste` VARCHAR(255) NULL COMMENT 'Preferred caste or Any',
-  `manglik` ENUM('no', 'yes', 'doesnt_matter') DEFAULT 'doesnt_matter',
+  `manglik` ENUM('no', 'yes', 'anshik', 'doesnt_matter') DEFAULT 'doesnt_matter' COMMENT 'Filter preference: doesn\'t matter (any), non-manglik, manglik, or anshik',
   `min_education` VARCHAR(100) NULL,
   `employed_in` VARCHAR(255) NULL,
   `min_annual_income_inr` BIGINT UNSIGNED DEFAULT 0,
@@ -182,19 +182,39 @@ CREATE TABLE `partner_preferences` (
 
 ---
 
-### 7. `user_photos` (Photo Gallery & Admin Moderation)
+### 7. `user_photos` (Photo Gallery, Privacy Modes & Security Watermark)
 ```sql
 CREATE TABLE `user_photos` (
   `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `user_id` BIGINT UNSIGNED NOT NULL,
   `file_path` VARCHAR(255) NOT NULL,
   `is_profile_picture` TINYINT(1) NOT NULL DEFAULT 0,
+  `privacy_mode` ENUM('public', 'mutual', 'request') NOT NULL DEFAULT 'public' COMMENT 'public: visible with watermark, mutual: blurred until mutual interest, request: locked until explicit request approved',
+  `watermark_enabled` TINYINT(1) NOT NULL DEFAULT 1 COMMENT '1 = Anti-theft watermark overlay enabled',
   `is_private` TINYINT(1) NOT NULL DEFAULT 0,
   `is_approved` ENUM('pending', 'approved', 'rejected') NOT NULL DEFAULT 'approved',
   `rejection_reason` VARCHAR(255) NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
   INDEX `idx_photos_user_approved` (`user_id`, `is_approved`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+---
+
+### 7.1 `photo_view_requests` ( कन्या व वर प्राइवेसी फोटो अनुरोध )
+```sql
+CREATE TABLE `photo_view_requests` (
+  `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `sender_user_id` BIGINT UNSIGNED NOT NULL,
+  `target_user_id` BIGINT UNSIGNED NOT NULL,
+  `status` ENUM('pending', 'approved', 'rejected') NOT NULL DEFAULT 'pending',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (`sender_user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`target_user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+  UNIQUE KEY `uk_photo_req` (`sender_user_id`, `target_user_id`),
+  INDEX `idx_target_status` (`target_user_id`, `status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
 
