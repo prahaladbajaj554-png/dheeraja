@@ -109,12 +109,19 @@
     /* Gender & Option Pill Toggles */
     .pill-radio:checked + label {
       background: linear-gradient(135deg, #065F46 0%, #033626 100%);
-      color: #FFFFFF;
-      border-color: #E6C254;
+      color: #FFFFFF !important;
+      border-color: #E6C254 !important;
       box-shadow: 0 4px 12px rgba(6, 78, 59, 0.25);
+      transform: translateY(-1px);
     }
     .pill-radio:checked + label .pill-icon {
-      color: #F5D061;
+      color: #F5D061 !important;
+    }
+    .pill-radio:checked + label span {
+      color: #FFFFFF !important;
+    }
+    .pill-radio:checked + label span:last-child {
+      color: #E6C254 !important;
     }
     /* Photo Upload Box */
     .photo-upload-box {
@@ -356,56 +363,76 @@
           </span>
         </div>
 
-        <!-- किसके लिए रिश्ता देख रहे हैं (Profile For) -->
+        <!-- किसके लिए रिश्ता देख रहे हैं (Profile For) - 3D Tactile Option Buttons -->
         <div>
-          <label class="block text-xs font-bold text-stone-700 mb-1.5">किसके लिए रिश्ता देख रहे हैं? *</label>
-          <div class="grid grid-cols-3 gap-1.5 text-center text-xs">
-            
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-xs font-extrabold text-stone-800 flex items-center space-x-1.5">
+              <i class="fa-solid fa-user-tag text-emerald-700 text-xs"></i>
+              <span>किसके लिए रिश्ता देख रहे हैं? (Profile For) *</span>
+            </label>
+            <span class="text-[10px] text-emerald-800 font-extrabold bg-emerald-50 border border-emerald-300 px-2 py-0.5 rounded-full shadow-2xs">
+              विकल्प चुनें
+            </span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 text-center text-xs">
+            <!-- 1. Self -->
             <div>
               <input type="radio" name="profile_for" value="myself" id="pfor_myself" class="hidden pill-radio" checked onchange="updateFormProgress()">
-              <label for="pfor_myself" class="block py-2 px-1 rounded-xl border border-emerald-200 bg-emerald-50/50 text-[#064E3B] font-bold cursor-pointer transition">
-                <i class="fa-solid fa-user pill-icon text-[11px] block mb-0.5"></i>
-                <span>स्वयं</span>
+              <label for="pfor_myself" class="option-pill-btn block py-2.5 px-1.5 rounded-2xl border-2 border-emerald-200 bg-white text-[#064E3B] font-extrabold cursor-pointer transition shadow-xs hover:border-emerald-400">
+                <i class="fa-solid fa-user pill-icon text-sm block mb-1 text-emerald-700"></i>
+                <span class="block text-[11px] leading-tight">स्वयं के लिए</span>
+                <span class="text-[9px] text-stone-500 font-semibold">(Self)</span>
               </label>
             </div>
 
+            <!-- 2. Son -->
             <div>
               <input type="radio" name="profile_for" value="son" id="pfor_son" class="hidden pill-radio" onchange="updateFormProgress()">
-              <label for="pfor_son" class="block py-2 px-1 rounded-xl border border-emerald-200 bg-emerald-50/50 text-[#064E3B] font-bold cursor-pointer transition">
-                <i class="fa-solid fa-child pill-icon text-[11px] block mb-0.5"></i>
-                <span>बेटा</span>
+              <label for="pfor_son" class="option-pill-btn block py-2.5 px-1.5 rounded-2xl border-2 border-emerald-200 bg-white text-[#064E3B] font-extrabold cursor-pointer transition shadow-xs hover:border-emerald-400">
+                <i class="fa-solid fa-child pill-icon text-sm block mb-1 text-emerald-700"></i>
+                <span class="block text-[11px] leading-tight">बेटे के लिए</span>
+                <span class="text-[9px] text-stone-500 font-semibold">(Son)</span>
               </label>
             </div>
 
+            <!-- 3. Daughter -->
             <div>
               <input type="radio" name="profile_for" value="daughter" id="pfor_daughter" class="hidden pill-radio" onchange="updateFormProgress()">
-              <label for="pfor_daughter" class="block py-2 px-1 rounded-xl border border-emerald-200 bg-emerald-50/50 text-[#064E3B] font-bold cursor-pointer transition">
-                <i class="fa-solid fa-child-dress pill-icon text-[11px] block mb-0.5"></i>
-                <span>बेटी</span>
+              <label for="pfor_daughter" class="option-pill-btn block py-2.5 px-1.5 rounded-2xl border-2 border-emerald-200 bg-white text-[#064E3B] font-extrabold cursor-pointer transition shadow-xs hover:border-emerald-400">
+                <i class="fa-solid fa-child-dress pill-icon text-sm block mb-1 text-emerald-700"></i>
+                <span class="block text-[11px] leading-tight">बेटी के लिए</span>
+                <span class="text-[9px] text-stone-500 font-semibold">(Daughter)</span>
               </label>
             </div>
 
+            <!-- 4. Brother -->
             <div>
               <input type="radio" name="profile_for" value="brother" id="pfor_brother" class="hidden pill-radio" onchange="updateFormProgress()">
-              <label for="pfor_brother" class="block py-2 px-1 rounded-xl border border-emerald-200 bg-emerald-50/50 text-[#064E3B] font-bold cursor-pointer transition">
-                <i class="fa-solid fa-user-group pill-icon text-[11px] block mb-0.5"></i>
-                <span>भाई</span>
+              <label for="pfor_brother" class="option-pill-btn block py-2.5 px-1.5 rounded-2xl border-2 border-emerald-200 bg-white text-[#064E3B] font-extrabold cursor-pointer transition shadow-xs hover:border-emerald-400">
+                <i class="fa-solid fa-user-group pill-icon text-sm block mb-1 text-emerald-700"></i>
+                <span class="block text-[11px] leading-tight">भाई के लिए</span>
+                <span class="text-[9px] text-stone-500 font-semibold">(Brother)</span>
               </label>
             </div>
 
+            <!-- 5. Sister -->
             <div>
               <input type="radio" name="profile_for" value="sister" id="pfor_sister" class="hidden pill-radio" onchange="updateFormProgress()">
-              <label for="pfor_sister" class="block py-2 px-1 rounded-xl border border-emerald-200 bg-emerald-50/50 text-[#064E3B] font-bold cursor-pointer transition">
-                <i class="fa-solid fa-person-dress pill-icon text-[11px] block mb-0.5"></i>
-                <span>बहन</span>
+              <label for="pfor_sister" class="option-pill-btn block py-2.5 px-1.5 rounded-2xl border-2 border-emerald-200 bg-white text-[#064E3B] font-extrabold cursor-pointer transition shadow-xs hover:border-emerald-400">
+                <i class="fa-solid fa-person-dress pill-icon text-sm block mb-1 text-emerald-700"></i>
+                <span class="block text-[11px] leading-tight">बहन के लिए</span>
+                <span class="text-[9px] text-stone-500 font-semibold">(Sister)</span>
               </label>
             </div>
 
+            <!-- 6. Relative / Friend -->
             <div>
               <input type="radio" name="profile_for" value="relative" id="pfor_relative" class="hidden pill-radio" onchange="updateFormProgress()">
-              <label for="pfor_relative" class="block py-2 px-1 rounded-xl border border-emerald-200 bg-emerald-50/50 text-[#064E3B] font-bold cursor-pointer transition">
-                <i class="fa-solid fa-users pill-icon text-[11px] block mb-0.5"></i>
-                <span>रिश्तेदार</span>
+              <label for="pfor_relative" class="option-pill-btn block py-2.5 px-1.5 rounded-2xl border-2 border-emerald-200 bg-white text-[#064E3B] font-extrabold cursor-pointer transition shadow-xs hover:border-emerald-400">
+                <i class="fa-solid fa-handshake-angle pill-icon text-sm block mb-1 text-emerald-700"></i>
+                <span class="block text-[11px] leading-tight">रिश्तेदार/मित्र</span>
+                <span class="text-[9px] text-stone-500 font-semibold">(Relative)</span>
               </label>
             </div>
 
@@ -500,22 +527,41 @@
 
       </div>
 
-      <!-- ================= SECTION 2: धर्म, समाज एवं गोत्र विवरण (Community & Astrology) - LATEST PROFESSIONAL REDESIGN ================= -->
-      <div class="form-section-card space-y-3.5 relative overflow-hidden bg-gradient-to-b from-[#F9FCFA] to-white border-2 border-emerald-200 shadow-sm">
+      <!-- ================= SECTION 2: धर्म, समाज एवं गोत्र विवरण (Community & Astrology) ================= -->
+      <div class="form-section-card space-y-3.5 relative overflow-hidden bg-gradient-to-b from-white via-amber-50/15 to-white border-2 border-amber-300 shadow-sm">
         
         <!-- Section Header with Royal Badge -->
-        <div class="flex items-center justify-between pb-2.5 border-b border-emerald-100">
+        <div class="flex items-center justify-between pb-2.5 border-b border-amber-200">
           <div class="flex items-center space-x-2">
-            <div class="w-7 h-7 rounded-full bg-gradient-to-br from-[#065F46] to-[#033626] text-white flex items-center justify-center text-xs font-bold shadow-xs">2</div>
+            <div class="w-7 h-7 rounded-full bg-gradient-to-br from-amber-500 to-[#92400E] text-white flex items-center justify-center text-xs font-extrabold shadow-sm">
+              <i class="fa-solid fa-shield-halved text-xs"></i>
+            </div>
             <div>
-              <h2 class="text-sm font-bold text-[#064E3B] leading-tight">धर्म, समाज एवं गोत्र विवरण</h2>
-              <p class="text-[10px] text-stone-500 font-medium">सगोत्र रक्षा एवं उपयुक्त पारिवारिक मिलान</p>
+              <h2 class="text-sm font-extrabold text-[#064E3B] leading-tight">समाज, जाति एवं गोत्र विवरण</h2>
+              <p class="text-[10px] text-amber-900 font-semibold">अधिकृत समाज सदस्यता एवं पात्रता सत्यापन</p>
             </div>
           </div>
-          <span class="text-[9px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-300 flex items-center space-x-1 shadow-2xs">
-            <i class="fa-solid fa-shield-halved text-emerald-600 text-[10px]"></i>
-            <span>100% प्रामाणिक मिलान</span>
+          <span class="text-[9px] text-amber-950 font-extrabold bg-amber-100/90 border border-amber-300 px-2 py-0.5 rounded-full flex items-center space-x-1 shadow-2xs">
+            <i class="fa-solid fa-lock text-[9px] text-amber-700"></i>
+            <span>समाज पात्रता नियम</span>
           </span>
+        </div>
+
+        <!-- STRICT COMMUNITY ACCESS GATE BANNER (जिस जाति का ऐप हो उसी का सदस्य प्रवेश कर सकता है) -->
+        <div class="p-2.5 rounded-xl bg-gradient-to-r from-amber-50 via-emerald-50 to-amber-50 border-2 border-amber-300 text-stone-800 shadow-2xs">
+          <div class="flex items-start space-x-2">
+            <div class="w-6 h-6 rounded-full bg-amber-400 text-amber-950 flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+              <i class="fa-solid fa-scale-balanced text-xs"></i>
+            </div>
+            <div class="flex-1">
+              <h4 class="text-[11px] font-extrabold text-amber-950 flex items-center space-x-1">
+                <span>🔒 केवल अधिकृत समाज के सदस्यों हेतु (Strict Samaj Eligibility)</span>
+              </h4>
+              <p class="text-[10px] text-stone-600 font-medium leading-tight mt-0.5">
+                यह वैवाहिक मंच आपके चुने हुए समाज के प्रामाणिक एवं सत्यापित परिवारों के लिए ही आरक्षित है। केवल उसी समाज का व्यक्ति इसमें प्रवेश कर सकता है व रिश्ते देख सकता है।
+              </p>
+            </div>
+          </div>
         </div>
 
         <!-- धर्म चयन (Religion Tabs) -->
@@ -559,38 +605,82 @@
         <!-- जाति / समाज (Caste & Community) - Interactive Smart Selector -->
         <div>
           <div class="flex items-center justify-between mb-1.5">
-            <label class="block text-xs font-bold text-stone-700">समाज / जाति (Caste / Community) *</label>
+            <label class="block text-xs font-bold text-stone-800 flex items-center space-x-1">
+              <i class="fa-solid fa-users text-emerald-700 text-xs"></i>
+              <span>समाज / जाति चुनें (Select Samaj / Caste) *</span>
+            </label>
             <span class="text-[10px] text-amber-900 font-bold bg-amber-50 border border-amber-300 px-2 py-0.5 rounded-full flex items-center space-x-1">
               <i class="fa-solid fa-bolt text-amber-600 text-[10px]"></i>
               <span>1-टैप में चुनें या लिखें</span>
             </span>
           </div>
 
-          <!-- Popular Caste Quick Chips Container (Scrollable or auto-wrap) -->
+          <!-- Popular Caste Quick Chips Container -->
           <div class="flex flex-wrap gap-1.5 mb-2.5 max-h-[160px] overflow-y-auto pr-0.5" id="casteChipsContainer">
             <!-- Dynamically populated by JS according to selected religion -->
           </div>
 
-          <!-- Caste Input with Verified Check & Autocomplete suggestions -->
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-emerald-700 text-xs">
-              <i class="fa-solid fa-users text-sm"></i>
+          <!-- Samaj Dropdown Selection + Manual Input -->
+          <div class="space-y-1.5">
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-emerald-700 text-xs">
+                <i class="fa-solid fa-landmark text-sm"></i>
+              </div>
+              <select id="casteDropdownSelect" class="royal-input pl-9 font-bold text-xs text-stone-800 bg-white border-2 border-emerald-300" onchange="handleCasteSelectDropdown(this.value)">
+                <option value="">-- अपनी जाति / समाज सूची में से चुनें --</option>
+                <optgroup label="प्रमुख समाज (Major Communities)">
+                  <option value="ब्राह्मण (Brahmin)">ब्राह्मण समाज (Brahmin Samaj)</option>
+                  <option value="राजपूत (Rajput)">राजपूत समाज (Rajput Samaj)</option>
+                  <option value="माहेश्वरी (Maheshwari)">माहेश्वरी समाज (Maheshwari Samaj)</option>
+                  <option value="अग्रवाल (Agarwal)">अग्रवाल समाज (Agarwal Samaj)</option>
+                  <option value="जैन (Jain)">जैन समाज (Jain Samaj)</option>
+                  <option value="पाटीदार / पटेल (Patidar)">पाटीदार / पटेल समाज (Patidar / Patel)</option>
+                  <option value="खंडेलवाल (Khandelwal)">खंडेलवाल समाज (Khandelwal Samaj)</option>
+                  <option value="कायस्थ (Kayastha)">कायस्थ समाज (Kayastha Samaj)</option>
+                  <option value="जाट (Jat)">जाट समाज (Jat Samaj)</option>
+                  <option value="यादव (Yadav)">यादव समाज (Yadav Samaj)</option>
+                  <option value="गुर्जर (Gurjar)">गुर्जर समाज (Gurjar Samaj)</option>
+                  <option value="सिख (Sikh)">सिख समाज (Sikh Samaj)</option>
+                  <option value="सैनी / माली (Saini)">सैनी / माली समाज (Saini / Mali)</option>
+                  <option value="सोनी / स्वर्णकार (Soni)">सोनी / स्वर्णकार समाज (Swarnakar)</option>
+                  <option value="जांगिड़ / विश्वकर्मा (Jangid)">जांगिड़ / विश्वकर्मा समाज (Jangid)</option>
+                  <option value="चौधरी / बिश्नोई (Bishnoi)">बिश्नोई समाज (Bishnoi Samaj)</option>
+                  <option value="सिंधी (Sindhi)">सिंधी समाज (Sindhi Samaj)</option>
+                  <option value="अन्य समाज (Other)">अन्य समाज (नीचे दर्ज करें)</option>
+                </optgroup>
+              </select>
             </div>
-            <input 
-              type="text" 
-              name="caste" 
-              id="casteInput" 
-              placeholder="अपनी जाति / समाज ऊपर से चुनें या लिखें..." 
-              class="royal-input pl-9 pr-28 font-semibold text-xs text-stone-800"
-              oninput="handleCasteInput(this.value)"
-            >
-            <!-- Verified Community Badge -->
-            <div id="casteSelectedBadge" class="hidden absolute inset-y-1.5 right-1.5 flex items-center pr-1.5 pointer-events-none">
-              <span class="text-[10px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-md flex items-center space-x-1 shadow-2xs animate-fade-in">
-                <i class="fa-solid fa-circle-check text-emerald-600 text-[11px]"></i>
-                <span id="casteBadgeText">सत्यापित समाज</span>
-              </span>
+
+            <!-- Caste Input with Verified Check & Autocomplete suggestions -->
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-emerald-700 text-xs">
+                <i class="fa-solid fa-users text-sm"></i>
+              </div>
+              <input 
+                type="text" 
+                name="caste" 
+                id="casteInput" 
+                placeholder="अपनी जाति / समाज ऊपर से चुनें या लिखें..." 
+                class="royal-input pl-9 pr-32 font-bold text-xs text-stone-800"
+                oninput="handleCasteInput(this.value)"
+                required
+              >
+              <!-- Verified Community Badge -->
+              <div id="casteSelectedBadge" class="hidden absolute inset-y-1.5 right-1.5 flex items-center pr-1.5 pointer-events-none">
+                <span class="text-[10px] font-extrabold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-md flex items-center space-x-1 shadow-2xs animate-fade-in">
+                  <i class="fa-solid fa-circle-check text-emerald-600 text-[11px]"></i>
+                  <span id="casteBadgeText">सत्यापित समाज</span>
+                </span>
+              </div>
             </div>
+          </div>
+
+          <!-- MANDATORY COMMUNITY ELIGIBILITY DECLARATION CHECKBOX -->
+          <div class="mt-2.5 p-2 rounded-xl bg-amber-50/70 border border-amber-300 flex items-start space-x-2">
+            <input type="checkbox" id="samajDeclaration" name="samaj_declaration" checked required class="mt-0.5 w-4 h-4 rounded text-emerald-700 focus:ring-emerald-500 border-amber-300 cursor-pointer">
+            <label for="samajDeclaration" class="text-[10.5px] text-stone-700 font-semibold cursor-pointer select-none leading-snug">
+              <strong class="text-amber-950 font-bold">समाज सदस्यता पुष्टि:</strong> मैं पुष्टि करता/करती हूँ कि मैं चुने हुए समाज का प्रामाणिक सदस्य हूँ और केवल संबंधित समाज के सदस्य ही इस ऐप में प्रवेश कर सकते हैं।
+            </label>
           </div>
         </div>
 
@@ -846,20 +936,129 @@
           <button type="button" onclick="selectQuickCity('बैंगलोर', 'कर्नाटक')" class="px-2 py-0.5 rounded-md text-[10px] font-medium bg-stone-50 hover:bg-emerald-50 text-stone-700 border border-stone-200 transition">बैंगलोर</button>
         </div>
 
-        <div class="grid grid-cols-2 gap-2">
+        <!-- 2. पिता का विवरण (Father Name & Occupation Option List) -->
+        <div class="p-3 rounded-2xl bg-emerald-50/50 border border-emerald-200/80 space-y-2.5">
+          <div class="flex items-center space-x-1.5 text-[#064E3B] font-extrabold text-xs">
+            <i class="fa-solid fa-user-tie text-emerald-700 text-sm"></i>
+            <span>पिता का विवरण (Father's Details)</span>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-2">
+            <!-- पिता का नाम -->
+            <div>
+              <label class="block text-[11px] font-bold text-stone-700 mb-1">पिता का शुभ नाम (Father's Name)</label>
+              <input type="text" name="father_name" placeholder="जैसे: श्री रमाकांत शर्मा" class="royal-input text-xs font-semibold">
+            </div>
+
+            <!-- पिता का कार्य / व्यवसाय (Option Dropdown List) -->
+            <div>
+              <label class="block text-[11px] font-bold text-stone-700 mb-1">
+                <span>पिता का कार्य / व्यवसाय *</span>
+              </label>
+              <select name="father_occupation" id="fatherOccSelect" class="royal-input text-xs font-bold bg-white text-stone-800" onchange="updateFormProgress()">
+                <option value="">-- पिता का कार्य चुनें --</option>
+                <option value="व्यापार / उद्योगपति (Business)">🏢 व्यापार / उद्योगपति (Business)</option>
+                <option value="सरकारी सेवा / राजपत्रित अधिकारी (Govt Service)">🏛️ सरकारी सेवा / राजपत्रित अधिकारी (Govt Service)</option>
+                <option value="कॉर्पोरेट / प्राइवेट सर्विस (Corporate / MNC)">💼 कॉर्पोरेट / प्राइवेट सर्विस (Corporate / MNC)</option>
+                <option value="डॉक्टर / चिकित्सा सेवा (Doctor / Healthcare)">🩺 डॉक्टर / चिकित्सा सेवा (Doctor)</option>
+                <option value="सीए / सीएस / वित्तीय सलाहकार (CA / Finance)">📊 सीए / सीएस / वित्तीय सलाहकार (CA)</option>
+                <option value="अधिवक्ता / विधिक सेवा (Advocate / Legal)">⚖️ अधिवक्ता / विधिक सेवा (Advocate)</option>
+                <option value="इंजीनियर / आईटी कंसल्टेंट (Engineer / IT)">💻 इंजीनियर / आईटी कंसल्टेंट (Engineer)</option>
+                <option value="कृषि / जमींदार / फार्मिंग (Agriculture)">🌾 कृषि / जमींदार / फार्मिंग (Agriculture)</option>
+                <option value="प्रोफेसर / शिक्षक / शिक्षाविद् (Professor / Teacher)">🎓 प्रोफेसर / शिक्षक / शिक्षाविद् (Teacher)</option>
+                <option value="डिफेंस / सेना / पुलिस सेवा (Defence / Police)">🛡️ डिफेंस / सेना / पुलिस (Defence / Police)</option>
+                <option value="बैंकिंग / वित्तीय संस्थान (Banking / Finance)">🏦 बैंकिंग / बीमा सेवा (Banking)</option>
+                <option value="सेवानिवृत्त (Retired)">📜 सेवानिवृत्त (Retired)</option>
+                <option value="अन्य (Other)">✏️ अन्य कार्य (Other)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. माता का विवरण (Mother Name & Occupation Option List with B.Ed / Teacher / Homemaker) -->
+        <div class="p-3 rounded-2xl bg-amber-50/50 border border-amber-200/80 space-y-2.5">
+          <div class="flex items-center space-x-1.5 text-amber-950 font-extrabold text-xs">
+            <i class="fa-solid fa-person-dress text-amber-700 text-sm"></i>
+            <span>माता का विवरण (Mother's Details)</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <!-- माता का नाम -->
+            <div>
+              <label class="block text-[11px] font-bold text-stone-700 mb-1">माता का शुभ नाम (Mother's Name)</label>
+              <input type="text" name="mother_name" placeholder="जैसे: श्रीमती विमला शर्मा" class="royal-input text-xs font-semibold">
+            </div>
+
+            <!-- माता का कार्य / पेशा (Option Dropdown List with B.Ed / Teacher / Homemaker) -->
+            <div>
+              <label class="block text-[11px] font-bold text-stone-700 mb-1">
+                <span>माता का कार्य / पेशा *</span>
+              </label>
+              <select name="mother_occupation" id="motherOccSelect" class="royal-input text-xs font-bold bg-white text-stone-800" onchange="updateFormProgress()">
+                <option value="">-- माता का कार्य चुनें --</option>
+                <option value="गृहणी (Homemaker / Housewife)">🏡 गृहणी (Homemaker / Housewife)</option>
+                <option value="शिक्षिका / प्रोफेसर / B.Ed (Teacher / Lecturer)">👩‍🏫 शिक्षिका / प्रोफेसर / B.Ed (Teacher / B.Ed)</option>
+                <option value="सरकारी सेवा (Government Service)">🏛️ सरकारी सेवा (Government Service)</option>
+                <option value="डॉक्टर / स्वास्थ्य सेवा (Doctor / Healthcare)">🩺 डॉक्टर / चिकित्सा / स्वास्थ्य सेवा (Doctor)</option>
+                <option value="बैंक / वित्तीय सेवा (Banking / Finance)">🏦 बैंक / वित्तीय सेवा (Banking)</option>
+                <option value="व्यापार / उद्यमी (Business / Entrepreneur)">🏢 व्यापार / उद्यमी (Business)</option>
+                <option value="प्राइवेट कंपनी / कॉर्पोरेट (Corporate / Private)">💼 प्राइवेट सेक्टर / कॉर्पोरेट (Corporate)</option>
+                <option value="समाजसेविका / ट्रस्टी (Social Worker)">🤝 समाजसेविका / ट्रस्टी (Social Worker)</option>
+                <option value="सेवानिवृत्त (Retired)">📜 सेवानिवृत्त (Retired)</option>
+                <option value="अन्य (Other)">✏️ अन्य कार्य (Other)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. परिवार प्रकार, स्टेटस एवं मूल निवास -->
+        <div class="grid grid-cols-3 gap-2">
           <!-- परिवार का प्रकार (Family Type) -->
           <div>
-            <label class="block text-[11px] font-bold text-stone-700 mb-1">परिवार प्रकार (Family Type)</label>
-            <select name="family_type" class="royal-input">
+            <label class="block text-[11px] font-bold text-stone-700 mb-1">परिवार प्रकार</label>
+            <select name="family_type" class="royal-input text-xs font-medium">
               <option value="nuclear">एकल परिवार (Nuclear)</option>
               <option value="joint">संयुक्त परिवार (Joint Family)</option>
             </select>
           </div>
 
-          <!-- पिता का व्यवसाय (Father Occupation) -->
+          <!-- परिवार स्टेटस -->
           <div>
-            <label class="block text-[11px] font-bold text-stone-700 mb-1">पिता का कार्य / व्यवसाय</label>
-            <input type="text" name="father_occupation" placeholder="जैसे: व्यवसायी / सरकारी अधिकारी" class="royal-input">
+            <label class="block text-[11px] font-bold text-stone-700 mb-1">पारिवारिक स्टेटस</label>
+            <select name="family_status" class="royal-input text-xs font-medium">
+              <option value="upper_middle_class" selected>उच्च मध्यमवर्गीय (Upper Middle)</option>
+              <option value="middle_class">मध्यमवर्गीय (Middle Class)</option>
+              <option value="rich">सम्पन्न (Affluent)</option>
+              <option value="royal">प्रतिष्ठित राजसी (Elite / Royal)</option>
+            </select>
+          </div>
+
+          <!-- मूल निवास (Native Place) -->
+          <div>
+            <label class="block text-[11px] font-bold text-stone-700 mb-1">मूल निवास (Native Origin)</label>
+            <input type="text" name="native_city" placeholder="जैसे: शेखावाटी / मारवाड़" class="royal-input text-xs font-medium">
+          </div>
+        </div>
+
+        <!-- भाई और बहन संख्या विवरण -->
+        <div class="grid grid-cols-2 gap-2 pt-1 border-t border-emerald-100">
+          <div>
+            <label class="block text-[10.5px] font-bold text-stone-600 mb-0.5">भाई (Brothers)</label>
+            <select name="brothers_count" class="royal-input text-xs">
+              <option value="0">कोई भाई नहीं (No Brother)</option>
+              <option value="1">1 भाई</option>
+              <option value="2">2 भाई</option>
+              <option value="3">3 या अधिक भाई</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[10.5px] font-bold text-stone-600 mb-0.5">बहनें (Sisters)</label>
+            <select name="sisters_count" class="royal-input text-xs">
+              <option value="0">कोई बहन नहीं (No Sister)</option>
+              <option value="1">1 बहन</option>
+              <option value="2">2 बहनें</option>
+              <option value="3">3 या अधिक बहनें</option>
+            </select>
           </div>
         </div>
 
@@ -1229,17 +1428,44 @@
       updateFormProgress();
     }
 
+    // Handle Caste Dropdown Selection
+    function handleCasteSelectDropdown(val) {
+      if (!val) return;
+      if (val.includes('अन्य')) {
+        const casteInput = document.getElementById('casteInput');
+        if (casteInput) {
+          casteInput.value = '';
+          casteInput.placeholder = 'कृपया अपना समाज यहाँ दर्ज करें...';
+          casteInput.focus();
+        }
+        return;
+      }
+      const cleanName = val.split('(')[0].trim();
+      selectCaste(cleanName, val);
+    }
+
     // Select Caste Action (1-Tap Experience)
     function selectCaste(cleanName, fullName) {
       currentSelectedCaste = cleanName;
       const casteInput = document.getElementById('casteInput');
       const badge = document.getElementById('casteSelectedBadge');
       const badgeText = document.getElementById('casteBadgeText');
+      const dropdown = document.getElementById('casteDropdownSelect');
 
       if (casteInput) casteInput.value = cleanName;
       if (badge) {
         badge.classList.remove('hidden');
         if (badgeText) badgeText.textContent = cleanName + ' (सत्यापित)';
+      }
+
+      // Sync Dropdown
+      if (dropdown && cleanName) {
+        for (let i = 0; i < dropdown.options.length; i++) {
+          if (dropdown.options[i].value.includes(cleanName) || dropdown.options[i].text.includes(cleanName)) {
+            dropdown.selectedIndex = i;
+            break;
+          }
+        }
       }
 
       // Update active state on all chips

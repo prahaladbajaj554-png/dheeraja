@@ -162,7 +162,11 @@ $router->post('/biodata/save', function (Request $request) {
 
     // Family
     $familyType = $request->input('family_type', 'nuclear');
+    $fatherName = trim($request->input('father_name', ''));
     $fatherOcc  = trim($request->input('father_occupation', ''));
+    $motherName = trim($request->input('mother_name', ''));
+    $motherOcc  = trim($request->input('mother_occupation', ''));
+    $profileFor = trim($request->input('profile_for', 'myself'));
 
     // 1. Update/Insert Profile
     \App\Core\Database::query(
@@ -213,15 +217,18 @@ $router->post('/biodata/save', function (Request $request) {
         ]
     );
 
-    // 4. Update/Insert Family Details
+    // 4. Update/Insert Family Details (पिता व माता का नाम व व्यवसाय)
     \App\Core\Database::query(
-        "INSERT INTO `family_details` (`user_id`, `family_type`, `father_occupation`)
-         VALUES (:uid, :ft, :focc)
-         ON DUPLICATE KEY UPDATE `family_type` = :ft, `father_occupation` = :focc",
+        "INSERT INTO `family_details` (`user_id`, `family_type`, `father_name`, `father_occupation`, `mother_name`, `mother_occupation`)
+         VALUES (:uid, :ft, :fname, :focc, :mname, :mocc)
+         ON DUPLICATE KEY UPDATE `family_type` = :ft, `father_name` = :fname, `father_occupation` = :focc, `mother_name` = :mname, `mother_occupation` = :mocc",
         [
-            'uid'  => $userId,
-            'ft'   => $familyType,
-            'focc' => $fatherOcc
+            'uid'   => $userId,
+            'ft'    => $familyType,
+            'fname' => $fatherName,
+            'focc'  => $fatherOcc,
+            'mname' => $motherName,
+            'mocc'  => $motherOcc
         ]
     );
 
