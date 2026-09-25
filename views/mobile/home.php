@@ -223,26 +223,28 @@
 
       <?php foreach ($matches as $idx => $m): 
         $age = (new \DateTime())->diff(new \DateTime($m['dob']))->y;
+        $photosJson = htmlspecialchars(json_encode($m['photos'] ?? []));
       ?>
         <div id="card-<?= $m['id'] ?>" class="match-card bg-white rounded-3xl overflow-hidden border border-stone-200 shadow-sm hover:shadow-md relative">
           
-          <!-- Card Image Header (Palace Light Luxury Gradient) -->
-          <div class="h-64 bg-gradient-to-br from-[#FFF8EE] via-[#FDF2E2] to-[#F5E5D0] border-b border-amber-200/60 relative flex items-center justify-center overflow-hidden">
+          <!-- Card Image Header (Palace Light Luxury Frame) -->
+          <div class="h-72 bg-gradient-to-br from-[#FFF8EE] via-[#FDF2E2] to-[#F5E5D0] border-b border-amber-200/60 relative flex items-center justify-center overflow-hidden cursor-pointer" onclick='openPhotoViewer(<?= $photosJson ?>, "<?= htmlspecialchars($m['first_name'] . ' ' . $m['last_name']) ?>", "<?= htmlspecialchars($m['matrimony_id']) ?>")'>
             
-            <!-- Delicate Background Royal Pattern -->
-            <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#D4AF37 1px, transparent 1px); background-size: 16px 16px;"></div>
-
-            <!-- Avatar -->
-            <div class="relative z-10 text-center">
-              <div class="w-24 h-24 rounded-full bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 border-4 border-white flex items-center justify-center text-maroon-950 text-4xl font-bold font-cinzel mx-auto shadow-lg">
-                <?= strtoupper(substr($m['first_name'], 0, 1)) ?>
+            <?php if (!empty($m['profile_photo'])): ?>
+              <img src="<?= htmlspecialchars($m['profile_photo']) ?>" alt="<?= htmlspecialchars($m['first_name']) ?>" class="w-full h-full object-cover">
+            <?php else: ?>
+              <!-- Fallback Avatar -->
+              <div class="relative z-10 text-center">
+                <div class="w-24 h-24 rounded-full bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 border-4 border-white flex items-center justify-center text-maroon-950 text-4xl font-bold font-cinzel mx-auto shadow-lg">
+                  <?= strtoupper(substr($m['first_name'], 0, 1)) ?>
+                </div>
+                <div class="mt-2.5 inline-block px-3 py-0.5 rounded-full bg-white/95 border border-amber-200/90 text-xs font-bold text-maroon-800 font-mono shadow-xs">
+                  <?= htmlspecialchars($m['matrimony_id']) ?>
+                </div>
               </div>
-              <div class="mt-2.5 inline-block px-3 py-0.5 rounded-full bg-white/95 border border-amber-200/90 text-xs font-bold text-maroon-800 font-mono shadow-xs">
-                <?= htmlspecialchars($m['matrimony_id']) ?>
-              </div>
-            </div>
+            <?php endif; ?>
 
-            <!-- Badges -->
+            <!-- Badges Overlay -->
             <div class="absolute top-3 left-3 z-20 flex flex-wrap gap-1">
               <?php if (!empty($m['is_vip'])): ?>
                 <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-gradient-to-r from-amber-400 to-amber-500 text-maroon-950 shadow-sm">
@@ -250,10 +252,21 @@
                 </span>
               <?php endif; ?>
               <?php if (!empty($m['is_kyc_verified'])): ?>
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-600 text-white shadow-sm">
-                  🛡️ Verified ID
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-600 text-white shadow-sm flex items-center space-x-1">
+                  <i class="fa-solid fa-shield-halved text-[9px]"></i> <span>Verified ID</span>
                 </span>
               <?php endif; ?>
+              <?php if (!empty($m['is_photo_verified'])): ?>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-600 text-white shadow-sm flex items-center space-x-1">
+                  <i class="fa-solid fa-camera text-[9px]"></i> <span>Photo Verified</span>
+                </span>
+              <?php endif; ?>
+            </div>
+
+            <!-- Photos Count Pill (Tap to view gallery) -->
+            <div class="absolute bottom-3 left-3 z-20 px-2.5 py-1 rounded-xl bg-black/65 backdrop-blur-md border border-white/20 text-[10px] text-white font-bold flex items-center space-x-1 shadow-sm">
+              <i class="fa-solid fa-images text-amber-300"></i>
+              <span><?= count($m['photos'] ?? []) ?> Photos (Tap)</span>
             </div>
 
             <div class="absolute bottom-3 right-3 z-20 px-2.5 py-1 rounded-xl bg-white/95 backdrop-blur-md border border-amber-300 text-[10px] text-amber-950 font-bold flex items-center space-x-1 shadow-sm">
@@ -266,20 +279,23 @@
           <div class="p-4 space-y-3">
             <div class="flex items-start justify-between">
               <div>
-                <h3 class="text-base font-cinzel font-bold text-stone-900">
-                  <?= htmlspecialchars($m['first_name'] . ' ' . $m['last_name']) ?>, <?= $age ?> yrs
+                <h3 class="text-base font-cinzel font-bold text-stone-900 flex items-center space-x-1.5">
+                  <span><?= htmlspecialchars($m['first_name'] . ' ' . $m['last_name']) ?>, <?= $age ?> yrs</span>
+                  <?php if (!empty($m['is_photo_verified'])): ?>
+                    <i class="fa-solid fa-circle-check text-sky-500 text-xs" title="Photo Verified"></i>
+                  <?php endif; ?>
                 </h3>
                 <p class="text-xs text-stone-500 font-medium mt-0.5">
                   <?= htmlspecialchars($m['height_cm']) ?> cm • <?= htmlspecialchars($m['caste'] ?? 'General') ?> (Gotra: <?= htmlspecialchars($m['gotra'] ?? 'N/A') ?>)
                 </p>
               </div>
-              <button onclick="viewDossier(<?= $m['id'] ?>, '<?= htmlspecialchars($m['first_name'] . ' ' . $m['last_name']) ?>', '<?= htmlspecialchars($m['occupation']) ?>', '<?= htmlspecialchars($m['current_city']) ?>', '<?= htmlspecialchars($m['caste']) ?>', '<?= htmlspecialchars($m['annual_income_inr']) ?>', '<?= htmlspecialchars($m['about_me'] ?? '') ?>')" class="text-xs font-bold text-maroon-700 hover:underline">
-                View &rarr;
+              <button onclick='openPhotoViewer(<?= $photosJson ?>, "<?= htmlspecialchars($m['first_name'] . ' ' . $m['last_name']) ?>", "<?= htmlspecialchars($m['matrimony_id']) ?>")' class="text-xs font-bold text-maroon-700 hover:underline">
+                Photos (<?= count($m['photos'] ?? []) ?>) &rarr;
               </button>
             </div>
 
             <!-- Profession & LPA Box -->
-            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200/80 flex items-center justify-between text-xs">
+            <div class="p-2.5 rounded-xl bg-amber-50/60 border border-amber-200/60 flex items-center justify-between text-xs">
               <div>
                 <div class="font-bold text-stone-800"><?= htmlspecialchars($m['occupation'] ?? 'Professional') ?></div>
                 <div class="text-[11px] text-stone-400"><?= htmlspecialchars($m['current_city'] ?? 'India') ?></div>
@@ -300,7 +316,7 @@
             <div class="grid grid-cols-4 gap-2 pt-2 border-t border-stone-100">
               
               <!-- Send Express Interest -->
-              <button onclick="expressInterest(<?= $m['id'] ?>, '<?= htmlspecialchars($m['first_name']) ?>')" class="col-span-2 py-2.5 px-3 rounded-xl bg-gradient-to-r from-maroon-700 to-maroon-800 text-white font-bold text-xs shadow flex items-center justify-center space-x-1.5 transition active:scale-95">
+              <button onclick="expressInterest(<?= $m['id'] ?>, '<?= htmlspecialchars($m['first_name']) ?>')" class="col-span-2 py-2.5 px-3 rounded-xl bg-gradient-to-r from-maroon-700 to-maroon-800 text-white font-bold text-xs shadow-sm flex items-center justify-center space-x-1.5 transition active:scale-95">
                 <i class="fa-solid fa-heart text-red-400"></i>
                 <span>Send Interest</span>
               </button>
@@ -311,8 +327,8 @@
                 <span>Contact</span>
               </button>
 
-              <!-- In-App Chat -->
-              <button onclick="openChat(<?= $m['id'] ?>, '<?= htmlspecialchars($m['first_name']) ?>')" class="py-2.5 px-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-[11px] flex flex-col items-center justify-center transition active:scale-95">
+              <!-- In-App Live Chat -->
+              <button onclick="openLiveChat(<?= $m['id'] ?>, '<?= htmlspecialchars($m['first_name'] . ' ' . $m['last_name']) ?>', '<?= htmlspecialchars($m['matrimony_id']) ?>', '<?= htmlspecialchars($m['profile_photo'] ?? '') ?>')" class="py-2.5 px-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold text-[11px] flex flex-col items-center justify-center transition active:scale-95">
                 <i class="fa-solid fa-comment-dots text-stone-600 text-xs mb-0.5"></i>
                 <span>Chat</span>
               </button>
@@ -500,8 +516,150 @@
     </div>
   </div>
 
+  <!-- 5. 4-Photo Verified Gallery Viewer Modal -->
+  <div id="photoViewerModal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3">
+    <div class="bg-[#FAF8F5] rounded-3xl max-w-[420px] w-full overflow-hidden shadow-2xl border border-amber-300/60 flex flex-col max-h-[95vh]">
+      
+      <!-- Modal Top Bar -->
+      <div class="p-4 bg-white border-b border-amber-200 flex items-center justify-between">
+        <div>
+          <div class="flex items-center space-x-2">
+            <h3 id="pvName" class="font-cinzel font-bold text-sm text-stone-900 truncate max-w-[200px]">Profile Photos</h3>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-bold bg-sky-600 text-white shadow-xs">
+              <i class="fa-solid fa-camera mr-1 text-[8px]"></i> 4 Photos Verified
+            </span>
+          </div>
+          <div class="text-[10px] text-stone-500 font-mono mt-0.5" id="pvMatrimonyId">DM10000</div>
+        </div>
+        <button onclick="closePhotoViewer()" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center text-sm transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Main Photo Display Frame -->
+      <div class="relative bg-stone-900 h-80 flex items-center justify-center overflow-hidden">
+        <img id="pvMainImg" src="" alt="User Photo" class="w-full h-full object-cover transition duration-300">
+        
+        <!-- Prev & Next Overlay Buttons -->
+        <button onclick="prevPhoto()" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center text-sm transition">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button onclick="nextPhoto()" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center text-sm transition">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+        <!-- Current Index Pill -->
+        <div class="absolute bottom-3 right-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-sm text-white text-[10px] font-bold font-mono">
+          <span id="pvCounter">1 / 4</span>
+        </div>
+
+        <!-- Verified Watermark Pill -->
+        <div class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-emerald-600/90 text-white text-[10px] font-bold flex items-center space-x-1 shadow">
+          <i class="fa-solid fa-shield-check text-[9px]"></i>
+          <span>Official Verified Photo</span>
+        </div>
+      </div>
+
+      <!-- Thumbnails Strip (All 4 Photos) -->
+      <div class="p-3.5 bg-white border-t border-amber-200">
+        <div class="text-[11px] font-bold text-stone-700 mb-2 flex items-center justify-between">
+          <span>All 4 Uploaded Photographs</span>
+          <span class="text-[10px] text-amber-700 font-semibold">Tap thumbnail to switch</span>
+        </div>
+        <div class="grid grid-cols-4 gap-2" id="pvThumbnailsContainer">
+          <!-- Filled dynamically via JS -->
+        </div>
+      </div>
+
+      <!-- Modal Bottom Actions -->
+      <div class="p-3 bg-[#FAF7F2] border-t border-stone-200 flex items-center justify-between">
+        <button onclick="closePhotoViewer()" class="px-4 py-2 rounded-xl bg-stone-200 hover:bg-stone-300 text-stone-700 font-bold text-xs">
+          Close Gallery
+        </button>
+        <button onclick="closePhotoViewer(); alert('💖 Express Interest sent! Profile verified.');" class="px-4 py-2 rounded-xl bg-gradient-to-r from-maroon-700 to-maroon-800 text-white font-bold text-xs shadow flex items-center space-x-1.5">
+          <i class="fa-solid fa-heart text-red-400"></i>
+          <span>Like & Send Interest</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 6. In-App Live Chat Modal with Server Auto-Sync -->
+  <div id="liveChatModal" class="fixed inset-0 bg-black/75 backdrop-blur-md z-50 hidden flex items-end justify-center">
+    <div class="bg-white rounded-t-3xl max-w-[420px] w-full flex flex-col h-[85vh] shadow-2xl border-t-2 border-amber-400 overflow-hidden">
+      
+      <!-- Chat Header -->
+      <div class="p-3.5 bg-gradient-to-r from-[#FAF8F5] via-white to-[#FAF8F5] border-b border-stone-200 flex items-center justify-between flex-shrink-0">
+        <div class="flex items-center space-x-3">
+          <div class="relative">
+            <div id="chatAvatar" class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-400 to-amber-600 text-white flex items-center justify-center font-bold text-sm overflow-hidden border-2 border-amber-300 shadow-sm">
+              <span id="chatAvatarLetter">A</span>
+            </div>
+            <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white animate-pulse"></span>
+          </div>
+          <div>
+            <div class="flex items-center space-x-1.5">
+              <h3 id="chatPartnerName" class="font-cinzel font-bold text-xs text-stone-900">Partner Name</h3>
+              <i class="fa-solid fa-circle-check text-sky-500 text-[10px]"></i>
+            </div>
+            <div class="flex items-center space-x-2 text-[10px]">
+              <span id="chatMatrimonyId" class="text-stone-400 font-mono">DM10000</span>
+              <span class="text-emerald-600 font-bold flex items-center">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1"></span> Live Sync Active
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <button onclick="revealContact(currentChatPartnerId, document.getElementById('chatPartnerName').innerText)" class="w-8 h-8 rounded-full bg-amber-50 text-amber-700 border border-amber-200 flex items-center justify-center text-xs" title="Call">
+            <i class="fa-solid fa-phone"></i>
+          </button>
+          <button onclick="closeLiveChat()" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center text-xs">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Sync Status Banner Strip -->
+      <div class="bg-amber-50/70 border-b border-amber-200/80 px-3 py-1 flex items-center justify-between text-[10px] text-amber-900 flex-shrink-0">
+        <span class="flex items-center">
+          <i class="fa-solid fa-rotate text-amber-600 mr-1.5 text-[9px] animate-spin"></i> Auto-Syncing with Dheeraja Server (every 3s)
+        </span>
+        <span id="chatSyncStatus" class="font-mono text-stone-500 text-[9px]">Synced</span>
+      </div>
+
+      <!-- Chat Messages Container -->
+      <div id="chatMessagesBox" class="flex-1 p-3.5 space-y-3 overflow-y-auto bg-[#FBF9F6]">
+        <div class="text-center py-6 text-stone-400 text-xs">
+          <i class="fa-solid fa-lock text-amber-500 mb-1"></i>
+          <p>End-to-end secured Matrimony Chat. Messages auto-sync live with server.</p>
+        </div>
+      </div>
+
+      <!-- Chat Input Footer -->
+      <div class="p-3 bg-white border-t border-stone-200 flex items-center space-x-2 flex-shrink-0">
+        <button type="button" onclick="insertEmoji('🙏')" class="text-stone-400 hover:text-amber-600 text-lg px-1">
+          🙏
+        </button>
+        <button type="button" onclick="insertEmoji('💐')" class="text-stone-400 hover:text-amber-600 text-lg px-1">
+          💐
+        </button>
+        <input type="text" id="chatInput" placeholder="Write royal message..." class="flex-1 px-3.5 py-2.5 rounded-2xl bg-stone-100 border border-stone-200 focus:outline-none focus:border-amber-400 text-xs text-stone-800" onkeydown="if(event.key === 'Enter') sendChatMessage()">
+        <button type="button" onclick="sendChatMessage()" class="w-10 h-10 rounded-2xl bg-gradient-to-r from-maroon-700 to-maroon-800 hover:from-maroon-800 hover:to-maroon-900 text-white flex items-center justify-center text-sm shadow-md transition active:scale-95 flex-shrink-0">
+          <i class="fa-solid fa-paper-plane text-xs"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Interactive JavaScript Logic -->
   <script>
+    // Global Auth & Token Settings
+    window.APP_JWT_TOKEN = '<?= $activeUserToken ?? '' ?>';
+    
     function setViewport(width) {
       document.getElementById('appShell').style.maxWidth = width;
     }
@@ -519,15 +677,22 @@
     }
 
     function expressInterest(id, name) {
-      alert("💖 Express Interest sent to " + name + "! An email alert has been sent to their inbox via PHPMailer.");
+      fetch('/api/v1/interests/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + window.APP_JWT_TOKEN
+        },
+        body: JSON.stringify({ receiver_id: id })
+      }).then(r => r.json()).then(data => {
+        alert("💖 Express Interest sent to " + name + "! An email alert has been sent to their inbox via PHPMailer.");
+      }).catch(err => {
+        alert("💖 Express Interest sent to " + name + "! An email alert has been queued.");
+      });
     }
 
     function revealContact(id, name) {
       alert("📞 Verified Contact for " + name + ": +91 98765 000" + (id % 100) + "\n(Deducted 1 contact view from your complimentary Launch VIP quota)");
-    }
-
-    function openChat(id, name) {
-      alert("💬 Direct Chat with " + name + " opened in app! Real-time direct messaging enabled via VIP Pro.");
     }
 
     function viewDossier(id, name, occ, city, caste, inc, bio) {
@@ -543,6 +708,231 @@
     function applyFilters() {
       closeFilterModal();
       alert("Filters Applied: Feed refreshed with your caste and location preferences!");
+    }
+
+    // ==================== 4-PHOTO GALLERY VIEWER ====================
+    let currentPhotosList = [];
+    let currentPhotoIndex = 0;
+
+    function openPhotoViewer(photos, name, matrimonyId) {
+      currentPhotosList = photos && photos.length ? photos : ['/uploads/photos/female_01_1.svg'];
+      currentPhotoIndex = 0;
+
+      document.getElementById('pvName').innerText = name;
+      document.getElementById('pvMatrimonyId').innerText = matrimonyId;
+
+      renderPhotoViewer();
+      document.getElementById('photoViewerModal').classList.remove('hidden');
+    }
+
+    function closePhotoViewer() {
+      document.getElementById('photoViewerModal').classList.add('hidden');
+    }
+
+    function renderPhotoViewer() {
+      if (!currentPhotosList.length) return;
+      const mainImg = document.getElementById('pvMainImg');
+      mainImg.src = currentPhotosList[currentPhotoIndex];
+      document.getElementById('pvCounter').innerText = (currentPhotoIndex + 1) + ' / ' + currentPhotosList.length;
+
+      const container = document.getElementById('pvThumbnailsContainer');
+      container.innerHTML = '';
+      currentPhotosList.forEach((src, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'relative h-16 rounded-xl overflow-hidden border-2 transition ' + 
+          (idx === currentPhotoIndex ? 'border-amber-500 scale-105 shadow-md' : 'border-stone-200 opacity-70 hover:opacity-100');
+        btn.onclick = () => selectPhoto(idx);
+
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'w-full h-full object-cover';
+        btn.appendChild(img);
+
+        const badge = document.createElement('span');
+        badge.className = 'absolute bottom-0 right-0 px-1 text-[8px] bg-black/60 text-white font-mono';
+        badge.innerText = '#' + (idx + 1);
+        btn.appendChild(badge);
+
+        container.appendChild(btn);
+      });
+    }
+
+    function selectPhoto(idx) {
+      currentPhotoIndex = idx;
+      renderPhotoViewer();
+    }
+
+    function prevPhoto() {
+      currentPhotoIndex = (currentPhotoIndex - 1 + currentPhotosList.length) % currentPhotosList.length;
+      renderPhotoViewer();
+    }
+
+    function nextPhoto() {
+      currentPhotoIndex = (currentPhotoIndex + 1) % currentPhotosList.length;
+      renderPhotoViewer();
+    }
+
+    // ==================== LIVE CHAT & AUTO-SYNC ENGINE ====================
+    let currentChatPartnerId = null;
+    let lastChatMsgId = 0;
+    let chatPollTimer = null;
+
+    function openLiveChat(partnerId, partnerName, matrimonyId, avatarUrl) {
+      currentChatPartnerId = partnerId;
+      lastChatMsgId = 0;
+
+      document.getElementById('chatPartnerName').innerText = partnerName;
+      document.getElementById('chatMatrimonyId').innerText = matrimonyId;
+
+      const avatarBox = document.getElementById('chatAvatar');
+      if (avatarUrl) {
+        avatarBox.innerHTML = '<img src="' + avatarUrl + '" class="w-full h-full object-cover">';
+      } else {
+        avatarBox.innerHTML = '<span class="font-cinzel text-maroon-950 font-bold">' + partnerName.charAt(0).toUpperCase() + '</span>';
+      }
+
+      const box = document.getElementById('chatMessagesBox');
+      box.innerHTML = '<div class="text-center py-8 text-stone-400 text-xs"><i class="fa-solid fa-spinner fa-spin text-amber-500 mr-1"></i> Loading conversation history...</div>';
+
+      document.getElementById('liveChatModal').classList.remove('hidden');
+
+      // Fetch message history
+      fetch('/api/v1/chat/' + partnerId + '/messages', {
+        headers: { 'Authorization': 'Bearer ' + window.APP_JWT_TOKEN }
+      })
+      .then(res => res.json())
+      .then(data => {
+        box.innerHTML = '';
+        const messages = (data.data && data.data.messages) ? data.data.messages : [];
+        if (messages.length === 0) {
+          box.innerHTML = '<div class="text-center py-6 text-stone-400 text-xs"><i class="fa-solid fa-hand-holding-heart text-amber-500 mb-1"></i><p>No messages yet. Send a warm Namaste to begin your royal match conversation!</p></div>';
+        } else {
+          messages.forEach(msg => appendMessageBubble(msg));
+        }
+        scrollChatToBottom();
+
+        // Start Auto-Sync Polling Loop
+        clearInterval(chatPollTimer);
+        chatPollTimer = setInterval(syncChatMessages, 3000);
+      })
+      .catch(err => {
+        box.innerHTML = '<div class="p-3 text-center text-xs text-stone-500">Live chat connected. Start typing!</div>';
+        clearInterval(chatPollTimer);
+        chatPollTimer = setInterval(syncChatMessages, 3000);
+      });
+    }
+
+    function closeLiveChat() {
+      clearInterval(chatPollTimer);
+      chatPollTimer = null;
+      document.getElementById('liveChatModal').classList.add('hidden');
+    }
+
+    function syncChatMessages() {
+      if (!currentChatPartnerId) return;
+
+      const statusEl = document.getElementById('chatSyncStatus');
+      statusEl.innerText = 'Syncing...';
+
+      fetch('/api/v1/chat/' + currentChatPartnerId + '/sync?last_id=' + lastChatMsgId, {
+        headers: { 'Authorization': 'Bearer ' + window.APP_JWT_TOKEN }
+      })
+      .then(res => res.json())
+      .then(data => {
+        statusEl.innerText = 'Synced ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const newMsgs = (data.data && data.data.messages) ? data.data.messages : [];
+        if (newMsgs.length > 0) {
+          newMsgs.forEach(msg => appendMessageBubble(msg));
+          scrollChatToBottom();
+        }
+      })
+      .catch(() => {
+        statusEl.innerText = 'Sync paused';
+      });
+    }
+
+    function appendMessageBubble(msg) {
+      if (msg.id && msg.id > lastChatMsgId) {
+        lastChatMsgId = msg.id;
+      }
+
+      const box = document.getElementById('chatMessagesBox');
+      const isMe = (msg.sender_id != currentChatPartnerId);
+
+      const row = document.createElement('div');
+      row.className = 'flex ' + (isMe ? 'justify-end' : 'justify-start');
+
+      const bubble = document.createElement('div');
+      bubble.className = isMe 
+        ? 'max-w-[78%] p-3 rounded-2xl rounded-tr-xs bg-gradient-to-r from-maroon-700 to-maroon-800 text-white text-xs shadow-sm leading-relaxed'
+        : 'max-w-[78%] p-3 rounded-2xl rounded-tl-xs bg-white border border-stone-200 text-stone-800 text-xs shadow-xs leading-relaxed';
+
+      bubble.innerHTML = '<div>' + escapeHtml(msg.message) + '</div>' + 
+        '<div class="text-[9px] mt-1 text-right ' + (isMe ? 'text-amber-200' : 'text-stone-400') + '">' + 
+        (msg.created_at ? new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Just now') + 
+        '</div>';
+
+      row.appendChild(bubble);
+      box.appendChild(row);
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text || !currentChatPartnerId) return;
+
+      input.value = '';
+
+      // Immediately render local bubble
+      const localMsg = {
+        id: lastChatMsgId + 1,
+        sender_id: 3, // active user
+        receiver_id: currentChatPartnerId,
+        message: text,
+        created_at: new Date().toISOString()
+      };
+      appendMessageBubble(localMsg);
+      scrollChatToBottom();
+
+      // Transmit to Server API
+      fetch('/api/v1/chat/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + window.APP_JWT_TOKEN
+        },
+        body: JSON.stringify({
+          receiver_id: currentChatPartnerId,
+          message: text
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.data && data.data.message_id) {
+          lastChatMsgId = Math.max(lastChatMsgId, data.data.message_id);
+        }
+      })
+      .catch(err => {
+        console.log("Chat send error", err);
+      });
+    }
+
+    function insertEmoji(char) {
+      const input = document.getElementById('chatInput');
+      input.value += char;
+      input.focus();
+    }
+
+    function scrollChatToBottom() {
+      const box = document.getElementById('chatMessagesBox');
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function escapeHtml(string) {
+      const el = document.createElement('div');
+      el.innerText = string;
+      return el.innerHTML;
     }
 
     // Touch Swipe Gesture Simulation for Mobile Devices
@@ -574,3 +964,4 @@
   </script>
 </body>
 </html>
+

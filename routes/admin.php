@@ -73,10 +73,21 @@ $router->group([
     $r->post('/communities/update/{id}', 'App\Controllers\Admin\CommunitiesController@update');
     $r->post('/communities/delete/{id}', 'App\Controllers\Admin\CommunitiesController@delete');
 
+    // Broker & Marriage Bureau Network
+    $r->get('/brokers', 'App\Controllers\Admin\BrokersController@index');
+    $r->get('/brokers/add', 'App\Controllers\Admin\BrokersController@add');
+    $r->post('/brokers/create', 'App\Controllers\Admin\BrokersController@create');
+    $r->get('/brokers/view/{id}', 'App\Controllers\Admin\BrokersController@show');
+    $r->post('/brokers/payout/{id}', 'App\Controllers\Admin\BrokersController@payout');
+
     // Mail & PHPMailer Settings
     $r->get('/settings/mail', 'App\Controllers\Admin\SettingsController@mailSettings');
     $r->post('/settings/mail', 'App\Controllers\Admin\SettingsController@saveMailSettings');
     $r->post('/settings/mail/test', 'App\Controllers\Admin\SettingsController@sendTestEmail');
+
+    // Master API Credentials & Payment Gateways
+    $r->get('/settings/api', 'App\Controllers\Admin\SettingsController@apiSettings');
+    $r->post('/settings/api', 'App\Controllers\Admin\SettingsController@saveApiSettings');
 
     // Security Operations Center
     $r->get('/security', 'App\Controllers\Admin\SecurityController@auditLogs');

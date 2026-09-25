@@ -40,6 +40,7 @@ $router->group([
         // Direct In-App Chat
         $authR->get('/chat/threads', 'App\Controllers\Api\ChatController@threads');
         $authR->get('/chat/{partner_id}/messages', 'App\Controllers\Api\ChatController@messages');
+        $authR->get('/chat/{partner_id}/sync', 'App\Controllers\Api\ChatController@sync');
         $authR->post('/chat/send', 'App\Controllers\Api\ChatController@send');
 
         // Subscriptions & Launch Free VIP

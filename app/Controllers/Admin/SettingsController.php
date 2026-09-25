@@ -103,4 +103,66 @@ class SettingsController extends Controller
 
         Response::redirect('/admin/settings/mail');
     }
+
+    public function apiSettings(Request $request)
+    {
+        $settings = [
+            'payment_gateway_mode'         => setting('payment_gateway_mode', 'test'),
+            'razorpay_key_id'              => setting('razorpay_key_id', 'rzp_test_placeholder_key'),
+            'razorpay_key_secret'          => setting('razorpay_key_secret', ''),
+            'phonepe_merchant_id'          => setting('phonepe_merchant_id', ''),
+            'phonepe_salt_key'             => setting('phonepe_salt_key', ''),
+            'phonepe_salt_index'           => setting('phonepe_salt_index', '1'),
+            'upi_merchant_vpa'             => setting('upi_merchant_vpa', 'dheeraja@okhdfcbank'),
+            'upi_merchant_name'            => setting('upi_merchant_name', 'Dheeraja Matrimony'),
+            'sms_gateway_provider'         => setting('sms_gateway_provider', 'msg91'),
+            'sms_api_key'                  => setting('sms_api_key', ''),
+            'sms_sender_id'                => setting('sms_sender_id', 'DHRMAT'),
+            'whatsapp_cloud_api_token'     => setting('whatsapp_cloud_api_token', ''),
+            'whatsapp_phone_number_id'     => setting('whatsapp_phone_number_id', ''),
+            'whatsapp_business_account_id' => setting('whatsapp_business_account_id', ''),
+            'firebase_server_key'          => setting('firebase_server_key', ''),
+            'firebase_project_id'          => setting('firebase_project_id', '')
+        ];
+
+        $this->view('admin/settings/api', [
+            'page_title' => 'Master API Credentials & Payment Gateways',
+            'settings'   => $settings
+        ]);
+    }
+
+    public function saveApiSettings(Request $request)
+    {
+        $keys = [
+            'payment_gateway_mode', 'razorpay_key_id', 'razorpay_key_secret',
+            'phonepe_merchant_id', 'phonepe_salt_key', 'phonepe_salt_index',
+            'upi_merchant_vpa', 'upi_merchant_name',
+            'sms_gateway_provider', 'sms_api_key', 'sms_sender_id',
+            'whatsapp_cloud_api_token', 'whatsapp_phone_number_id', 'whatsapp_business_account_id',
+            'firebase_server_key', 'firebase_project_id'
+        ];
+
+        foreach ($keys as $k) {
+            $val = trim($request->post($k, ''));
+            // If secret is blank, retain previous value
+            if (in_array($k, ['razorpay_key_secret', 'phonepe_salt_key', 'whatsapp_cloud_api_token', 'firebase_server_key']) && empty($val)) {
+                continue;
+            }
+
+            Database::query("INSERT INTO `app_settings` (`setting_key`, `setting_value`, `setting_group`) 
+                            VALUES (:k, :v, 'api') 
+                            ON DUPLICATE KEY UPDATE `setting_value` = :v", [
+                'k' => $k,
+                'v' => $val
+            ]);
+        }
+
+        $admin = Session::getAdmin();
+        AdminLog::log($admin['id'] ?? 1, 'UPDATE_API_SETTINGS', 'app_settings', null, [
+            'gateway_mode' => $request->post('payment_gateway_mode', 'test')
+        ]);
+
+        $this->flash('success', 'Master API Keys, Payment Gateways & SMS/WhatsApp Credentials updated successfully without code changes!');
+        Response::redirect('/admin/settings/api');
+    }
 }

@@ -64,7 +64,17 @@ function isActive(string $route, string $currentUri): string {
       <span>WhatsApp Groups</span>
     </a>
 
+    <a href="/admin/brokers" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm transition <?= isActive('/admin/brokers', $currentUri) ? 'bg-gradient-to-r from-amber-100/90 to-amber-50 text-maroon-800 border-l-4 border-amber-500 font-bold shadow-sm' : 'text-stone-700 hover:bg-amber-50/80 hover:text-maroon-800 font-medium' ?>">
+      <i class="fa-solid fa-handshake w-5 text-amber-500"></i>
+      <span>Brokers & Bureaus</span>
+    </a>
+
     <div class="pt-5 px-3 pb-2 text-[10px] font-bold text-stone-400 tracking-widest uppercase">System & Anti-Hacking</div>
+
+    <a href="/admin/settings/api" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm transition <?= isActive('/admin/settings/api', $currentUri) ? 'bg-gradient-to-r from-amber-100/90 to-amber-50 text-maroon-800 border-l-4 border-amber-500 font-bold shadow-sm' : 'text-stone-700 hover:bg-amber-50/80 hover:text-maroon-800 font-medium' ?>">
+      <i class="fa-solid fa-key w-5 text-amber-500"></i>
+      <span>API & Gateway Secrets</span>
+    </a>
 
     <a href="/admin/settings/mail" class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm transition <?= isActive('/admin/settings/mail', $currentUri) ?>">
       <i class="fa-solid fa-envelope-open-text w-5 text-amber-500"></i>

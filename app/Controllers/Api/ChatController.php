@@ -54,6 +54,38 @@ class ChatController extends Controller
         return $this->apiSuccess('Message history fetched.', ['messages' => $messages]);
     }
 
+    public function sync(Request $request)
+    {
+        $authUser = $request->param('auth_user');
+        $partnerId = (int)$request->param('partner_id');
+        $lastId = (int)$request->get('last_id', 0);
+
+        $sql = "SELECT * FROM `chat_messages` 
+                WHERE ((sender_id = :my_id AND receiver_id = :pid) 
+                    OR (sender_id = :pid AND receiver_id = :my_id))
+                  AND id > :last_id 
+                ORDER BY id ASC";
+
+        $messages = Database::fetchAll($sql, [
+            'my_id'   => $authUser['id'],
+            'pid'     => $partnerId,
+            'last_id' => $lastId
+        ]);
+
+        if (!empty($messages)) {
+            Database::query("UPDATE `chat_messages` SET `is_read` = 1, `read_at` = NOW() 
+                            WHERE `sender_id` = :pid AND `receiver_id` = :my_id AND `is_read` = 0", [
+                'pid'   => $partnerId,
+                'my_id' => $authUser['id']
+            ]);
+        }
+
+        return $this->apiSuccess('Synced new messages.', [
+            'messages' => $messages,
+            'count'    => count($messages)
+        ]);
+    }
+
     public function send(Request $request)
     {
         $authUser = $request->param('auth_user');
