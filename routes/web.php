@@ -249,6 +249,285 @@ $router->post('/biodata/save', function (Request $request) {
     return Response::redirect('/matches');
 });
 
+// Royal Biodata (Golden Border & 1-Click PDF Download Routes)
+$router->get('/biodata/royal/{id}', function (Request $request) {
+    $id = strtolower(trim($request->param('id', '1')));
+    $autoDownload = ($request->get('download') === '1');
+    
+    // Dataset of 4 featured candidates
+    $catalog = [
+        '1' => [
+            'id'             => 'DM10028',
+            'name'           => 'प्रिया शर्मा (Priya Sharma)',
+            'raw_name'       => 'Priya Sharma',
+            'gender_prefix'  => 'सौभाग्यकांक्षिणी (सौ.)',
+            'dob'            => '12 मई 1998 (12-05-1998)',
+            'birth_time'     => 'प्रातः 07:45 बजे',
+            'birth_place'    => 'इन्दौर, मध्य प्रदेश',
+            'age'            => '26 वर्ष',
+            'height'         => '5 फीट 4 इंच (163 cm)',
+            'complexion'     => 'गोरा (Fair & Radiant)',
+            'marital_status' => 'अविवाहित (Never Married)',
+            'diet'           => 'शुद्ध शाकाहारी (Vegetarian)',
+            'religion'       => 'सनातन हिन्दू (Hinduism)',
+            'caste'          => 'सनाढ्य ब्राह्मण (Brahmin)',
+            'sub_caste'      => 'सनाढ्य',
+            'gotra'          => 'कश्यप (Kashyap)',
+            'origin_gotra'   => 'शांडिल्य (ऐच्छिक)',
+            'rashi'          => 'कन्या (Virgo)',
+            'nakshatra'      => 'हस्त (तृतीय चरण)',
+            'manglik'        => 'नहीं (अमांगलिक / सौम्य कुंडली)',
+            'guna_score'     => '28 / 36 गुण उत्तम',
+            'education'      => 'B.Tech (Computer Science & Engg.)',
+            'college'        => 'SGSITS, Indore (Gold Medalist)',
+            'occupation'     => 'सीनियर सॉफ्टवेयर इंजीनियर (Sr. Software Engineer)',
+            'company'        => 'MNC Tech Solutions (Work from Home / Hybrid)',
+            'income'         => '₹ 14,50,000/- प्रतिवर्ष (14.5 LPA)',
+            'work_city'      => 'इन्दौर / बेंगलुरु',
+            'father_name'    => 'डॉ. रमाकांत शर्मा (Dr. Ramakant Sharma)',
+            'father_occ'     => 'मुख्य चिकित्सा अधिकारी (Chief Medical Officer, Retd.)',
+            'mother_name'    => 'श्रीमती सुनीता शर्मा (Mrs. Sunita Sharma)',
+            'mother_occ'     => 'गृहणी (सुसंस्कृत धार्मिक परिवार)',
+            'brothers'       => '1 छोटा भाई (IIT Delhi से B.Tech, कार्यरत)',
+            'sisters'        => 'कोई नहीं',
+            'native_place'   => 'इन्दौर / उज्जैन (मध्य प्रदेश)',
+            'family_type'    => 'उच्च मध्यमवर्गीय, संयुक्त व संस्कारी परिवार',
+            'contact_person' => 'डॉ. रमाकांत शर्मा (पिताजी)',
+            'phone'          => '+91 98260 41289',
+            'email'          => 'sharma.priya98@example.com',
+            'address'        => '142, साकेत नगर, ओल्ड पलासिया, इन्दौर (म.प्र.) - 452001',
+            'photo'          => '/assets/images/match_priya.jpg',
+            'verified'       => true,
+            'verified_date'  => date('d-m-Y')
+        ],
+        '2' => [
+            'id'             => 'DM10034',
+            'name'           => 'नेहा वर्मा (Neha Verma)',
+            'raw_name'       => 'Neha Verma',
+            'gender_prefix'  => 'सौभाग्यकांक्षिणी (सौ.)',
+            'dob'            => '18 अगस्त 2000 (18-08-2000)',
+            'birth_time'     => 'प्रातः 10:15 बजे',
+            'birth_place'    => 'पुणे, महाराष्ट्र',
+            'age'            => '24 वर्ष',
+            'height'         => '5 फीट 3 इंच (160 cm)',
+            'complexion'     => 'गेहुंआ/गोरा (Fair)',
+            'marital_status' => 'अविवाहित (Never Married)',
+            'diet'           => 'शाकाहारी (Vegetarian)',
+            'religion'       => 'सनातन हिन्दू (Hinduism)',
+            'caste'          => 'कायस्थ (Kayastha)',
+            'sub_caste'      => 'श्रीवास्तव',
+            'gotra'          => 'भारद्वाज (Bharadwaj)',
+            'origin_gotra'   => 'कश्यप (ऐच्छिक)',
+            'rashi'          => 'तुला (Libra)',
+            'nakshatra'      => 'चित्रा (द्वितीय चरण)',
+            'manglik'        => 'आंशिक मांगलिक (परिहार सहित)',
+            'guna_score'     => '31 / 36 गुण अत्यंत शुभ',
+            'education'      => 'M.Sc (Biotechnology)',
+            'college'        => 'पुणे यूनिवर्सिटी (University of Pune)',
+            'occupation'     => 'क्लीनिकल रिसर्च एसोसिएट (Clinical Research Associate)',
+            'company'        => 'सीरम इंस्टीट्यूट ऑफ इंडिया (Serum Institute)',
+            'income'         => '₹ 9,80,000/- प्रतिवर्ष (9.8 LPA)',
+            'work_city'      => 'पुणे, महाराष्ट्र',
+            'father_name'    => 'श्री सतीश वर्मा (Mr. Satish Verma)',
+            'father_occ'     => 'सेवानिवृत्त बैंक मुख्य प्रबंधक (Retd. Chief Manager, SBI)',
+            'mother_name'    => 'श्रीमती अनीता वर्मा (Mrs. Anita Verma)',
+            'mother_occ'     => 'वरिष्ठ अध्यापिका (Senior Teacher, Govt. School)',
+            'brothers'       => 'कोई नहीं',
+            'sisters'        => '1 बड़ी बहन (विवाहित, MNC में कार्यरत)',
+            'native_place'   => 'पुणे / नागपुर (महाराष्ट्र)',
+            'family_type'    => 'मध्यमवर्गीय, संस्कारी व शिक्षित परिवार',
+            'contact_person' => 'श्री सतीश वर्मा (पिताजी)',
+            'phone'          => '+91 97654 82910',
+            'email'          => 'verma.neha2000@example.com',
+            'address'        => 'फ्लैट 402, रॉयल पाम्स, कोथरुड, पुणे (महाराष्ट्र) - 411038',
+            'photo'          => '/assets/images/match_neha.jpg',
+            'verified'       => true,
+            'verified_date'  => date('d-m-Y')
+        ],
+        '3' => [
+            'id'             => 'DM10042',
+            'name'           => 'अंजलि सिंह (Anjali Singh)',
+            'raw_name'       => 'Anjali Singh',
+            'gender_prefix'  => 'सौभाग्यकांक्षिणी (सौ.)',
+            'dob'            => '04 नवम्बर 1999 (04-11-1999)',
+            'birth_time'     => 'प्रातः 04:30 बजे (ब्रह्म मुहूर्त)',
+            'birth_place'    => 'जयपुर, राजस्थान',
+            'age'            => '25 वर्ष',
+            'height'         => '5 फीट 5 इंच (165 cm)',
+            'complexion'     => 'अत्यंत गोरा (Very Fair & Royal)',
+            'marital_status' => 'अविवाहित (Never Married)',
+            'diet'           => 'शुद्ध शाकाहारी (Vegetarian)',
+            'religion'       => 'सनातन हिन्दू (Hinduism)',
+            'caste'          => 'राजपूत राठौड़ (Rajput)',
+            'sub_caste'      => 'राठौड़',
+            'gotra'          => 'गौतम (Gautam)',
+            'origin_gotra'   => 'राठौड़ कुल (ऐच्छिक)',
+            'rashi'          => 'वृषभ (Taurus)',
+            'nakshatra'      => 'रोहिणी (प्रथम चरण)',
+            'manglik'        => 'नहीं (अमांगलिक / सर्वगुण संपन्न)',
+            'guna_score'     => '32 / 36 गुण सर्वश्रेष्ठ',
+            'education'      => 'MBA (Finance & Banking)',
+            'college'        => 'राजस्थान विश्वविद्यालय, जयपुर',
+            'occupation'     => 'असिस्टेंट मैनेजर (Assistant Manager)',
+            'company'        => 'HDFC बैंक लिमिटेड',
+            'income'         => '₹ 12,00,000/- प्रतिवर्ष (12 LPA)',
+            'work_city'      => 'जयपुर, राजस्थान',
+            'father_name'    => 'ठाकुर भंवर सिंह (Thakur Bhanwar Singh)',
+            'father_occ'     => 'कृषि एवं प्रतिष्ठित रियल एस्टेट व्यवसायी',
+            'mother_name'    => 'श्रीमती पुष्पा कंवर (Mrs. Pushpa Kanwar)',
+            'mother_occ'     => 'गृहणी (रॉयल राजपूत परंपरा)',
+            'brothers'       => '2 भाई (1 भारतीय सेना में कैप्टन, 1 बिज़नेस)',
+            'sisters'        => 'कोई नहीं',
+            'native_place'   => 'जयपुर / जोधपुर (राजस्थान)',
+            'family_type'    => 'कुलीन रॉयल राजपूत संयुक्त परिवार',
+            'contact_person' => 'ठाकुर भंवर सिंह (पिताजी)',
+            'phone'          => '+91 94140 76321',
+            'email'          => 'anjali.singh.rajput@example.com',
+            'address'        => 'राठौड़ विला, प्लॉट 52, वैशाली नगर, जयपुर (राजस्थान) - 302021',
+            'photo'          => '/assets/images/match_anjali.jpg',
+            'verified'       => true,
+            'verified_date'  => date('d-m-Y')
+        ],
+        '4' => [
+            'id'             => 'DM10055',
+            'name'           => 'रीतिका पटेल (Ritika Patel)',
+            'raw_name'       => 'Ritika Patel',
+            'gender_prefix'  => 'सौभाग्यकांक्षिणी (सौ.)',
+            'dob'            => '22 जनवरी 1997 (22-01-1997)',
+            'birth_time'     => 'दोपहर 01:20 बजे',
+            'birth_place'    => 'अहमदाबाद, गुजरात',
+            'age'            => '27 वर्ष',
+            'height'         => '5 फीट 2 इंच (158 cm)',
+            'complexion'     => 'गोरा (Fair)',
+            'marital_status' => 'अविवाहित (Never Married)',
+            'diet'           => 'शुद्ध शाकाहारी (Pure Jain/Vegetarian)',
+            'religion'       => 'सनातन हिन्दू वैष्णव (Hindu Vaishnav)',
+            'caste'          => 'कड़वा पाटीदार (Patidar)',
+            'sub_caste'      => 'पाटीदार',
+            'gotra'          => 'वशिष्ठ (Vashishtha)',
+            'origin_gotra'   => 'कश्यप (ऐच्छिक)',
+            'rashi'          => 'मिथुन (Gemini)',
+            'nakshatra'      => 'पुनर्वसु (चतुर्थ चरण)',
+            'manglik'        => 'नहीं (अमांगलिक)',
+            'guna_score'     => '29 / 36 गुण उत्तम',
+            'education'      => 'CA (Chartered Accountant) & B.Com',
+            'college'        => 'The Institute of Chartered Accountants of India (ICAI)',
+            'occupation'     => 'सीनियर फाइनेंशियल ऑडिटर (Senior Financial Auditor)',
+            'company'        => 'Big 4 Financial Advisory Services',
+            'income'         => '₹ 16,00,000/- प्रतिवर्ष (16 LPA)',
+            'work_city'      => 'अहमदाबाद, गुजरात',
+            'father_name'    => 'श्री दिनेश पटेल (Mr. Dinesh Patel)',
+            'father_occ'     => 'उद्योगपति (डायरेक्टर - टेक्सटाइल एक्सपोर्ट्स)',
+            'mother_name'    => 'श्रीमती हंसा पटेल (Mrs. Hansa Patel)',
+            'mother_occ'     => 'गृहणी (धार्मिक एवं परोपकारी)',
+            'brothers'       => '1 बड़ा भाई (विवाहित, टेक्सटाइल फैक्ट्री डायरेक्टर)',
+            'sisters'        => 'कोई नहीं',
+            'native_place'   => 'अहमदाबाद / मेहसाणा (गुजरात)',
+            'family_type'    => 'उच्च संभ्रांत, प्रतिष्ठित वैष्णव व्यापारिक परिवार',
+            'contact_person' => 'श्री दिनेश पटेल (पिताजी)',
+            'phone'          => '+91 98980 54312',
+            'email'          => 'ritika.patel.ca@example.com',
+            'address'        => '701, शिवालिक हाइट्स, बोडकदेव, एस.जी. हाईवे, अहमदाबाद (गुजरात) - 380054',
+            'photo'          => '/assets/images/match_ritika.jpg',
+            'verified'       => true,
+            'verified_date'  => date('d-m-Y')
+        ]
+    ];
+    
+    // Slugs mapping
+    $slugMap = [
+        'priya' => '1', 'priya-sharma' => '1',
+        'neha'  => '2', 'neha-verma'    => '2',
+        'anjali'=> '3', 'anjali-singh'  => '3',
+        'ritika'=> '4', 'ritika-patel'  => '4'
+    ];
+    if (isset($slugMap[$id])) {
+        $id = $slugMap[$id];
+    }
+
+    $candidate = $catalog[$id] ?? null;
+
+    // Check database if numeric and not found in catalog
+    if (!$candidate && is_numeric($id)) {
+        $dbUser = \App\Core\Database::fetch("SELECT u.*, p.first_name, p.last_name, p.gender, p.dob, p.height_cm, p.current_city, p.complexion, p.marital_status, p.eating_habits,
+            a.religion, a.caste, a.gotra, a.rashi, a.nakshatra, a.manglik, a.birth_time, a.birth_city,
+            e.highest_education, e.occupation, e.organization_name, e.annual_income_inr, e.work_city,
+            f.father_name, f.father_occupation, f.mother_name, f.family_type, f.native_city
+            FROM users u
+            LEFT JOIN profiles p ON u.id = p.user_id
+            LEFT JOIN astrology_details a ON u.id = a.user_id
+            LEFT JOIN education_careers e ON u.id = e.user_id
+            LEFT JOIN family_details f ON u.id = f.user_id
+            WHERE u.id = :id", ['id' => (int)$id]);
+
+        if ($dbUser) {
+            $fullName = trim(($dbUser['first_name'] ?? 'सदस्य') . ' ' . ($dbUser['last_name'] ?? ''));
+            $isFemale = ($dbUser['gender'] ?? 'male') === 'female';
+            $candidate = [
+                'id'             => $dbUser['matrimony_id'] ?? ('DM' . $dbUser['id']),
+                'name'           => $fullName,
+                'raw_name'       => $fullName,
+                'gender_prefix'  => $isFemale ? 'सौभाग्यकांक्षिणी (सौ.)' : 'आयुष्मान (चि.)',
+                'dob'            => date('d M Y', strtotime($dbUser['dob'] ?? '1998-01-01')),
+                'birth_time'     => $dbUser['birth_time'] ?? 'प्रातः 08:00 बजे',
+                'birth_place'    => $dbUser['birth_city'] ?: ($dbUser['current_city'] ?? 'जयपुर'),
+                'age'            => '26 वर्ष',
+                'height'         => $dbUser['height_cm'] ? round($dbUser['height_cm']/30.48, 1) . ' फीट' : "5'6\"",
+                'complexion'     => $dbUser['complexion'] ?? 'गोरा',
+                'marital_status' => $dbUser['marital_status'] ?? 'अविवाहित',
+                'diet'           => $dbUser['eating_habits'] ?? 'शाकाहारी',
+                'religion'       => $dbUser['religion'] ?? 'सनातन हिन्दू',
+                'caste'          => $dbUser['caste'] ?? 'सामान्य',
+                'sub_caste'      => '',
+                'gotra'          => $dbUser['gotra'] ?? 'कश्यप',
+                'origin_gotra'   => 'ऐच्छिक',
+                'rashi'          => $dbUser['rashi'] ?? 'तुला',
+                'nakshatra'      => $dbUser['nakshatra'] ?? 'चित्रा',
+                'manglik'        => ($dbUser['manglik'] === 'yes') ? 'मांगलिक' : 'अमांगलिक',
+                'guna_score'     => '30 / 36 गुण शुभ',
+                'education'      => $dbUser['highest_education'] ?? 'स्नातक (Graduate)',
+                'college'        => 'विश्वविद्यालय',
+                'occupation'     => $dbUser['occupation'] ?? 'कार्यरत',
+                'company'        => $dbUser['organization_name'] ?? 'प्रतिष्ठित संस्थान',
+                'income'         => $dbUser['annual_income_inr'] ? ('₹ ' . number_format($dbUser['annual_income_inr']) . '/-') : '₹ 8,00,000/-',
+                'work_city'      => $dbUser['work_city'] ?: ($dbUser['current_city'] ?? 'जयपुर'),
+                'father_name'    => $dbUser['father_name'] ?: 'अभिभावक',
+                'father_occ'     => $dbUser['father_occupation'] ?: 'व्यवसाय / सेवा',
+                'mother_name'    => $dbUser['mother_name'] ?: 'माताजी',
+                'mother_occ'     => 'गृहणी',
+                'brothers'       => 'विवरण उपलब्ध',
+                'sisters'        => 'विवरण उपलब्ध',
+                'native_place'   => $dbUser['native_city'] ?: ($dbUser['current_city'] ?? 'जयपुर'),
+                'family_type'    => $dbUser['family_type'] ?? 'संस्कारी परिवार',
+                'contact_person' => $dbUser['father_name'] ?: 'अभिभावक',
+                'phone'          => $dbUser['phone'] ?? '+91 98000 00000',
+                'email'          => $dbUser['email'] ?? 'contact@dheerajamatrimony.com',
+                'address'        => ($dbUser['current_city'] ?? 'जयपुर') . ', भारत',
+                'photo'          => '/assets/images/dheeraja_dm_logo_clean.jpg',
+                'verified'       => true,
+                'verified_date'  => date('d-m-Y')
+            ];
+        }
+    }
+
+    if (!$candidate) {
+        $candidate = $catalog['1'];
+    }
+
+    Response::view('home/biodata_royal', [
+        'candidate'     => $candidate,
+        'auto_download' => $autoDownload
+    ], null);
+});
+
+$router->get('/biodata/preview/{id}', function (Request $request) {
+    Response::redirect('/biodata/royal/' . $request->param('id'));
+});
+
+$router->get('/biodata/download/{id}', function (Request $request) {
+    Response::redirect('/biodata/royal/' . $request->param('id') . '?download=1');
+});
+
 // Fourth Page: Activity & Matches Tracker / तालिका वाला पेज
 $router->get('/matches', function (Request $request) {
     Response::view('home/matches', [

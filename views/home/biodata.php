@@ -297,6 +297,14 @@
         ✨ <strong>लॉन्च ऑफर:</strong> फॉर्म पूरा भरते ही <strong>3 माह का VIP Pro प्लान</strong> बिल्कुल मुफ्त! ✨
       </div>
 
+      <!-- Royal Golden Biodata Preview Button -->
+      <div class="mt-2 flex items-center justify-center">
+        <a href="/biodata/royal/1" target="_blank" class="px-3 py-1 rounded-full bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 border border-amber-400 text-amber-950 text-[10.5px] font-extrabold flex items-center space-x-1.5 shadow-2xs hover:bg-amber-300 transition active:scale-95" title="सुनहरे बॉर्डर वाला रॉयल बायोडाटा नमूना देखें व 1-क्लिक डाउनलोड करें">
+          <i class="fa-solid fa-crown text-amber-600"></i>
+          <span>👑 सुनहरे बॉर्डर वाला रॉयल बायोडाटा नमूना (1-क्लिक PDF)</span>
+        </a>
+      </div>
+
         <!-- Live Profile Completion Progress Bar with Congratulatory Milestones -->
       <div class="mt-3 px-3.5 py-2.5 bg-white/95 rounded-2xl border border-emerald-200 shadow-2xs">
         <div class="flex items-center justify-between text-[11px] font-bold text-[#064E3B] mb-1">

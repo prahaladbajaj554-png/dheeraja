@@ -8,13 +8,16 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rozha+One&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Cinzel+Decorative:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rozha+One&family=Yatra+One&family=Noto+Serif+Devanagari:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- html2pdf Bundle for 1-Click PDF Download -->
+  <script src="/assets/js/html2pdf.bundle.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -200,6 +203,109 @@
     }
     ::-webkit-scrollbar-thumb:hover {
       background: #059669;
+    }
+
+    /* Royal Golden Ornate Border & Biodata Styles */
+    .royal-border-outer {
+      padding: 10px;
+      background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 25%, #B38728 50%, #FBF5B7 75%, #AA771C 100%);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.45);
+      border-radius: 8px;
+    }
+    .royal-border-middle {
+      padding: 5px;
+      background: #064E3B;
+      border-radius: 6px;
+    }
+    .royal-border-inner {
+      background: #FFFDF9;
+      border: 2px solid #D4AF37;
+      padding: 18px 20px;
+      position: relative;
+      border-radius: 4px;
+    }
+    .corner-flourish {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .corner-tl { top: 4px; left: 4px; }
+    .corner-tr { top: 4px; right: 4px; transform: rotate(90deg); }
+    .corner-bl { bottom: 4px; left: 4px; transform: rotate(-90deg); }
+    .corner-br { bottom: 4px; right: 4px; transform: rotate(180deg); }
+    .royal-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 280px;
+      opacity: 0.04;
+      background-image: url('/assets/images/dheeraja_dm_logo_icon.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .section-banner {
+      background: linear-gradient(90deg, #064E3B 0%, #0F684F 50%, #064E3B 100%);
+      color: #F8E7A2;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border-left: 4px solid #D4AF37;
+      border-right: 4px solid #D4AF37;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .attr-row {
+      display: flex;
+      padding: 3.5px 4px;
+      border-bottom: 1px dashed #E5D5BA;
+      font-size: 11.5px;
+      align-items: baseline;
+    }
+    .attr-row:last-child {
+      border-bottom: none;
+    }
+    .attr-label {
+      width: 40%;
+      font-weight: 700;
+      color: #78350F;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .attr-sep {
+      width: 4%;
+      text-align: center;
+      color: #92400E;
+      font-weight: bold;
+    }
+    .attr-val {
+      width: 56%;
+      color: #1F2937;
+      font-weight: 700;
+    }
+    .photo-gold-frame {
+      position: relative;
+      padding: 3px;
+      background: linear-gradient(135deg, #BF953F 0%, #FCF6BA 35%, #B38728 70%, #AA771C 100%);
+      border-radius: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15), 0 0 10px rgba(212, 175, 55, 0.4);
+      display: inline-block;
+    }
+    .photo-gold-frame img {
+      width: 120px;
+      height: 145px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      border: 1.5px solid #FFFDF9;
     }
   </style>
 </head>
@@ -470,6 +576,20 @@
           </div>
         </div>
 
+        <!-- Royal Golden Biodata 1-Click Ribbon -->
+        <div class="mt-2 pt-1.5 border-t border-amber-200/70">
+          <button onclick="openRoyalBiodataModal('Priya Sharma')" class="w-full py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-amber-100 via-amber-50 to-amber-200 hover:from-amber-200 hover:to-amber-300 border border-amber-300 text-amber-950 font-bold text-[11px] flex items-center justify-between shadow-2xs transition active:scale-98" title="सुनहरे बॉर्डर वाला बायोडाटा व 1-क्लिक PDF डाउनलोड">
+            <span class="flex items-center space-x-1.5">
+              <i class="fa-solid fa-crown text-amber-600 text-xs"></i>
+              <span>👑 रॉयल बायोडाटा (सुनहरा बॉर्डर)</span>
+            </span>
+            <span class="bg-[#064E3B] text-amber-200 text-[10px] px-2 py-0.5 rounded-full font-extrabold flex items-center space-x-1 shadow-xs">
+              <i class="fa-solid fa-cloud-arrow-down text-[10px]"></i>
+              <span>⚡ 1-क्लिक PDF</span>
+            </span>
+          </button>
+        </div>
+
         <!-- Bottom: 5 Action Buttons in Horizontal Row -->
         <div class="mt-2.5 pt-2 border-t border-stone-100 flex items-center space-x-1">
           <button onclick="sendInterest(this, 'Priya Sharma')" class="card-btn btn-interest">
@@ -587,6 +707,20 @@
               <span class="text-[8px] text-stone-400 font-medium leading-none">2 hours ago</span>
             </div>
           </div>
+        </div>
+
+        <!-- Royal Golden Biodata 1-Click Ribbon -->
+        <div class="mt-2 pt-1.5 border-t border-amber-200/70">
+          <button onclick="openRoyalBiodataModal('Neha Verma')" class="w-full py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-amber-100 via-amber-50 to-amber-200 hover:from-amber-200 hover:to-amber-300 border border-amber-300 text-amber-950 font-bold text-[11px] flex items-center justify-between shadow-2xs transition active:scale-98" title="सुनहरे बॉर्डर वाला बायोडाटा व 1-क्लिक PDF डाउनलोड">
+            <span class="flex items-center space-x-1.5">
+              <i class="fa-solid fa-crown text-amber-600 text-xs"></i>
+              <span>👑 रॉयल बायोडाटा (सुनहरा बॉर्डर)</span>
+            </span>
+            <span class="bg-[#064E3B] text-amber-200 text-[10px] px-2 py-0.5 rounded-full font-extrabold flex items-center space-x-1 shadow-xs">
+              <i class="fa-solid fa-cloud-arrow-down text-[10px]"></i>
+              <span>⚡ 1-क्लिक PDF</span>
+            </span>
+          </button>
         </div>
 
         <!-- Bottom: 5 Action Buttons in Horizontal Row -->
@@ -708,6 +842,20 @@
           </div>
         </div>
 
+        <!-- Royal Golden Biodata 1-Click Ribbon -->
+        <div class="mt-2 pt-1.5 border-t border-amber-200/70">
+          <button onclick="openRoyalBiodataModal('Anjali Singh')" class="w-full py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-amber-100 via-amber-50 to-amber-200 hover:from-amber-200 hover:to-amber-300 border border-amber-300 text-amber-950 font-bold text-[11px] flex items-center justify-between shadow-2xs transition active:scale-98" title="सुनहरे बॉर्डर वाला बायोडाटा व 1-क्लिक PDF डाउनलोड">
+            <span class="flex items-center space-x-1.5">
+              <i class="fa-solid fa-crown text-amber-600 text-xs"></i>
+              <span>👑 रॉयल बायोडाटा (सुनहरा बॉर्डर)</span>
+            </span>
+            <span class="bg-[#064E3B] text-amber-200 text-[10px] px-2 py-0.5 rounded-full font-extrabold flex items-center space-x-1 shadow-xs">
+              <i class="fa-solid fa-cloud-arrow-down text-[10px]"></i>
+              <span>⚡ 1-क्लिक PDF</span>
+            </span>
+          </button>
+        </div>
+
         <!-- Bottom: 5 Action Buttons in Horizontal Row -->
         <div class="mt-2.5 pt-2 border-t border-stone-100 flex items-center space-x-1">
           <button onclick="sendInterest(this, 'Anjali Singh')" class="card-btn btn-interest">
@@ -825,6 +973,20 @@
               <span>Verified Profile</span>
             </div>
           </div>
+        </div>
+
+        <!-- Royal Golden Biodata 1-Click Ribbon -->
+        <div class="mt-2 pt-1.5 border-t border-amber-200/70">
+          <button onclick="openRoyalBiodataModal('Ritika Patel')" class="w-full py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-amber-100 via-amber-50 to-amber-200 hover:from-amber-200 hover:to-amber-300 border border-amber-300 text-amber-950 font-bold text-[11px] flex items-center justify-between shadow-2xs transition active:scale-98" title="सुनहरे बॉर्डर वाला बायोडाटा व 1-क्लिक PDF डाउनलोड">
+            <span class="flex items-center space-x-1.5">
+              <i class="fa-solid fa-crown text-amber-600 text-xs"></i>
+              <span>👑 रॉयल बायोडाटा (सुनहरा बॉर्डर)</span>
+            </span>
+            <span class="bg-[#064E3B] text-amber-200 text-[10px] px-2 py-0.5 rounded-full font-extrabold flex items-center space-x-1 shadow-xs">
+              <i class="fa-solid fa-cloud-arrow-down text-[10px]"></i>
+              <span>⚡ 1-क्लिक PDF</span>
+            </span>
+          </button>
         </div>
 
         <!-- Bottom: 5 Action Buttons in Horizontal Row -->
@@ -1250,6 +1412,282 @@
     </div>
   </div>
 
+  <!-- ==================== MODAL 5: ROYAL GOLDEN BIODATA (1-CLICK PDF) ==================== -->
+  <div id="royalBiodataModal" class="modal-backdrop fixed inset-0 z-[160] bg-black/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+    <div class="bg-[#102A21] rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border-2 border-[#D4AF37] flex flex-col max-h-[96vh] animate-bounce-in my-auto">
+      
+      <!-- Top Action Bar -->
+      <div class="bg-gradient-to-r from-[#064E3B] via-[#0D5F48] to-[#043628] text-white p-3 sm:p-3.5 flex items-center justify-between border-b-2 border-amber-400">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 rounded-full bg-amber-400/20 border border-amber-300 flex items-center justify-center text-amber-300 text-xs">
+            <i class="fa-solid fa-crown"></i>
+          </div>
+          <div>
+            <h3 class="font-cinzel text-xs sm:text-sm font-bold text-amber-200">रॉयल बायोडाटा (सुनहरा बॉर्डर)</h3>
+            <p class="text-[10.5px] text-emerald-100 font-sans" id="modalBiodataHeaderSub">प्रिया शर्मा • 1-क्लिक PDF डाउनलोड</p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-1.5 sm:space-x-2">
+          <!-- 1-Click Instant Download Button -->
+          <button id="btnModalDownloadPdf" onclick="downloadModalRoyalBiodata()" class="px-3 sm:px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-[#064E3B] font-black text-[11px] sm:text-xs flex items-center space-x-1.5 shadow-md hover:brightness-105 active:scale-95 transition cursor-pointer">
+            <i class="fa-solid fa-cloud-arrow-down text-xs"></i>
+            <span>⚡ 1-क्लिक डाउनलोड PDF</span>
+          </button>
+
+          <!-- Open in Standalone Tab -->
+          <button onclick="openCandidateRoyalPage()" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-amber-200 text-xs transition" title="अलग पेज पर खोलें">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </button>
+
+          <!-- Close Modal -->
+          <button onclick="closeRoyalBiodataModal()" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xs transition" title="बंद करें">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Download Toast inside Modal -->
+      <div id="modalPdfProgress" class="hidden bg-amber-500 text-amber-950 px-4 py-2 text-xs font-bold flex items-center justify-between border-b border-amber-600 animate-pulse">
+        <span class="flex items-center space-x-2">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          <span>✨ सुनहरा बॉर्डर वाला PDF बायोडाटा तैयार हो रहा है...</span>
+        </span>
+        <span class="text-[10px] font-mono">हाई-रेजोल्यूशन</span>
+      </div>
+
+      <!-- Scrollable Biodata Sheet Wrapper -->
+      <div class="p-2 sm:p-4 overflow-y-auto flex-1 bg-stone-900/60 flex justify-center">
+        <!-- The Printable Sheet with Golden Border -->
+        <div id="modalRoyalSheet" class="w-full max-w-[620px] bg-[#FFFDF9] rounded-xl shadow-2xl relative select-none">
+          <div class="royal-border-outer">
+            <div class="royal-border-middle">
+              <div class="royal-border-inner">
+
+                <!-- 4 Ornate Vector Corner Flourishes -->
+                <svg class="corner-flourish corner-tl" viewBox="0 0 50 50">
+                  <path d="M0,0 L50,0 C35,6 20,20 14,35 L14,50 C8,35 6,15 0,0 Z" fill="#BF953F"/>
+                  <path d="M4,4 L42,4 C30,9 18,20 12,32 L12,42 C7,30 5,14 4,4 Z" fill="#FCF6BA"/>
+                  <circle cx="8" cy="8" r="3.5" fill="#78350F"/>
+                </svg>
+                <svg class="corner-flourish corner-tr" viewBox="0 0 50 50">
+                  <path d="M0,0 L50,0 C35,6 20,20 14,35 L14,50 C8,35 6,15 0,0 Z" fill="#BF953F"/>
+                  <path d="M4,4 L42,4 C30,9 18,20 12,32 L12,42 C7,30 5,14 4,4 Z" fill="#FCF6BA"/>
+                  <circle cx="8" cy="8" r="3.5" fill="#78350F"/>
+                </svg>
+                <svg class="corner-flourish corner-bl" viewBox="0 0 50 50">
+                  <path d="M0,0 L50,0 C35,6 20,20 14,35 L14,50 C8,35 6,15 0,0 Z" fill="#BF953F"/>
+                  <path d="M4,4 L42,4 C30,9 18,20 12,32 L12,42 C7,30 5,14 4,4 Z" fill="#FCF6BA"/>
+                  <circle cx="8" cy="8" r="3.5" fill="#78350F"/>
+                </svg>
+                <svg class="corner-flourish corner-br" viewBox="0 0 50 50">
+                  <path d="M0,0 L50,0 C35,6 20,20 14,35 L14,50 C8,35 6,15 0,0 Z" fill="#BF953F"/>
+                  <path d="M4,4 L42,4 C30,9 18,20 12,32 L12,42 C7,30 5,14 4,4 Z" fill="#FCF6BA"/>
+                  <circle cx="8" cy="8" r="3.5" fill="#78350F"/>
+                </svg>
+
+                <div class="royal-watermark"></div>
+
+                <!-- Invocation & Title -->
+                <div class="relative z-10 text-center pb-2 border-b-2 border-[#D4AF37]">
+                  <div class="text-[#9A1B1E] font-extrabold text-xs font-rozha tracking-widest">
+                    ॥ 卐 श्री गणेशाय नमः 卐 ॥
+                  </div>
+                  <h2 class="font-cinzel text-base sm:text-lg font-black text-[#064E3B] tracking-wider mt-0.5 leading-none">
+                    DHEERAJA ROYAL MATRIMONY
+                  </h2>
+                  <p class="text-[10px] text-amber-800 font-bold tracking-wider mt-0.5">
+                    पवित्र सनातन विवाह संगम • 100% सत्यापित बायोडाटा
+                  </p>
+                  <div class="mt-1 flex items-center justify-center space-x-2 text-[9px] font-bold">
+                    <span class="px-2 py-0.5 bg-amber-100 text-amber-900 rounded-full border border-amber-300 font-mono" id="rbCandidateId">ID: DM10028</span>
+                    <span class="px-2 py-0.5 bg-emerald-100 text-emerald-900 rounded-full border border-emerald-300">✓ सत्यापित सदस्य</span>
+                    <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded-full border border-stone-300" id="rbCandidateGuna">28/36 गुण मिलान</span>
+                  </div>
+                </div>
+
+                <!-- Spotlight Candidate & Photo -->
+                <div class="relative z-10 mt-3 flex items-start gap-3 pb-2.5 border-b border-[#E5D5BA]">
+                  <div class="shrink-0 text-center">
+                    <div class="photo-gold-frame">
+                      <img id="rbCandidatePhoto" src="/assets/images/match_priya.jpg" alt="Candidate" class="w-[98px] h-[120px] object-cover rounded-lg border border-white">
+                    </div>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <span class="inline-block px-2 py-0.5 rounded-full bg-amber-50 border border-amber-300 text-[#9A1B1E] text-[9.5px] font-bold" id="rbCandidatePrefix">
+                      सौभाग्यकांक्षिणी (सौ.)
+                    </span>
+                    <h3 class="text-base sm:text-lg font-black text-[#064E3B] leading-tight font-rozha truncate mt-0.5" id="rbCandidateName">
+                      प्रिया शर्मा (Priya Sharma)
+                    </h3>
+                    <div class="mt-1.5 grid grid-cols-2 gap-1.5 text-[10.5px]">
+                      <div class="bg-amber-50/70 p-1.5 rounded border border-amber-200">
+                        <span class="text-[9px] text-amber-800 font-bold block">आयु व कद</span>
+                        <span class="font-extrabold text-stone-900" id="rbCandidateAgeHeight">26 वर्ष | 5'4"</span>
+                      </div>
+                      <div class="bg-emerald-50/70 p-1.5 rounded border border-emerald-200">
+                        <span class="text-[9px] text-emerald-800 font-bold block">जाति / समाज</span>
+                        <span class="font-extrabold text-stone-900 truncate block" id="rbCandidateCaste">सनाढ्य ब्राह्मण</span>
+                      </div>
+                      <div class="bg-amber-50/70 p-1.5 rounded border border-amber-200">
+                        <span class="text-[9px] text-amber-800 font-bold block">उच्चतम शिक्षा</span>
+                        <span class="font-extrabold text-stone-900 truncate block" id="rbCandidateEdu">B.Tech (CS)</span>
+                      </div>
+                      <div class="bg-emerald-50/70 p-1.5 rounded border border-emerald-200">
+                        <span class="text-[9px] text-emerald-800 font-bold block">वार्षिक पैकेज</span>
+                        <span class="font-extrabold text-[#064E3B] truncate block" id="rbCandidateIncome">₹ 14.50 LPA</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 1. व्यक्तिगत विवरण -->
+                <div class="relative z-10 mt-2 mb-2.5">
+                  <div class="section-banner">
+                    <span class="font-bold text-[11px] font-rozha tracking-wider flex items-center space-x-1">
+                      <i class="fa-solid fa-user-check text-amber-300 text-[10px]"></i>
+                      <span>१. व्यक्तिगत विवरण (Personal Details)</span>
+                    </span>
+                    <span class="text-[9px] opacity-75">Confidential</span>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-2 bg-white/70 p-1.5 rounded border border-amber-100">
+                    <div class="attr-row"><span class="attr-label">जन्म तिथि</span><span class="attr-sep">:</span><span class="attr-val" id="rbDob">12-05-1998</span></div>
+                    <div class="attr-row"><span class="attr-label">जन्म समय</span><span class="attr-sep">:</span><span class="attr-val" id="rbBirthTime">07:45 AM</span></div>
+                    <div class="attr-row"><span class="attr-label">जन्म स्थान</span><span class="attr-sep">:</span><span class="attr-val" id="rbBirthPlace">Indore (M.P.)</span></div>
+                    <div class="attr-row"><span class="attr-label">वैवाहिक स्थिति</span><span class="attr-sep">:</span><span class="attr-val" id="rbMarital">अविवाहित</span></div>
+                    <div class="attr-row"><span class="attr-label">खान-पान</span><span class="attr-sep">:</span><span class="attr-val" id="rbDiet">शाकाहारी</span></div>
+                    <div class="attr-row"><span class="attr-label">रंग-रूप</span><span class="attr-sep">:</span><span class="attr-val" id="rbComplexion">गोरा</span></div>
+                  </div>
+                </div>
+
+                <!-- 2. धार्मिक एवं कुल विवरण -->
+                <div class="relative z-10 mb-2.5">
+                  <div class="section-banner">
+                    <span class="font-bold text-[11px] font-rozha tracking-wider flex items-center space-x-1">
+                      <i class="fa-solid fa-om text-amber-300 text-[10px]"></i>
+                      <span>२. धार्मिक एवं कुल विवरण (Astro & Gotra)</span>
+                    </span>
+                    <span class="text-[9px] opacity-75">Kundali Compatible</span>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-2 bg-white/70 p-1.5 rounded border border-amber-100">
+                    <div class="attr-row"><span class="attr-label">धर्म</span><span class="attr-sep">:</span><span class="attr-val" id="rbReligion">सनातन हिन्दू</span></div>
+                    <div class="attr-row"><span class="attr-label">समाज / जाति</span><span class="attr-sep">:</span><span class="attr-val" id="rbCasteFull">ब्राह्मण</span></div>
+                    <div class="attr-row"><span class="attr-label">गोत्र (स्वयं/पिता)</span><span class="attr-sep">:</span><span class="attr-val text-[#064E3B] font-black" id="rbGotra">कश्यप</span></div>
+                    <div class="attr-row"><span class="attr-label">मूल गोत्र (ऐच्छिक)</span><span class="attr-sep">:</span><span class="attr-val" id="rbOriginGotra">शांडिल्य</span></div>
+                    <div class="attr-row"><span class="attr-label">राशि व नक्षत्र</span><span class="attr-sep">:</span><span class="attr-val" id="rbRashi">कन्या (हस्त)</span></div>
+                    <div class="attr-row"><span class="attr-label">मांगलिक स्थिति</span><span class="attr-sep">:</span><span class="attr-val text-emerald-800" id="rbManglik">अमांगलिक</span></div>
+                  </div>
+                </div>
+
+                <!-- 3. शैक्षणिक एवं व्यावसायिक विवरण -->
+                <div class="relative z-10 mb-2.5">
+                  <div class="section-banner">
+                    <span class="font-bold text-[11px] font-rozha tracking-wider flex items-center space-x-1">
+                      <i class="fa-solid fa-graduation-cap text-amber-300 text-[10px]"></i>
+                      <span>३. शैक्षणिक एवं व्यावसायिक विवरण (Career)</span>
+                    </span>
+                    <span class="text-[9px] opacity-75">Professional</span>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-2 bg-white/70 p-1.5 rounded border border-amber-100">
+                    <div class="attr-row"><span class="attr-label">उच्चतम शिक्षा</span><span class="attr-sep">:</span><span class="attr-val" id="rbEduDetail">B.Tech (CS)</span></div>
+                    <div class="attr-row"><span class="attr-label">संस्थान</span><span class="attr-sep">:</span><span class="attr-val" id="rbCollege">SGSITS</span></div>
+                    <div class="attr-row"><span class="attr-label">पद / पेशा</span><span class="attr-sep">:</span><span class="attr-val" id="rbOcc">सॉफ्टवेयर इंजीनियर</span></div>
+                    <div class="attr-row"><span class="attr-label">कार्यरत कंपनी</span><span class="attr-sep">:</span><span class="attr-val" id="rbCompany">MNC Tech</span></div>
+                    <div class="attr-row"><span class="attr-label">वार्षिक आय</span><span class="attr-sep">:</span><span class="attr-val text-[#064E3B] font-black" id="rbIncomeFull">₹ 14.5 LPA</span></div>
+                    <div class="attr-row"><span class="attr-label">कार्य स्थल</span><span class="attr-sep">:</span><span class="attr-val" id="rbWorkCity">इन्दौर / बेंगलुरु</span></div>
+                  </div>
+                </div>
+
+                <!-- 4. पारिवारिक पृष्ठभूमि -->
+                <div class="relative z-10 mb-2.5">
+                  <div class="section-banner">
+                    <span class="font-bold text-[11px] font-rozha tracking-wider flex items-center space-x-1">
+                      <i class="fa-solid fa-people-roof text-amber-300 text-[10px]"></i>
+                      <span>४. पारिवारिक पृष्ठभूमि (Family Background)</span>
+                    </span>
+                    <span class="text-[9px] opacity-75">Cultured</span>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-2 bg-white/70 p-1.5 rounded border border-amber-100">
+                    <div class="attr-row"><span class="attr-label">पूज्य पिताश्री</span><span class="attr-sep">:</span><span class="attr-val" id="rbFatherName">डॉ. रमाकांत शर्मा</span></div>
+                    <div class="attr-row"><span class="attr-label">पिता का व्यवसाय</span><span class="attr-sep">:</span><span class="attr-val" id="rbFatherOcc">Chief Medical Officer</span></div>
+                    <div class="attr-row"><span class="attr-label">पूज्या माताजी</span><span class="attr-sep">:</span><span class="attr-val" id="rbMotherName">श्रीमती सुनीता शर्मा</span></div>
+                    <div class="attr-row"><span class="attr-label">भाई-बहन</span><span class="attr-sep">:</span><span class="attr-val" id="rbSiblings">1 भाई (IIT Delhi)</span></div>
+                    <div class="attr-row"><span class="attr-label">मूल निवास</span><span class="attr-sep">:</span><span class="attr-val" id="rbNative">इन्दौर / उज्जैन</span></div>
+                    <div class="attr-row"><span class="attr-label">पारिवारिक मूल्य</span><span class="attr-sep">:</span><span class="attr-val" id="rbFamilyType">संयुक्त व संस्कारी</span></div>
+                  </div>
+                </div>
+
+                <!-- 5. संपर्क एवं आवास -->
+                <div class="relative z-10 mb-2">
+                  <div class="section-banner">
+                    <span class="font-bold text-[11px] font-rozha tracking-wider flex items-center space-x-1">
+                      <i class="fa-solid fa-address-book text-amber-300 text-[10px]"></i>
+                      <span>५. संपर्क सूत्र एवं पता (Contact & Residence)</span>
+                    </span>
+                    <span class="text-[9px] opacity-75">Verified</span>
+                  </div>
+                  <div class="bg-amber-50/70 p-2 rounded border border-amber-200 text-[11px]">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <span class="text-[9px] font-bold text-amber-800 uppercase">अभिभावक संपर्क:</span>
+                        <p class="font-extrabold text-stone-900" id="rbContactPerson">डॉ. रमाकांत शर्मा</p>
+                      </div>
+                      <div class="text-right">
+                        <span class="text-[9px] font-bold text-amber-800 uppercase">मोबाइल नंबर:</span>
+                        <p class="font-mono font-bold text-xs text-[#064E3B]" id="rbPhone">+91 98260 41289</p>
+                      </div>
+                    </div>
+                    <div class="mt-1 pt-1 border-t border-amber-200/60 text-[10.5px]">
+                      <span class="font-bold text-stone-700">निवास पता: </span>
+                      <span class="text-stone-800" id="rbAddress">142, साकेत नगर, इन्दौर (म.प्र.)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Footer & Official Stamp -->
+                <div class="relative z-10 pt-2 border-t-2 border-[#D4AF37] flex items-center justify-between text-[10px] text-stone-600">
+                  <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-full border border-amber-600 border-dashed flex items-center justify-center text-[6px] font-black text-amber-900 leading-none bg-amber-100 text-center">
+                      ★ DHEERAJA ★<br>VERIFIED
+                    </div>
+                    <div>
+                      <span class="font-cinzel font-bold text-[#064E3B] block leading-none">धीरजा रॉयल मैट्रिमोनी™</span>
+                      <span class="text-[8.5px] text-stone-500">अखंड सनातन वैवाहिक परंपरा</span>
+                    </div>
+                  </div>
+                  <div class="text-right text-[8.5px] text-stone-500 font-mono">
+                    <span>डिजिटल सत्यापित बायोडाटा</span><br>
+                    <span>www.dheerajamatrimony.com</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Action Strip inside Modal -->
+      <div class="bg-[#0A2018] p-2.5 sm:p-3 border-t border-amber-400/40 flex items-center justify-between">
+        <div class="text-emerald-200 text-xs flex items-center space-x-1.5">
+          <i class="fa-solid fa-shield-check text-amber-400"></i>
+          <span class="hidden sm:inline">100% सत्यापित एवं सुनहरे बॉर्डर वाला आधिकारिक बायोडाटा</span>
+          <span class="sm:hidden">100% सत्यापित बायोडाटा</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <button onclick="closeRoyalBiodataModal()" class="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition">
+            बंद करें
+          </button>
+          <button onclick="downloadModalRoyalBiodata()" class="px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 text-[#064E3B] font-extrabold text-xs shadow-md transition active:scale-95 flex items-center space-x-1.5 cursor-pointer">
+            <i class="fa-solid fa-cloud-arrow-down"></i>
+            <span>⚡ 1-क्लिक PDF डाउनलोड</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   <script>
     // Desktop Viewport Switcher
@@ -1535,12 +1973,276 @@
       showToast(`पेज ${currentPage}`, `पेज ${currentPage} के रिश्ते लोड हो रहे हैं...`, 'fa-arrows-rotate');
     }
 
+    // ==================== ROYAL GOLDEN BIODATA & 1-CLICK PDF LOGIC ====================
+    const royalCandidatesCatalog = {
+      'Priya Sharma': {
+        id: 'DM10028',
+        slug: 'priya-sharma',
+        name: 'प्रिया शर्मा (Priya Sharma)',
+        raw_name: 'Priya Sharma',
+        gender_prefix: 'सौभाग्यकांक्षिणी (सौ.)',
+        dob: '12 मई 1998 (12-05-1998)',
+        birth_time: 'प्रातः 07:45 बजे',
+        birth_place: 'इन्दौर, मध्य प्रदेश',
+        age_height: '26 वर्ष | 5 फीट 4 इंच',
+        caste: 'सनाढ्य ब्राह्मण (Brahmin)',
+        caste_full: 'सनाढ्य ब्राह्मण (सनातन हिन्दू)',
+        religion: 'सनातन हिन्दू',
+        gotra: 'कश्यप (Kashyap)',
+        origin_gotra: 'शांडिल्य (ऐच्छिक)',
+        rashi: 'कन्या (हस्त नक्षत्र)',
+        manglik: 'नहीं (अमांगलिक / सौम्य कुंडली)',
+        guna_score: '28 / 36 गुण उत्तम',
+        education: 'B.Tech (Computer Science)',
+        college: 'SGSITS, Indore (Gold Medalist)',
+        occupation: 'सीनियर सॉफ्टवेयर इंजीनियर',
+        company: 'MNC Tech Solutions (Hybrid)',
+        income: '₹ 14.50 LPA',
+        income_full: '₹ 14,50,000/- प्रतिवर्ष (14.5 LPA)',
+        work_city: 'इन्दौर / बेंगलुरु',
+        marital: 'अविवाहित (Never Married)',
+        diet: 'शुद्ध शाकाहारी',
+        complexion: 'गोरा (Fair & Radiant)',
+        father_name: 'डॉ. रमाकांत शर्मा',
+        father_occ: 'मुख्य चिकित्सा अधिकारी (CMO Retd.)',
+        mother_name: 'श्रीमती सुनीता शर्मा',
+        siblings: '1 छोटा भाई (IIT Delhi से B.Tech)',
+        native: 'इन्दौर / उज्जैन (मध्य प्रदेश)',
+        family_type: 'उच्च मध्यमवर्गीय संयुक्त व संस्कारी',
+        contact_person: 'डॉ. रमाकांत शर्मा (पिताजी)',
+        phone: '+91 98260 41289',
+        address: '142, साकेत नगर, ओल्ड पलासिया, इन्दौर (म.प्र.)',
+        photo: '/assets/images/match_priya.jpg'
+      },
+      'Neha Verma': {
+        id: 'DM10034',
+        slug: 'neha-verma',
+        name: 'नेहा वर्मा (Neha Verma)',
+        raw_name: 'Neha Verma',
+        gender_prefix: 'सौभाग्यकांक्षिणी (सौ.)',
+        dob: '18 अगस्त 2000 (18-08-2000)',
+        birth_time: 'प्रातः 10:15 बजे',
+        birth_place: 'पुणे, महाराष्ट्र',
+        age_height: '24 वर्ष | 5 फीट 3 इंच',
+        caste: 'कायस्थ (Kayastha)',
+        caste_full: 'कायस्थ (श्रीवास्तव)',
+        religion: 'सनातन हिन्दू',
+        gotra: 'भारद्वाज (Bharadwaj)',
+        origin_gotra: 'कश्यप (ऐच्छिक)',
+        rashi: 'तुला (चित्रा नक्षत्र)',
+        manglik: 'आंशिक मांगलिक (परिहार सहित)',
+        guna_score: '31 / 36 गुण अत्यंत शुभ',
+        education: 'M.Sc (Biotechnology)',
+        college: 'पुणे यूनिवर्सिटी (Pune University)',
+        occupation: 'क्लीनिकल रिसर्च एसोसिएट',
+        company: 'सीरम इंस्टीट्यूट ऑफ इंडिया (Serum Institute)',
+        income: '₹ 9.80 LPA',
+        income_full: '₹ 9,80,000/- प्रतिवर्ष (9.8 LPA)',
+        work_city: 'पुणे, महाराष्ट्र',
+        marital: 'अविवाहित (Never Married)',
+        diet: 'शाकाहारी (Vegetarian)',
+        complexion: 'गेहुंआ/गोरा (Fair)',
+        father_name: 'श्री सतीश वर्मा',
+        father_occ: 'सेवानिवृत्त बैंक मुख्य प्रबंधक (SBI)',
+        mother_name: 'श्रीमती अनीता वर्मा',
+        siblings: '1 बड़ी बहन (विवाहित, MNC में)',
+        native: 'पुणे / नागपुर (महाराष्ट्र)',
+        family_type: 'मध्यमवर्गीय संस्कारी व शिक्षित',
+        contact_person: 'श्री सतीश वर्मा (पिताजी)',
+        phone: '+91 97654 82910',
+        address: 'फ्लैट 402, रॉयल पाम्स, कोथरुड, पुणे (महाराष्ट्र)',
+        photo: '/assets/images/match_neha.jpg'
+      },
+      'Anjali Singh': {
+        id: 'DM10042',
+        slug: 'anjali-singh',
+        name: 'अंजलि सिंह (Anjali Singh)',
+        raw_name: 'Anjali Singh',
+        gender_prefix: 'सौभाग्यकांक्षिणी (सौ.)',
+        dob: '04 नवम्बर 1999 (04-11-1999)',
+        birth_time: 'प्रातः 04:30 बजे (ब्रह्म मुहूर्त)',
+        birth_place: 'जयपुर, राजस्थान',
+        age_height: '25 वर्ष | 5 फीट 5 इंच',
+        caste: 'राजपूत राठौड़ (Rajput)',
+        caste_full: 'सूर्यवंशी कुलीन राजपूत',
+        religion: 'सनातन हिन्दू',
+        gotra: 'गौतम (Gautam)',
+        origin_gotra: 'राठौड़ कुल (ऐच्छिक)',
+        rashi: 'वृषभ (रोहिणी नक्षत्र)',
+        manglik: 'नहीं (अमांगलिक / सर्वगुण संपन्न)',
+        guna_score: '32 / 36 गुण सर्वश्रेष्ठ',
+        education: 'MBA (Finance & Banking)',
+        college: 'राजस्थान विश्वविद्यालय, जयपुर',
+        occupation: 'असिस्टेंट मैनेजर',
+        company: 'HDFC बैंक लिमिटेड',
+        income: '₹ 12.00 LPA',
+        income_full: '₹ 12,00,000/- प्रतिवर्ष (12 LPA)',
+        work_city: 'जयपुर, राजस्थान',
+        marital: 'अविवाहित (Never Married)',
+        diet: 'शुद्ध शाकाहारी',
+        complexion: 'अत्यंत गोरा (Very Fair & Royal)',
+        father_name: 'ठाकुर भंवर सिंह',
+        father_occ: 'कृषि एवं रियल एस्टेट व्यवसायी',
+        mother_name: 'श्रीमती पुष्पा कंवर',
+        siblings: '2 भाई (1 सेना में कैप्टन, 1 बिज़नेस)',
+        native: 'जयपुर / जोधपुर (राजस्थान)',
+        family_type: 'कुलीन रॉयल राजपूत संयुक्त परिवार',
+        contact_person: 'ठाकुर भंवर सिंह (पिताजी)',
+        phone: '+91 94140 76321',
+        address: 'राठौड़ विला, प्लॉट 52, वैशाली नगर, जयपुर (राज.)',
+        photo: '/assets/images/match_anjali.jpg'
+      },
+      'Ritika Patel': {
+        id: 'DM10055',
+        slug: 'ritika-patel',
+        name: 'रीतिका पटेल (Ritika Patel)',
+        raw_name: 'Ritika Patel',
+        gender_prefix: 'सौभाग्यकांक्षिणी (सौ.)',
+        dob: '22 जनवरी 1997 (22-01-1997)',
+        birth_time: 'दोपहर 01:20 बजे',
+        birth_place: 'अहमदाबाद, गुजरात',
+        age_height: '27 वर्ष | 5 फीट 2 इंच',
+        caste: 'कड़वा पाटीदार (Patidar)',
+        caste_full: 'पाटीदार (सनातन वैष्णव)',
+        religion: 'सनातन हिन्दू वैष्णव',
+        gotra: 'वशिष्ठ (Vashishtha)',
+        origin_gotra: 'कश्यप (ऐच्छिक)',
+        rashi: 'मिथुन (पुनर्वसु नक्षत्र)',
+        manglik: 'नहीं (अमांगलिक)',
+        guna_score: '29 / 36 गुण उत्तम',
+        education: 'CA (Chartered Accountant) & B.Com',
+        college: 'ICAI (Institute of Chartered Accountants)',
+        occupation: 'सीनियर फाइनेंशियल ऑडिटर',
+        company: 'Big 4 Financial Advisory Services',
+        income: '₹ 16.00 LPA',
+        income_full: '₹ 16,00,000/- प्रतिवर्ष (16 LPA)',
+        work_city: 'अहमदाबाद, गुजरात',
+        marital: 'अविवाहित (Never Married)',
+        diet: 'शुद्ध शाकाहारी (Pure Jain/Veg)',
+        complexion: 'गोरा (Fair)',
+        father_name: 'श्री दिनेश पटेल',
+        father_occ: 'उद्योगपति (डायरेक्टर - टेक्सटाइल)',
+        mother_name: 'श्रीमती हंसा पटेल',
+        siblings: '1 बड़ा भाई (डायरेक्टर, टेक्सटाइल)',
+        native: 'अहमदाबाद / मेहसाणा (गुजरात)',
+        family_type: 'उच्च संभ्रांत वैष्णव व्यापारिक परिवार',
+        contact_person: 'श्री दिनेश पटेल (पिताजी)',
+        phone: '+91 98980 54312',
+        address: '701, शिवालिक हाइट्स, बोडकदेव, अहमदाबाद (गुजरात)',
+        photo: '/assets/images/match_ritika.jpg'
+      }
+    };
+
+    let activeCandidateData = null;
+
+    function openRoyalBiodataModal(name) {
+      const data = royalCandidatesCatalog[name] || royalCandidatesCatalog['Priya Sharma'];
+      activeCandidateData = data;
+
+      // Populate Modal Fields
+      document.getElementById('modalBiodataHeaderSub').textContent = `${data.name} • 1-क्लिक PDF डाउनलोड`;
+      document.getElementById('rbCandidateId').textContent = `ID: ${data.id}`;
+      document.getElementById('rbCandidateGuna').textContent = data.guna_score;
+      document.getElementById('rbCandidatePhoto').src = data.photo;
+      document.getElementById('rbCandidatePrefix').textContent = data.gender_prefix;
+      document.getElementById('rbCandidateName').textContent = data.name;
+      document.getElementById('rbCandidateAgeHeight').textContent = data.age_height;
+      document.getElementById('rbCandidateCaste').textContent = data.caste;
+      document.getElementById('rbCandidateEdu').textContent = data.education;
+      document.getElementById('rbCandidateIncome').textContent = data.income;
+
+      // 1. Personal
+      document.getElementById('rbDob').textContent = data.dob;
+      document.getElementById('rbBirthTime').textContent = data.birth_time;
+      document.getElementById('rbBirthPlace').textContent = data.birth_place;
+      document.getElementById('rbMarital').textContent = data.marital;
+      document.getElementById('rbDiet').textContent = data.diet;
+      document.getElementById('rbComplexion').textContent = data.complexion;
+
+      // 2. Astro & Gotra
+      document.getElementById('rbReligion').textContent = data.religion;
+      document.getElementById('rbCasteFull').textContent = data.caste_full;
+      document.getElementById('rbGotra').textContent = data.gotra;
+      document.getElementById('rbOriginGotra').textContent = data.origin_gotra;
+      document.getElementById('rbRashi').textContent = data.rashi;
+      document.getElementById('rbManglik').textContent = data.manglik;
+
+      // 3. Career
+      document.getElementById('rbEduDetail').textContent = data.education;
+      document.getElementById('rbCollege').textContent = data.college;
+      document.getElementById('rbOcc').textContent = data.occupation;
+      document.getElementById('rbCompany').textContent = data.company;
+      document.getElementById('rbIncomeFull').textContent = data.income_full;
+      document.getElementById('rbWorkCity').textContent = data.work_city;
+
+      // 4. Family
+      document.getElementById('rbFatherName').textContent = data.father_name;
+      document.getElementById('rbFatherOcc').textContent = data.father_occ;
+      document.getElementById('rbMotherName').textContent = data.mother_name;
+      document.getElementById('rbSiblings').textContent = data.siblings;
+      document.getElementById('rbNative').textContent = data.native;
+      document.getElementById('rbFamilyType').textContent = data.family_type;
+
+      // 5. Contact
+      document.getElementById('rbContactPerson').textContent = data.contact_person;
+      document.getElementById('rbPhone').textContent = data.phone;
+      document.getElementById('rbAddress').textContent = data.address;
+
+      // Open Modal
+      document.getElementById('royalBiodataModal').classList.add('open');
+    }
+
+    function closeRoyalBiodataModal() {
+      document.getElementById('royalBiodataModal').classList.remove('open');
+    }
+
+    /**
+     * 1-Click Instant Download of Royal Golden Biodata PDF!
+     */
+    function downloadModalRoyalBiodata() {
+      if (!activeCandidateData) return;
+      const element = document.getElementById('modalRoyalSheet');
+      const progress = document.getElementById('modalPdfProgress');
+      const cleanFileName = `Dheeraja_Royal_Biodata_${activeCandidateData.raw_name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+
+      if (progress) progress.classList.remove('hidden');
+
+      const opt = {
+        margin:       [3, 3, 3, 3],
+        filename:     cleanFileName,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { 
+          scale: 2, 
+          useCORS: true, 
+          letterRendering: true,
+          scrollY: 0
+        },
+        jsPDF: { 
+          unit: 'mm', 
+          format: 'a4', 
+          orientation: 'portrait' 
+        }
+      };
+
+      html2pdf().set(opt).from(element).save().then(function() {
+        if (progress) progress.classList.add('hidden');
+        showToast('सफल डाउनलोड! ⚡', `${activeCandidateData.raw_name} का सुनहरा बॉर्डर वाला रॉयल बायोडाटा 1-क्लिक में डाउनलोड हो गया है।`, 'fa-cloud-arrow-down');
+      }).catch(function(err) {
+        if (progress) progress.classList.add('hidden');
+        console.error("PDF generation failed:", err);
+        // Fallback to direct window.open
+        window.open('/biodata/royal/' + (activeCandidateData.slug || '1') + '?download=1', '_blank');
+      });
+    }
+
+    function openCandidateRoyalPage() {
+      if (!activeCandidateData) return;
+      window.open('/biodata/royal/' + (activeCandidateData.slug || '1'), '_blank');
+    }
+
     // Footer Ribbon actions
     function downloadPdfProfile(name) {
-      showToast('बायोडाटा PDF डाउनलोड 📄', `${name} का पूर्ण बायोडाटा PDF तैयार हो रहा है...`, 'fa-file-pdf');
-      setTimeout(() => {
-        window.print();
-      }, 500);
+      openRoyalBiodataModal(name);
     }
     function openReportModal(name) {
       const reason = prompt(`${name} की प्रोफाइल रिपोर्ट करने का कारण चुनें:\n1. गलत जानकारी\n2. फोटो सत्यापन समस्या\n3. अन्य`);
