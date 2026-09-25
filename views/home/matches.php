@@ -105,69 +105,192 @@
     .filter-pill.active span.sub-text {
       color: #D1FAE5 !important;
     }
-    /* Action Buttons in Candidate Card */
+    /* ==============================================================
+       ACTION BUTTONS IN CANDIDATE CARD - 3D RAISED TACTILE BUTTONS
+       ============================================================== */
     .card-btn {
       font-size: 9.5px;
-      font-weight: 700;
-      padding: 6px 3px;
-      border-radius: 9999px;
+      font-weight: 800;
+      padding: 7px 4px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 3px;
-      transition: all 0.15s ease;
+      gap: 3.5px;
+      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       user-select: none;
       white-space: nowrap;
       flex: 1;
+      position: relative;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+      border: 1px solid transparent;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+    .card-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+      filter: brightness(1.08);
     }
     .card-btn:active {
-      transform: scale(0.96);
+      transform: translateY(1px) scale(0.97);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), inset 0 1px 2px rgba(0, 0, 0, 0.2);
     }
+
+    /* 1. Send Interest (Rose/Crimson 3D Button) */
     .btn-interest {
-      background: #FFFFFF;
-      border: 1px solid #F87171;
-      color: #DC2626;
+      background: linear-gradient(145deg, #FF456B 0%, #E11D48 60%, #BE123C 100%);
+      border-color: #9F1239;
+      color: #FFFFFF !important;
+      box-shadow: 0 3px 7px rgba(225, 29, 72, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
     .btn-interest:hover {
-      background: #FEF2F2;
+      background: linear-gradient(145deg, #FF5C7E 0%, #F43F5E 60%, #E11D48 100%);
     }
     .btn-interest.sent {
-      background: #ECFDF5 !important;
-      border-color: #10B981 !important;
-      color: #047857 !important;
+      background: linear-gradient(145deg, #10B981 0%, #059669 60%, #047857 100%) !important;
+      border-color: #065F46 !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 3px 7px rgba(5, 150, 105, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
     }
+
+    /* 2. Chat (Royal Emerald 3D Button) */
     .btn-chat {
-      background: #064E3B;
-      border: 1px solid #064E3B;
-      color: #FFFFFF;
+      background: linear-gradient(145deg, #10B981 0%, #064E3B 65%, #022C1E 100%);
+      border-color: #065F46;
+      color: #FFFFFF !important;
+      box-shadow: 0 3px 7px rgba(6, 78, 59, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
     .btn-chat:hover {
-      background: #047857;
+      background: linear-gradient(145deg, #34D399 0%, #059669 65%, #064E3B 100%);
     }
+
+    /* 3. Kundali Milan (Mystic Violet 3D Button) */
     .btn-kundali {
-      background: #B4782A;
-      border: 1px solid #B4782A;
-      color: #FFFFFF;
+      background: linear-gradient(145deg, #A855F7 0%, #7C3AED 60%, #581C87 100%);
+      border-color: #4C1D95;
+      color: #FFFFFF !important;
+      box-shadow: 0 3px 7px rgba(124, 58, 237, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.35);
     }
     .btn-kundali:hover {
-      background: #9A651E;
+      background: linear-gradient(145deg, #C084FC 0%, #9333EA 60%, #6D28D9 100%);
     }
+
+    /* 4. Contact / Accept (Warm Amber/Gold 3D Button) */
     .btn-contact {
-      background: #9F6D27;
-      border: 1px solid #9F6D27;
-      color: #FFFFFF;
+      background: linear-gradient(145deg, #F59E0B 0%, #D97706 60%, #92400E 100%);
+      border-color: #78350F;
+      color: #FFFFFF !important;
+      box-shadow: 0 3px 7px rgba(217, 119, 6, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
     .btn-contact:hover {
-      background: #84571A;
+      background: linear-gradient(145deg, #FBBF24 0%, #F59E0B 60%, #D97706 100%);
     }
+
+    /* 5. Skip (Steel Slate 3D Button) */
     .btn-skip {
-      background: #FFFFFF;
-      border: 1px solid #FCA5A5;
-      color: #EF4444;
+      background: linear-gradient(145deg, #94A3B8 0%, #64748B 60%, #334155 100%);
+      border-color: #1E293B;
+      color: #FFFFFF !important;
+      box-shadow: 0 3px 6px rgba(71, 85, 105, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
     .btn-skip:hover {
-      background: #FEF2F2;
+      background: linear-gradient(145deg, #CBD5E1 0%, #94A3B8 60%, #475569 100%);
+    }
+
+    /* ==============================================================
+       BOTTOM DOCK 5 NAVIGATION BUTTONS (Real 3D Pushable Capsules)
+       ============================================================== */
+    .dock-nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 4px;
+      min-height: 48px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 100%);
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      color: #E2E8F0;
+      font-weight: 700;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+      position: relative;
+      flex: 1;
+      max-width: 80px;
+    }
+    .dock-nav-btn:hover {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.08) 100%);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      color: #FFFFFF;
+    }
+    .dock-nav-btn:active {
+      transform: translateY(1px) scale(0.96);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+    }
+    /* Active Button State (Table / Matches) - Elevated Golden 3D Button */
+    .dock-nav-btn.active {
+      background: linear-gradient(135deg, #FFF1C5 0%, #E6C254 35%, #C99718 70%, #996D0A 100%) !important;
+      border: 1.5px solid #FFFBEB !important;
+      color: #064E3B !important;
+      box-shadow: 0 5px 16px rgba(212, 175, 55, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -2px 0 rgba(153, 109, 10, 0.5) !important;
+      transform: translateY(-3px);
+      font-weight: 800 !important;
+    }
+    .dock-nav-btn.active i {
+      color: #064E3B !important;
+      filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.4));
+    }
+    .dock-nav-btn.active .dock-label {
+      color: #064E3B !important;
+      font-weight: 900 !important;
+    }
+    .dock-badge {
+      position: absolute;
+      top: -5px;
+      right: -6px;
+      background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+      color: #FFFFFF;
+      border-radius: 9999px;
+      font-size: 8.5px;
+      font-weight: 900;
+      min-width: 17px;
+      height: 17px;
+      padding: 0 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #064E3B;
+      box-shadow: 0 2px 5px rgba(220, 38, 38, 0.5);
+    }
+
+    /* Key Features Ribbon Tactile Mini Buttons */
+    .ribbon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 6px;
+      border-radius: 8px;
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+    .ribbon-btn:hover {
+      background: #F9FAFB;
+      border-color: #D1D5DB;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+    .ribbon-btn:active {
+      transform: scale(0.96);
     }
     /* Modal Backdrop */
     .modal-backdrop {
@@ -591,25 +714,25 @@
         </div>
 
         <!-- Bottom: 5 Action Buttons in Horizontal Row -->
-        <div class="mt-2.5 pt-2 border-t border-stone-100 flex items-center space-x-1">
-          <button onclick="sendInterest(this, 'Priya Sharma')" class="card-btn btn-interest">
-            <i class="fa-solid fa-heart text-[9px]"></i>
-            <span>Send Interest</span>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 flex items-center space-x-1.5">
+          <button onclick="sendInterest(this, 'Priya Sharma')" class="card-btn btn-interest" title="रुचि भेजें (Send Interest)">
+            <i class="fa-solid fa-heart text-[10px]"></i>
+            <span>Interest</span>
           </button>
-          <button onclick="openChatModal('Priya Sharma', '/assets/images/match_priya.jpg', true)" class="card-btn btn-chat">
-            <i class="fa-solid fa-comment-dots text-[9px]"></i>
+          <button onclick="openChatModal('Priya Sharma', '/assets/images/match_priya.jpg', true)" class="card-btn btn-chat" title="चैट करें (Chat)">
+            <i class="fa-solid fa-comment-dots text-[10px]"></i>
             <span>Chat</span>
           </button>
-          <button onclick="openKundaliModal('Priya Sharma', 28, 'Kashyap', 'Brahmin', 'Indore')" class="card-btn btn-kundali">
-            <i class="fa-solid fa-compass text-[9px]"></i>
-            <span>Kundali Milan</span>
+          <button onclick="openKundaliModal('Priya Sharma', 28, 'Kashyap', 'Brahmin', 'Indore')" class="card-btn btn-kundali" title="36 गुण मिलान (Kundali Milan)">
+            <i class="fa-solid fa-dharmachakra text-[10px]"></i>
+            <span>Kundali</span>
           </button>
-          <button onclick="openContactModal('Priya Sharma', '+91 98260 41289', 'श्री रमाकांत शर्मा (पिताजी)', 'Indore, Madhya Pradesh')" class="card-btn btn-contact">
-            <i class="fa-solid fa-phone text-[9px]"></i>
-            <span>Contact / Accept</span>
+          <button onclick="openContactModal('Priya Sharma', '+91 98260 41289', 'श्री रमाकांत शर्मा (पिताजी)', 'Indore, Madhya Pradesh')" class="card-btn btn-contact" title="संपर्क विवरण (Contact Details)">
+            <i class="fa-solid fa-phone text-[10px]"></i>
+            <span>Contact</span>
           </button>
-          <button onclick="skipCard(this, 'Priya Sharma')" class="card-btn btn-skip">
-            <i class="fa-solid fa-xmark text-[9px]"></i>
+          <button onclick="skipCard(this, 'Priya Sharma')" class="card-btn btn-skip" title="छोड़ें (Skip)">
+            <i class="fa-solid fa-xmark text-[10px]"></i>
             <span>Skip</span>
           </button>
         </div>
@@ -724,25 +847,25 @@
         </div>
 
         <!-- Bottom: 5 Action Buttons in Horizontal Row -->
-        <div class="mt-2.5 pt-2 border-t border-stone-100 flex items-center space-x-1">
-          <button onclick="sendInterest(this, 'Neha Verma')" class="card-btn btn-interest">
-            <i class="fa-solid fa-heart text-[9px]"></i>
-            <span>Send Interest</span>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 flex items-center space-x-1.5">
+          <button onclick="sendInterest(this, 'Neha Verma')" class="card-btn btn-interest" title="रुचि भेजें (Send Interest)">
+            <i class="fa-solid fa-heart text-[10px]"></i>
+            <span>Interest</span>
           </button>
-          <button onclick="openChatModal('Neha Verma', '/assets/images/match_neha.jpg', false)" class="card-btn btn-chat">
-            <i class="fa-solid fa-comment-dots text-[9px]"></i>
+          <button onclick="openChatModal('Neha Verma', '/assets/images/match_neha.jpg', false)" class="card-btn btn-chat" title="चैट करें (Chat)">
+            <i class="fa-solid fa-comment-dots text-[10px]"></i>
             <span>Chat</span>
           </button>
-          <button onclick="openKundaliModal('Neha Verma', 22, 'Bharadwaj', 'Kayastha', 'Pune')" class="card-btn btn-kundali">
-            <i class="fa-solid fa-compass text-[9px]"></i>
-            <span>Kundali Milan</span>
+          <button onclick="openKundaliModal('Neha Verma', 22, 'Bharadwaj', 'Kayastha', 'Pune')" class="card-btn btn-kundali" title="36 गुण मिलान (Kundali Milan)">
+            <i class="fa-solid fa-dharmachakra text-[10px]"></i>
+            <span>Kundali</span>
           </button>
-          <button onclick="openContactModal('Neha Verma', '+91 97654 82910', 'श्री सतीश वर्मा (पिताजी)', 'Pune, Maharashtra')" class="card-btn btn-contact">
-            <i class="fa-solid fa-phone text-[9px]"></i>
-            <span>Contact / Accept</span>
+          <button onclick="openContactModal('Neha Verma', '+91 97654 82910', 'श्री सतीश वर्मा (पिताजी)', 'Pune, Maharashtra')" class="card-btn btn-contact" title="संपर्क विवरण (Contact Details)">
+            <i class="fa-solid fa-phone text-[10px]"></i>
+            <span>Contact</span>
           </button>
-          <button onclick="skipCard(this, 'Neha Verma')" class="card-btn btn-skip">
-            <i class="fa-solid fa-xmark text-[9px]"></i>
+          <button onclick="skipCard(this, 'Neha Verma')" class="card-btn btn-skip" title="छोड़ें (Skip)">
+            <i class="fa-solid fa-xmark text-[10px]"></i>
             <span>Skip</span>
           </button>
         </div>
@@ -857,25 +980,25 @@
         </div>
 
         <!-- Bottom: 5 Action Buttons in Horizontal Row -->
-        <div class="mt-2.5 pt-2 border-t border-stone-100 flex items-center space-x-1">
-          <button onclick="sendInterest(this, 'Anjali Singh')" class="card-btn btn-interest">
-            <i class="fa-solid fa-heart text-[9px]"></i>
-            <span>Send Interest</span>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 flex items-center space-x-1.5">
+          <button onclick="sendInterest(this, 'Anjali Singh')" class="card-btn btn-interest" title="रुचि भेजें (Send Interest)">
+            <i class="fa-solid fa-heart text-[10px]"></i>
+            <span>Interest</span>
           </button>
-          <button onclick="openChatModal('Anjali Singh', '/assets/images/match_anjali.jpg', true)" class="card-btn btn-chat">
-            <i class="fa-solid fa-comment-dots text-[9px]"></i>
+          <button onclick="openChatModal('Anjali Singh', '/assets/images/match_anjali.jpg', true)" class="card-btn btn-chat" title="चैट करें (Chat)">
+            <i class="fa-solid fa-comment-dots text-[10px]"></i>
             <span>Chat</span>
           </button>
-          <button onclick="openKundaliModal('Anjali Singh', 18, 'Gautam', 'Rajput', 'Jaipur')" class="card-btn btn-kundali">
-            <i class="fa-solid fa-compass text-[9px]"></i>
-            <span>Kundali Milan</span>
+          <button onclick="openKundaliModal('Anjali Singh', 18, 'Gautam', 'Rajput', 'Jaipur')" class="card-btn btn-kundali" title="36 गुण मिलान (Kundali Milan)">
+            <i class="fa-solid fa-dharmachakra text-[10px]"></i>
+            <span>Kundali</span>
           </button>
-          <button onclick="openContactModal('Anjali Singh', '+91 94140 76321', 'ठाकुर भंवर सिंह (पिताजी)', 'Jaipur, Rajasthan')" class="card-btn btn-contact">
-            <i class="fa-solid fa-phone text-[9px]"></i>
-            <span>Contact / Accept</span>
+          <button onclick="openContactModal('Anjali Singh', '+91 94140 76321', 'ठाकुर भंवर सिंह (पिताजी)', 'Jaipur, Rajasthan')" class="card-btn btn-contact" title="संपर्क विवरण (Contact Details)">
+            <i class="fa-solid fa-phone text-[10px]"></i>
+            <span>Contact</span>
           </button>
-          <button onclick="skipCard(this, 'Anjali Singh')" class="card-btn btn-skip">
-            <i class="fa-solid fa-xmark text-[9px]"></i>
+          <button onclick="skipCard(this, 'Anjali Singh')" class="card-btn btn-skip" title="छोड़ें (Skip)">
+            <i class="fa-solid fa-xmark text-[10px]"></i>
             <span>Skip</span>
           </button>
         </div>
@@ -990,25 +1113,25 @@
         </div>
 
         <!-- Bottom: 5 Action Buttons in Horizontal Row -->
-        <div class="mt-2.5 pt-2 border-t border-stone-100 flex items-center space-x-1">
-          <button onclick="sendInterest(this, 'Ritika Patel')" class="card-btn btn-interest">
-            <i class="fa-solid fa-heart text-[9px]"></i>
-            <span>Send Interest</span>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 flex items-center space-x-1.5">
+          <button onclick="sendInterest(this, 'Ritika Patel')" class="card-btn btn-interest" title="रुचि भेजें (Send Interest)">
+            <i class="fa-solid fa-heart text-[10px]"></i>
+            <span>Interest</span>
           </button>
-          <button onclick="openChatModal('Ritika Patel', '/assets/images/match_ritika.jpg', false)" class="card-btn btn-chat">
-            <i class="fa-solid fa-comment-dots text-[9px]"></i>
+          <button onclick="openChatModal('Ritika Patel', '/assets/images/match_ritika.jpg', false)" class="card-btn btn-chat" title="चैट करें (Chat)">
+            <i class="fa-solid fa-comment-dots text-[10px]"></i>
             <span>Chat</span>
           </button>
-          <button onclick="openKundaliModal('Ritika Patel', 26, 'Vashishtha', 'Patidar', 'Ahmedabad')" class="card-btn btn-kundali">
-            <i class="fa-solid fa-compass text-[9px]"></i>
-            <span>Kundali Milan</span>
+          <button onclick="openKundaliModal('Ritika Patel', 26, 'Vashishtha', 'Patidar', 'Ahmedabad')" class="card-btn btn-kundali" title="36 गुण मिलान (Kundali Milan)">
+            <i class="fa-solid fa-dharmachakra text-[10px]"></i>
+            <span>Kundali</span>
           </button>
-          <button onclick="openContactModal('Ritika Patel', '+91 98980 54312', 'श्री दिनेश पटेल (पिताजी)', 'Ahmedabad, Gujarat')" class="card-btn btn-contact">
-            <i class="fa-solid fa-phone text-[9px]"></i>
-            <span>Contact / Accept</span>
+          <button onclick="openContactModal('Ritika Patel', '+91 98980 54312', 'श्री दिनेश पटेल (पिताजी)', 'Ahmedabad, Gujarat')" class="card-btn btn-contact" title="संपर्क विवरण (Contact Details)">
+            <i class="fa-solid fa-phone text-[10px]"></i>
+            <span>Contact</span>
           </button>
-          <button onclick="skipCard(this, 'Ritika Patel')" class="card-btn btn-skip">
-            <i class="fa-solid fa-xmark text-[9px]"></i>
+          <button onclick="skipCard(this, 'Ritika Patel')" class="card-btn btn-skip" title="छोड़ें (Skip)">
+            <i class="fa-solid fa-xmark text-[10px]"></i>
             <span>Skip</span>
           </button>
         </div>
@@ -1020,62 +1143,60 @@
     <section class="px-3 pb-3">
       <div class="flex items-center justify-between space-x-2">
         <!-- Previous Page Button -->
-        <button onclick="changePage(-1)" id="btnPrevPage" class="flex-1 py-2 px-3 rounded-full bg-[#064E3B] hover:bg-[#055F46] text-white text-[11px] font-bold flex items-center justify-center space-x-1.5 shadow-sm transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+        <button onclick="changePage(-1)" id="btnPrevPage" class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#064E3B] to-[#047857] hover:from-[#047857] hover:to-[#059669] text-white text-[11px] font-extrabold flex items-center justify-center space-x-1.5 shadow-md border border-emerald-600/50 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
           <i class="fa-solid fa-arrow-left text-[10px]"></i>
           <span>Previous Page</span>
         </button>
 
         <!-- Current Page Pill -->
-        <div class="px-4 py-2 rounded-full bg-[#F5EEDC] border border-[#E6C254] text-[#854D0E] font-bold text-xs shadow-2xs whitespace-nowrap">
+        <div class="px-3.5 py-2 rounded-xl bg-amber-50 border border-amber-300 text-amber-950 font-extrabold text-xs shadow-2xs whitespace-nowrap">
           <span id="pageIndicator">Page 1 of 15</span>
         </div>
 
         <!-- Next Page Button -->
-        <button onclick="changePage(1)" id="btnNextPage" class="flex-1 py-2 px-3 rounded-full bg-[#064E3B] hover:bg-[#055F46] text-white text-[11px] font-bold flex items-center justify-center space-x-1.5 shadow-sm transition active:scale-95">
+        <button onclick="changePage(1)" id="btnNextPage" class="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#064E3B] to-[#047857] hover:from-[#047857] hover:to-[#059669] text-white text-[11px] font-extrabold flex items-center justify-center space-x-1.5 shadow-md border border-emerald-600/50 transition-all active:scale-95">
           <span>Next Page</span>
           <i class="fa-solid fa-arrow-right text-[10px]"></i>
         </button>
       </div>
     </section>
 
-    <!-- 7. BOTTOM APP BAR (Dock Menu: Home, Table/Dashboard Active, Chats, Interests, Profile) -->
-    <nav class="sticky bottom-0 left-0 right-0 bg-[#064E3B] text-white px-2 py-1.5 flex items-center justify-around z-40 border-t border-emerald-800 shadow-xl select-none">
-      <!-- 1. Home -->
-      <a href="/cover" class="flex flex-col items-center justify-center py-1 px-2 text-emerald-200/80 hover:text-white transition">
-        <i class="fa-solid fa-house text-sm"></i>
-        <span class="text-[9px] font-medium mt-0.5">Home</span>
+    <!-- 7. BOTTOM APP BAR (Dock Menu: 5 Distinct 3D Buttons: Home, Table, Chats, Interests, Profile) -->
+    <nav class="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-[#02281e] via-[#064E3B] to-[#085a44] text-white px-2.5 py-2 flex items-center justify-between gap-1.5 z-40 border-t-2 border-[#D4AF37]/60 shadow-[0_-8px_25px_rgba(0,0,0,0.4)] select-none">
+      <!-- 1. Home Button -->
+      <a href="/cover" class="dock-nav-btn" title="होम पेज (Home)">
+        <i class="fa-solid fa-house text-sm mb-1 text-emerald-200"></i>
+        <span class="dock-label text-[10px]">होम</span>
       </a>
 
-      <!-- 2. Table / Dashboard (ACTIVE with Gold Accent) -->
-      <a href="/matches" class="flex flex-col items-center justify-center py-1 px-3 text-[#F3D883] font-bold relative">
-        <i class="fa-solid fa-table-cells text-base text-[#F3D883]"></i>
-        <span class="text-[10px] tracking-tight mt-0.5">Table / Dashboard</span>
-        <!-- Active Gold Underline Bar -->
-        <span class="absolute bottom-0 w-10 h-0.5 bg-[#E6C254] rounded-full shadow-xs"></span>
+      <!-- 2. Table / Dashboard (ACTIVE 3D Royal Gold Button) -->
+      <a href="/matches" class="dock-nav-btn active" title="तालिका (Matches / Dashboard)">
+        <i class="fa-solid fa-table-cells text-base mb-1"></i>
+        <span class="dock-label text-[10px]">तालिका</span>
       </a>
 
-      <!-- 3. Chats (with Badge '2') -->
-      <button onclick="openChatModal('अंजलि सिंह (Anjali)', '/assets/images/match_anjali.jpg', true)" class="relative flex flex-col items-center justify-center py-1 px-2 text-emerald-200/80 hover:text-white transition">
-        <div class="relative">
-          <i class="fa-solid fa-comments text-sm"></i>
-          <span class="absolute -top-1 -right-2 w-3.5 h-3.5 bg-red-600 text-white rounded-full text-[8px] font-extrabold flex items-center justify-center border border-[#064E3B]">2</span>
+      <!-- 3. Chats Button (with Badge '2') -->
+      <button onclick="openChatModal('अंजलि सिंह (Anjali)', '/assets/images/match_anjali.jpg', true)" class="dock-nav-btn" title="संदेश (Chats)">
+        <div class="relative flex items-center justify-center">
+          <i class="fa-solid fa-comments text-sm mb-1 text-emerald-200"></i>
+          <span class="dock-badge">2</span>
         </div>
-        <span class="text-[9px] font-medium mt-0.5">Chats</span>
+        <span class="dock-label text-[10px]">चैट</span>
       </button>
 
-      <!-- 4. Interests (with Badge '5') -->
-      <button onclick="filterByCategory('interests_received')" class="relative flex flex-col items-center justify-center py-1 px-2 text-emerald-200/80 hover:text-white transition">
-        <div class="relative">
-          <i class="fa-solid fa-heart text-sm"></i>
-          <span class="absolute -top-1 -right-2 w-3.5 h-3.5 bg-red-600 text-white rounded-full text-[8px] font-extrabold flex items-center justify-center border border-[#064E3B]">5</span>
+      <!-- 4. Interests Button (with Badge '5') -->
+      <button onclick="filterByCategory('interests_received')" class="dock-nav-btn" title="रुचियां (Interests)">
+        <div class="relative flex items-center justify-center">
+          <i class="fa-solid fa-heart text-sm mb-1 text-emerald-200"></i>
+          <span class="dock-badge">5</span>
         </div>
-        <span class="text-[9px] font-medium mt-0.5">Interests</span>
+        <span class="dock-label text-[10px]">रुचि</span>
       </button>
 
-      <!-- 5. Profile -->
-      <a href="/biodata" class="flex flex-col items-center justify-center py-1 px-2 text-emerald-200/80 hover:text-white transition" title="मेरा बायोडाटा देखें">
-        <i class="fa-solid fa-user text-sm"></i>
-        <span class="text-[9px] font-medium mt-0.5">Profile</span>
+      <!-- 5. Profile Button -->
+      <a href="/biodata" class="dock-nav-btn" title="मेरा बायोडाटा (Profile)">
+        <i class="fa-solid fa-user-circle text-sm mb-1 text-emerald-200"></i>
+        <span class="dock-label text-[10px]">बायोडाटा</span>
       </a>
     </nav>
 
@@ -1084,33 +1205,33 @@
       <!-- Left: Key Features Added Crown Badge -->
       <div class="flex items-center space-x-1.5 shrink-0 pr-2 border-r border-amber-200">
         <i class="fa-solid fa-crown text-amber-600 text-xs"></i>
-        <span class="font-extrabold text-stone-900 tracking-tight">Key Features Added</span>
+        <span class="font-extrabold text-stone-900 tracking-tight">Key Features</span>
       </div>
 
       <!-- Right: Feature Actions -->
-      <div class="flex items-center justify-around flex-1 px-1 space-x-1">
+      <div class="flex items-center justify-around flex-1 px-1 space-x-1.5">
         <!-- Kundali Milan -->
-        <button onclick="openKundaliModal('Priya Sharma', 28, 'Kashyap', 'Brahmin', 'Indore')" class="flex flex-col items-center text-stone-700 hover:text-emerald-800 transition">
-          <i class="fa-solid fa-gear text-xs text-emerald-700"></i>
-          <span class="text-[8.5px] mt-0.5 font-semibold">Kundali Milan</span>
+        <button onclick="openKundaliModal('Priya Sharma', 28, 'Kashyap', 'Brahmin', 'Indore')" class="ribbon-btn" title="36 गुण मिलान">
+          <i class="fa-solid fa-dharmachakra text-xs text-amber-700"></i>
+          <span class="text-[8.5px] mt-0.5 font-bold text-stone-800">Kundali</span>
         </button>
 
         <!-- Download PDF -->
-        <button onclick="downloadPdfProfile('Priya Sharma')" class="flex flex-col items-center text-stone-700 hover:text-emerald-800 transition">
-          <i class="fa-solid fa-file-pdf text-xs text-stone-700"></i>
-          <span class="text-[8.5px] mt-0.5 font-semibold">Download PDF</span>
+        <button onclick="downloadPdfProfile('Priya Sharma')" class="ribbon-btn" title="डाउनलोड PDF">
+          <i class="fa-solid fa-file-pdf text-xs text-rose-700"></i>
+          <span class="text-[8.5px] mt-0.5 font-bold text-stone-800">PDF</span>
         </button>
 
         <!-- Report Profile -->
-        <button onclick="openReportModal('Priya Sharma')" class="flex flex-col items-center text-stone-700 hover:text-rose-700 transition">
-          <i class="fa-solid fa-triangle-exclamation text-xs text-rose-600"></i>
-          <span class="text-[8.5px] mt-0.5 font-semibold">Report Profile</span>
+        <button onclick="openReportModal('Priya Sharma')" class="ribbon-btn" title="रिपोर्ट प्रोफाइल">
+          <i class="fa-solid fa-triangle-exclamation text-xs text-amber-600"></i>
+          <span class="text-[8.5px] mt-0.5 font-bold text-stone-800">Report</span>
         </button>
 
         <!-- Block Profile -->
-        <button onclick="openBlockModal('Priya Sharma')" class="flex flex-col items-center text-stone-700 hover:text-rose-700 transition">
+        <button onclick="openBlockModal('Priya Sharma')" class="ribbon-btn" title="ब्लॉक प्रोफाइल">
           <i class="fa-solid fa-ban text-xs text-stone-600"></i>
-          <span class="text-[8.5px] mt-0.5 font-semibold">Block Profile</span>
+          <span class="text-[8.5px] mt-0.5 font-bold text-stone-800">Block</span>
         </button>
       </div>
     </footer>
