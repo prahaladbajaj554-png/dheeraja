@@ -225,24 +225,21 @@ $router->post('/biodata/save', function (Request $request) {
         ]
     );
 
-    // Send Notification to Admin & Confirmation Email to User via PHPMailer
+    // Send Notification to Admin & Confirmation Email to User Asynchronously in Background
     try {
         $userRow = \App\Core\Database::fetch("SELECT email, phone, matrimony_id FROM users WHERE id = :uid", ['uid' => $userId]);
         $userEmail = $userRow['email'] ?? '';
         $userMid = $userRow['matrimony_id'] ?? ('DM' . $userId);
 
-        \App\Helpers\MailerHelper::alertAdmin(
-            "नया बायोडाटा दर्ज हुआ: {$firstName} {$lastName} ({$city}, {$caste})",
-            "एक सदस्य ने धीरजा मैट्रिमोनी पर अपना बायोडाटा सफलतापूर्वक पूर्ण किया है:\n\n• ID: {$userMid}\n• नाम: {$firstName} {$lastName}\n• जेंडर: {$gender}\n• जन्मतिथि: {$dob}\n• शहर: {$city}, {$state}\n• समाज/जाति: {$caste} " . ($subCaste ? "({$subCaste})" : "") . "\n• गोत्र: {$gotra}\n• शिक्षा: {$highestEdu}\n• व्यवसाय: {$occupation}\n• वार्षिक आय: ₹" . number_format($annualIncome)
-        );
+        $payload = base64_encode(json_encode([
+            'admin_subject' => "नया बायोडाटा दर्ज हुआ: {$firstName} {$lastName} ({$city}, {$caste})",
+            'admin_body'    => "एक सदस्य ने धीरजा मैट्रिमोनी पर अपना बायोडाटा सफलतापूर्वक पूर्ण किया है:\n\n• ID: {$userMid}\n• नाम: {$firstName} {$lastName}\n• जेंडर: {$gender}\n• जन्मतिथि: {$dob}\n• शहर: {$city}, {$state}\n• समाज/जाति: {$caste} " . ($subCaste ? "({$subCaste})" : "") . "\n• गोत्र: {$gotra}\n• शिक्षा: {$highestEdu}\n• व्यवसाय: {$occupation}\n• वार्षिक आय: ₹" . number_format($annualIncome),
+            'user_email'    => $userEmail,
+            'user_name'     => $firstName
+        ]));
 
-        if (!empty($userEmail) && filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
-            \App\Helpers\MailerHelper::sendFreeVipGranted(
-                ['email' => $userEmail, 'first_name' => $firstName],
-                'Dheeraja Royal VIP Pro',
-                90
-            );
-        }
+        $root = dirname(__DIR__);
+        @exec("php {$root}/bin/send_async_mail.php '{$payload}' > /dev/null 2>&1 &");
     } catch (\Throwable $e) {}
 
     \App\Core\Session::flash('success', 'आपका बायोडाटा सफलतापूर्वक सुरक्षित हो गया है! योग्य रिश्ते नीचे तालिका में देखें।');
@@ -529,14 +526,16 @@ $router->get('/biodata/download/{id}', function (Request $request) {
 });
 
 // Fourth Page: Activity & Matches Tracker / तालिका वाला पेज
-$router->get('/matches', function (Request $request) {
+$matchesHandler = function (Request $request) {
     Response::view('home/matches', [
         'page_title'   => 'Dheeraja Royal Matrimony™ | Activity & Matches Tracker (तालिका)',
         'flashSuccess' => \App\Core\Session::get('_flash')['success'] ?? null,
         'flashError'   => \App\Core\Session::get('_flash')['error'] ?? null,
     ], null);
     unset($_SESSION['_flash']);
-});
+};
+$router->get('/matches', $matchesHandler);
+$router->post('/matches', $matchesHandler);
 
 // Matches Interactive Action: Express Interest
 $router->post('/matches/interest', function (Request $request) {

@@ -264,15 +264,21 @@
     <header class="w-full bg-gradient-to-b from-[#F5FAF4] via-[#FAFCFA] to-white border-b border-emerald-100 px-4 pt-12 pb-4 text-center relative">
       
       <!-- Back to Page 2 (Welcome) Button (बाण बटन) -->
-      <a href="/welcome" onclick="window.location.href='/welcome'; return false;" class="absolute top-3 left-3 z-50 px-3.5 py-1.5 rounded-full bg-white/95 border-2 border-emerald-300 text-[#065F46] hover:bg-emerald-50 hover:border-emerald-500 flex items-center space-x-1.5 text-xs font-bold shadow-md transition transform active:scale-95 cursor-pointer" title="वापस पेज 2 पर जाएं">
+      <a href="/welcome" onclick="window.location.href='/welcome'; return false;" class="absolute top-3 left-3 z-50 px-3 py-1.5 rounded-full bg-white/95 border-2 border-emerald-300 text-[#065F46] hover:bg-emerald-50 hover:border-emerald-500 flex items-center space-x-1.5 text-xs font-bold shadow-md transition transform active:scale-95 cursor-pointer" title="वापस पेज 2 पर जाएं">
         <i class="fa-solid fa-arrow-left text-sm"></i>
         <span>पेज 2</span>
       </a>
 
       <!-- Direct Link to Page 1 (Cover Page) Button -->
-      <a href="/cover" onclick="window.location.href='/cover'; return false;" class="absolute top-3 right-3 z-50 px-3.5 py-1.5 rounded-full bg-white/95 border-2 border-emerald-300 text-[#065F46] hover:bg-emerald-50 hover:border-emerald-500 flex items-center space-x-1.5 text-xs font-bold shadow-md transition transform active:scale-95 cursor-pointer" title="पहले कवर पेज पर जाएं">
+      <a href="/cover" onclick="window.location.href='/cover'; return false;" class="absolute top-3 left-[92px] z-50 px-2.5 py-1.5 rounded-full bg-white/95 border border-emerald-300 text-stone-600 hover:bg-emerald-50 flex items-center space-x-1 text-xs font-semibold shadow-xs transition active:scale-95 cursor-pointer" title="पहले कवर पेज पर जाएं">
         <i class="fa-solid fa-home text-xs text-amber-600"></i>
-        <span>कवर पेज</span>
+        <span>कवर</span>
+      </a>
+
+      <!-- Forward Arrow (बाण बटन) to Page 4 (तालिका / रिश्ते) -->
+      <a href="/matches" onclick="window.location.href='/matches'; return false;" class="absolute top-3 right-3 z-50 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-emerald-800 to-emerald-950 text-amber-300 hover:text-white border-2 border-amber-400 flex items-center space-x-1.5 text-xs font-bold shadow-lg transition transform active:scale-95 cursor-pointer animate-pulse" title="सीधे चौथे पेज (तालिका / रिश्ते) पर जाएं">
+        <span>पेज 4 (तालिका)</span>
+        <i class="fa-solid fa-arrow-right text-xs text-amber-300"></i>
       </a>
 
       <!-- Small Crown Logo -->
@@ -297,11 +303,16 @@
         ✨ <strong>लॉन्च ऑफर:</strong> फॉर्म पूरा भरते ही <strong>3 माह का VIP Pro प्लान</strong> बिल्कुल मुफ्त! ✨
       </div>
 
-      <!-- Royal Golden Biodata Preview Button -->
-      <div class="mt-2 flex items-center justify-center">
-        <a href="/biodata/royal/1" target="_blank" class="px-3 py-1 rounded-full bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 border border-amber-400 text-amber-950 text-[10.5px] font-extrabold flex items-center space-x-1.5 shadow-2xs hover:bg-amber-300 transition active:scale-95" title="सुनहरे बॉर्डर वाला रॉयल बायोडाटा नमूना देखें व 1-क्लिक डाउनलोड करें">
+      <!-- Quick Navigation Buttons: Page 4 (Matches) & Royal Biodata -->
+      <div class="mt-2.5 flex flex-wrap items-center justify-center gap-2">
+        <a href="/matches" onclick="window.location.href='/matches'; return false;" class="px-4 py-1.5 rounded-full bg-gradient-to-r from-emerald-800 via-emerald-900 to-[#033626] text-amber-300 hover:text-white border-2 border-amber-400 font-extrabold text-xs flex items-center space-x-2 shadow-md transition transform hover:scale-[1.02] active:scale-95" title="सीधे रिश्ते तालिका (पेज 4) पर जाएं">
+          <i class="fa-solid fa-table-cells text-xs"></i>
+          <span>सीधे रिश्ते तालिका (पेज 4) पर जाएं</span>
+          <i class="fa-solid fa-arrow-right text-xs text-amber-300"></i>
+        </a>
+        <a href="/biodata/royal/1" target="_blank" class="px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-200 via-amber-100 to-amber-200 border border-amber-400 text-amber-950 text-[11px] font-extrabold flex items-center space-x-1.5 shadow-2xs hover:bg-amber-300 transition active:scale-95" title="सुनहरे बॉर्डर वाला रॉयल बायोडाटा नमूना देखें व 1-क्लिक डाउनलोड करें">
           <i class="fa-solid fa-crown text-amber-600"></i>
-          <span>👑 सुनहरे बॉर्डर वाला रॉयल बायोडाटा नमूना (1-क्लिक PDF)</span>
+          <span>👑 रॉयल बायोडाटा (1-क्लिक PDF)</span>
         </a>
       </div>
 
@@ -428,12 +439,12 @@
         <!-- पूरा नाम (Name) -->
         <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block text-[11px] font-bold text-stone-700 mb-1">पहला नाम (First Name) *</label>
-            <input type="text" name="first_name" id="firstNameInput" required placeholder="जैसे: राहुल / पूजा" class="royal-input" oninput="updateFormProgress()">
+            <label class="block text-[11px] font-bold text-stone-700 mb-1">पहला नाम (First Name)</label>
+            <input type="text" name="first_name" id="firstNameInput" placeholder="जैसे: राहुल / पूजा" class="royal-input" oninput="updateFormProgress()">
           </div>
           <div>
-            <label class="block text-[11px] font-bold text-stone-700 mb-1">उपनाम / सरनेम (Last Name) *</label>
-            <input type="text" name="last_name" id="lastNameInput" required placeholder="जैसे: शर्मा / सिंह" class="royal-input" oninput="updateFormProgress()">
+            <label class="block text-[11px] font-bold text-stone-700 mb-1">उपनाम / सरनेम (Last Name)</label>
+            <input type="text" name="last_name" id="lastNameInput" placeholder="जैसे: शर्मा / सिंह" class="royal-input" oninput="updateFormProgress()">
           </div>
         </div>
 
@@ -447,7 +458,7 @@
                 🎂 28 वर्ष
               </span>
             </div>
-            <input type="date" name="dob" id="dobInput" value="1998-05-15" required class="royal-input" onchange="calculateAutoAge()">
+            <input type="date" name="dob" id="dobInput" value="1998-05-15" class="royal-input" onchange="calculateAutoAge()">
           </div>
           <div>
             <div class="flex items-center justify-between mb-1">
@@ -569,7 +580,6 @@
               type="text" 
               name="caste" 
               id="casteInput" 
-              required 
               placeholder="अपनी जाति / समाज ऊपर से चुनें या लिखें..." 
               class="royal-input pl-9 pr-28 font-semibold text-xs text-stone-800"
               oninput="handleCasteInput(this.value)"
@@ -743,7 +753,7 @@
                 ⚡ वर्तमान शहर जैसा
               </button>
             </div>
-            <input type="text" name="work_city" id="workCityInput" required placeholder="जैसे: जयपुर / दिल्ली" class="royal-input" oninput="updateFormProgress()">
+            <input type="text" name="work_city" id="workCityInput" placeholder="जैसे: जयपुर / दिल्ली" class="royal-input" oninput="updateFormProgress()">
           </div>
         </div>
 
@@ -764,7 +774,6 @@
               list="cityDatalist" 
               id="currentCityInput" 
               name="city" 
-              required 
               placeholder="जैसे: जयपुर / दिल्ली" 
               class="royal-input font-medium" 
               oninput="handleCityChange(this.value)"
@@ -821,7 +830,7 @@
                 ⚡ स्वतः चुना
               </span>
             </div>
-            <input type="text" id="currentStateInput" name="state" required placeholder="जैसे: राजस्थान" class="royal-input font-medium" oninput="updateFormProgress()">
+            <input type="text" id="currentStateInput" name="state" placeholder="जैसे: राजस्थान" class="royal-input font-medium" oninput="updateFormProgress()">
           </div>
         </div>
 
@@ -966,6 +975,15 @@
         <p class="text-center text-[10px] text-stone-500 mt-2 font-medium">
           🔒 आपकी संपूर्ण व्यक्तिगत जानकारी 100% सुरक्षित और गोपनीय रखी जाती है।
         </p>
+
+        <!-- Direct Jump to Page 4 (Matches) Button -->
+        <div class="mt-2.5">
+          <a href="/matches" onclick="window.location.href='/matches'; return false;" class="w-full py-3.5 px-4 rounded-2xl bg-amber-50 hover:bg-amber-100 border-2 border-amber-400 text-amber-950 font-extrabold text-xs sm:text-sm flex items-center justify-center space-x-2 transition shadow-sm active:scale-98 cursor-pointer">
+            <i class="fa-solid fa-table-cells text-amber-600 text-sm"></i>
+            <span>बिना फॉर्म भरे सीधे रिश्ते तालिका (पेज 4) देखें</span>
+            <i class="fa-solid fa-arrow-right text-amber-700"></i>
+          </a>
+        </div>
 
         <!-- Back Navigation Links -->
         <div class="mt-3 flex items-center justify-center space-x-2 text-xs">

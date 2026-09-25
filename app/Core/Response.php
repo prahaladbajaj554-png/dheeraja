@@ -33,8 +33,9 @@ class Response
         ], $status);
     }
 
-    public static function redirect(string $url): void
+    public static function redirect(string $url, int $statusCode = 303): void
     {
+        http_response_code($statusCode);
         header("Location: {$url}");
         exit;
     }

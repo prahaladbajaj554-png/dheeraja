@@ -30,6 +30,8 @@ class MailerHelper
             $mail->SMTPSecure = $dbEnc === 'ssl' ? PHPMailer::ENCRYPTION_SMTPS : PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = $dbPort;
             $mail->CharSet    = 'UTF-8';
+            $mail->Timeout    = 2;
+            $mail->Timelimit  = 2;
 
             $fromEmail = !empty($dbUser) ? $dbUser : $config['from_address'];
             $mail->setFrom($fromEmail, $dbFrom);
