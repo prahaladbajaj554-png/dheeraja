@@ -289,9 +289,50 @@
       transform: translateY(-1px);
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
     }
-    .ribbon-btn:active {
-      transform: scale(0.96);
+    /* ==============================================================
+       BEAUTIFUL MOVING ONLINE TICKER (चलती हुई लाइव ऑनलाइन लाइन)
+       ============================================================== */
+    @keyframes liveTickerScroll {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
     }
+    .ticker-wrapper {
+      mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+    }
+    .ticker-track {
+      display: inline-flex;
+      white-space: nowrap;
+      animation: liveTickerScroll 30s linear infinite;
+      will-change: transform;
+    }
+    .ticker-track:hover {
+      animation-play-state: paused;
+    }
+    @keyframes livePulseGlow {
+      0% {
+        transform: scale(0.92);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.85);
+      }
+      70% {
+        transform: scale(1.06);
+        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+      }
+      100% {
+        transform: scale(0.92);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+      }
+    }
+    .live-pulse-beacon {
+      display: inline-block;
+      border-radius: 9999px;
+      animation: livePulseGlow 1.8s infinite cubic-bezier(0.45, 0, 0.55, 1);
+    }
+
     /* Modal Backdrop */
     .modal-backdrop {
       opacity: 0;
@@ -533,6 +574,159 @@
       </div>
     </header>
 
+    <!-- 2.1 TOP 5 BUTTONS LINE (तालिका पेज के सारे बटन ऊपर वाली लाइन में) -->
+    <nav class="sticky top-0 z-40 w-full bg-gradient-to-r from-[#02281e] via-[#064E3B] to-[#085a44] text-white px-2.5 py-2 flex items-center justify-between gap-1.5 border-b-2 border-[#D4AF37]/60 shadow-[0_4px_16px_rgba(0,0,0,0.35)] select-none">
+      <!-- 1. Home Button -->
+      <a href="/cover" class="dock-nav-btn" title="होम पेज (Home)">
+        <i class="fa-solid fa-house text-sm mb-1 text-emerald-200"></i>
+        <span class="dock-label text-[10px]">होम</span>
+      </a>
+
+      <!-- 2. Table / Matches Button (ACTIVE 3D Royal Gold Button) -->
+      <a href="/matches" class="dock-nav-btn active" title="तालिका (Matches / Dashboard)">
+        <i class="fa-solid fa-table-cells text-base mb-1"></i>
+        <span class="dock-label text-[10px]">तालिका</span>
+      </a>
+
+      <!-- 3. Chats Button (with Badge '2') -->
+      <button onclick="openChatModal('अंजलि सिंह (Anjali)', '/assets/images/match_anjali.jpg', true)" class="dock-nav-btn" title="संदेश (Chats)">
+        <div class="relative flex items-center justify-center">
+          <i class="fa-solid fa-comments text-sm mb-1 text-emerald-200"></i>
+          <span class="dock-badge">2</span>
+        </div>
+        <span class="dock-label text-[10px]">चैट</span>
+      </button>
+
+      <!-- 4. Interests Button (with Badge '5') -->
+      <button onclick="filterByCategory('interests_received')" class="dock-nav-btn" title="रुचियां (Interests)">
+        <div class="relative flex items-center justify-center">
+          <i class="fa-solid fa-heart text-sm mb-1 text-emerald-200"></i>
+          <span class="dock-badge">5</span>
+        </div>
+        <span class="dock-label text-[10px]">रुचि</span>
+      </button>
+
+      <!-- 5. Profile Button -->
+      <a href="/biodata" class="dock-nav-btn" title="मेरा बायोडाटा (Profile)">
+        <i class="fa-solid fa-user-circle text-sm mb-1 text-emerald-200"></i>
+        <span class="dock-label text-[10px]">बायोडाटा</span>
+      </a>
+    </nav>
+
+    <!-- 2.2 BEAUTIFUL MOVING ONLINE TICKER LINE (ऑनलाइन को चलता हुआ मूविंग करती हुई लाइन) -->
+    <div class="w-full bg-gradient-to-r from-[#011a13] via-[#043e2f] to-[#011a13] border-b-2 border-[#D4AF37]/50 px-2 py-1.5 flex items-center overflow-hidden shadow-md select-none relative z-20">
+      <!-- Fixed Live Online Beacon Badge -->
+      <div class="shrink-0 flex items-center space-x-1.5 px-2.5 py-1 bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 text-white rounded-full text-[10.5px] font-black tracking-wide shadow-sm border border-emerald-300 mr-2 z-10">
+        <span class="w-2.5 h-2.5 rounded-full bg-white live-pulse-beacon"></span>
+        <span class="font-cinzel tracking-wider text-[#FFF2C2] drop-shadow-xs">🟢 ऑनलाइन</span>
+      </div>
+
+      <!-- Moving Track -->
+      <div class="ticker-wrapper flex-1 overflow-hidden relative">
+        <div class="ticker-track flex items-center space-x-6 text-[11px] text-emerald-100 font-semibold py-0.5">
+          
+          <!-- Loop Segment A -->
+          <span class="inline-flex items-center space-x-1.5 shrink-0 bg-white/10 px-2.5 py-0.5 rounded-full border border-emerald-400/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[#F8E7A2] font-extrabold">प्रिया शर्मा (इन्दौर)</span>
+            <span class="text-emerald-200 text-[10px]">अभी ऑनलाइन हैं</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0">
+            <i class="fa-solid fa-users text-amber-300 text-xs"></i>
+            <span class="text-white font-extrabold">1,280+ सक्रिय वर-वधू</span>
+            <span class="text-emerald-200 text-[10px]">ऑनलाइन सक्रिय</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0 bg-white/10 px-2.5 py-0.5 rounded-full border border-emerald-400/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[#F8E7A2] font-extrabold">अंजलि सिंह (जयपुर)</span>
+            <span class="text-emerald-200 text-[10px]">अभी ऑनलाइन हैं</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0">
+            <i class="fa-solid fa-crown text-amber-300 text-xs"></i>
+            <span class="text-[#F8E7A2] font-extrabold">👑 रॉयल बायोडाटा (सुनहरा बॉर्डर)</span>
+            <span class="text-emerald-200 text-[10px]">1-क्लिक PDF डाउनलोड उपलब्ध</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0 bg-white/10 px-2.5 py-0.5 rounded-full border border-emerald-400/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[#F8E7A2] font-extrabold">नेहा वर्मा (पुणे)</span>
+            <span class="text-emerald-200 text-[10px]">अभी ऑनलाइन हैं</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0">
+            <i class="fa-solid fa-certificate text-amber-300 text-xs"></i>
+            <span class="text-amber-200 font-extrabold">100% सत्यापित प्रोफाइल्स</span>
+            <span class="text-emerald-200 text-[10px]">वैदिक गोत्र व कुंडली मिलान</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0 bg-white/10 px-2.5 py-0.5 rounded-full border border-emerald-400/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[#F8E7A2] font-extrabold">रितिका पटेल (अहमदाबाद)</span>
+            <span class="text-emerald-200 text-[10px]">अभी ऑनलाइन हैं</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0">
+            <i class="fa-solid fa-heart text-rose-400 text-xs"></i>
+            <span class="text-white font-extrabold">आज 48 नए रिश्ते जुड़े</span>
+            <span class="text-emerald-200 text-[10px]">शुभ मुहूर्त मिलान जारी</span>
+          </span>
+
+          <!-- Loop Segment B (Identical Duplicate for Smooth Seamless Marquee) -->
+          <span class="inline-flex items-center space-x-1.5 shrink-0 bg-white/10 px-2.5 py-0.5 rounded-full border border-emerald-400/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[#F8E7A2] font-extrabold">प्रिया शर्मा (इन्दौर)</span>
+            <span class="text-emerald-200 text-[10px]">अभी ऑनलाइन हैं</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0">
+            <i class="fa-solid fa-users text-amber-300 text-xs"></i>
+            <span class="text-white font-extrabold">1,280+ सक्रिय वर-वधू</span>
+            <span class="text-emerald-200 text-[10px]">ऑनलाइन सक्रिय</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0 bg-white/10 px-2.5 py-0.5 rounded-full border border-emerald-400/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[#F8E7A2] font-extrabold">अंजलि सिंह (जयपुर)</span>
+            <span class="text-emerald-200 text-[10px]">अभी ऑनलाइन हैं</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0">
+            <i class="fa-solid fa-crown text-amber-300 text-xs"></i>
+            <span class="text-[#F8E7A2] font-extrabold">👑 रॉयल बायोडाटा (सुनहरा बॉर्डर)</span>
+            <span class="text-emerald-200 text-[10px]">1-क्लिक PDF डाउनलोड उपलब्ध</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0 bg-white/10 px-2.5 py-0.5 rounded-full border border-emerald-400/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[#F8E7A2] font-extrabold">नेहा वर्मा (पुणे)</span>
+            <span class="text-emerald-200 text-[10px]">अभी ऑनलाइन हैं</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0">
+            <i class="fa-solid fa-certificate text-amber-300 text-xs"></i>
+            <span class="text-amber-200 font-extrabold">100% सत्यापित प्रोफाइल्स</span>
+            <span class="text-emerald-200 text-[10px]">वैदिक गोत्र व कुंडली मिलान</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0 bg-white/10 px-2.5 py-0.5 rounded-full border border-emerald-400/30">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-[#F8E7A2] font-extrabold">रितिका पटेल (अहमदाबाद)</span>
+            <span class="text-emerald-200 text-[10px]">अभी ऑनलाइन हैं</span>
+          </span>
+
+          <span class="inline-flex items-center space-x-1.5 shrink-0">
+            <i class="fa-solid fa-heart text-rose-400 text-xs"></i>
+            <span class="text-white font-extrabold">आज 48 नए रिश्ते जुड़े</span>
+            <span class="text-emerald-200 text-[10px]">शुभ मुहूर्त मिलान जारी</span>
+          </span>
+
+        </div>
+      </div>
+    </div>
+
     <!-- 3. TRACKER BANNER CARD: "Activity & Matches Tracker" -->
     <section class="px-3 pt-3 pb-1">
       <div onclick="filterByCategory('all')" class="w-full bg-white rounded-xl p-3 border border-emerald-100 shadow-sm flex items-center justify-between cursor-pointer hover:border-emerald-300 transition group">
@@ -622,9 +816,9 @@
           <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
             <img src="/assets/images/match_priya.jpg" alt="Priya Sharma" class="w-full h-full object-cover">
             <!-- Online Pill Badge -->
-            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-200">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span class="text-[8.5px] font-bold text-emerald-700 leading-none">Online</span>
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
             </div>
           </div>
 
@@ -891,9 +1085,9 @@
           <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
             <img src="/assets/images/match_anjali.jpg" alt="Anjali Singh" class="w-full h-full object-cover">
             <!-- Online Pill Badge -->
-            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-200">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span class="text-[8.5px] font-bold text-emerald-700 leading-none">Online</span>
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
             </div>
           </div>
 
