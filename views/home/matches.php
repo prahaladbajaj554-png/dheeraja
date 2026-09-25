@@ -961,6 +961,111 @@
             <i class="fa-solid fa-sliders text-[9px]"></i>
           </span>
         </button>
+      <!-- 4.2 ADVANCED MULTI-FILTER BAR (उन्नत रिश्ते, उम्र, कद, सिटी, व्यवसाय, मांगलिक/नॉन-मांगलिक) -->
+      <div class="mt-2 bg-white rounded-2xl p-2.5 border border-stone-200 shadow-xs space-y-2">
+        <!-- Filter Header Row with Title & Quick Reset -->
+        <div class="flex items-center justify-between pb-1.5 border-b border-stone-100">
+          <div class="flex items-center space-x-1.5">
+            <span class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-bold">
+              <i class="fa-solid fa-sliders"></i>
+            </span>
+            <span class="text-xs font-black text-stone-900 font-cinzel">उन्नत रिश्ते व पसंद फ़िल्टर</span>
+          </div>
+          <div class="flex items-center space-x-1.5">
+            <button type="button" onclick="openAdvancedFilterModal()" class="px-2 py-0.5 rounded-lg bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-900 text-[10.5px] font-extrabold flex items-center space-x-1 transition cursor-pointer">
+              <i class="fa-solid fa-filter text-[9px] text-amber-700"></i>
+              <span>विस्तृत फ़िल्टर</span>
+              <span id="activeFilterBadge" class="hidden ml-1 px-1 rounded-full bg-emerald-600 text-white text-[8px] font-mono font-bold">0</span>
+            </button>
+            <button type="button" onclick="resetAllFilters()" id="btnResetFilters" class="hidden px-2 py-0.5 rounded-lg bg-stone-100 hover:bg-rose-50 text-stone-600 hover:text-rose-700 border border-stone-200 text-[10px] font-bold transition cursor-pointer">
+              <i class="fa-solid fa-rotate-left mr-0.5 text-[8.5px]"></i> रीसेट
+            </button>
+          </div>
+        </div>
+
+        <!-- 5 Fast Quick-Select Dropdowns Row (उम्र, कद, सिटी, व्यवसाय, मांगलिक) -->
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-1.5 text-[11px]">
+          <!-- 1. Manglik Status Filter -->
+          <div class="space-y-0.5">
+            <label class="text-[9.5px] font-bold text-stone-600 flex items-center gap-0.5">
+              <span>🪐 मांगलिक</span>
+            </label>
+            <select id="quickFilterManglik" onchange="onQuickFilterChange()" class="w-full py-1.5 px-2 rounded-lg bg-stone-50 border border-stone-200 text-stone-800 text-[10.5px] font-bold focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 cursor-pointer">
+              <option value="all">सभी (कोई भी)</option>
+              <option value="non_manglik">🟢 नॉन-मांगलिक (अमांगलिक)</option>
+              <option value="manglik">🔴 केवल मांगलिक</option>
+              <option value="anshik_manglik">🟡 आंशिक मांगलिक</option>
+            </select>
+          </div>
+
+          <!-- 2. Age Range Filter -->
+          <div class="space-y-0.5">
+            <label class="text-[9.5px] font-bold text-stone-600 flex items-center gap-0.5">
+              <span>🎂 उम्र सीमा</span>
+            </label>
+            <select id="quickFilterAge" onchange="onQuickFilterChange()" class="w-full py-1.5 px-2 rounded-lg bg-stone-50 border border-stone-200 text-stone-800 text-[10.5px] font-bold focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 cursor-pointer">
+              <option value="all">सभी उम्र (Any)</option>
+              <option value="21-24">21 - 24 वर्ष</option>
+              <option value="25-27">25 - 27 वर्ष</option>
+              <option value="28-32">28 - 32 वर्ष</option>
+            </select>
+          </div>
+
+          <!-- 3. City / Location Filter -->
+          <div class="space-y-0.5">
+            <label class="text-[9.5px] font-bold text-stone-600 flex items-center gap-0.5">
+              <span>🏙️ शहर / सिटी</span>
+            </label>
+            <select id="quickFilterCity" onchange="onQuickFilterChange()" class="w-full py-1.5 px-2 rounded-lg bg-stone-50 border border-stone-200 text-stone-800 text-[10.5px] font-bold focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 cursor-pointer">
+              <option value="all">सभी शहर (All Cities)</option>
+              <option value="Jaipur">जयपुर (Jaipur)</option>
+              <option value="Indore">इन्दौर (Indore)</option>
+              <option value="Pune">पुणे (Pune)</option>
+              <option value="Surat">सूरत (Surat)</option>
+              <option value="Ahmedabad">अहमदाबाद (Ahmedabad)</option>
+              <option value="Udaipur">उदयपुर (Udaipur)</option>
+              <option value="Jodhpur">जोधपुर (Jodhpur)</option>
+              <option value="Sikar">सीकर (Sikar)</option>
+              <option value="Alwar">अलवर (Alwar)</option>
+              <option value="Ajmer">अजमेर (Ajmer)</option>
+              <option value="Chandigarh">चंडीगढ़ (Chandigarh)</option>
+            </select>
+          </div>
+
+          <!-- 4. Vyavsay / Profession Filter -->
+          <div class="space-y-0.5">
+            <label class="text-[9.5px] font-bold text-stone-600 flex items-center gap-0.5">
+              <span>💼 व्यवसाय / पेशा</span>
+            </label>
+            <select id="quickFilterProfession" onchange="onQuickFilterChange()" class="w-full py-1.5 px-2 rounded-lg bg-stone-50 border border-stone-200 text-stone-800 text-[10.5px] font-bold focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 cursor-pointer">
+              <option value="all">सभी व्यवसाय (Any)</option>
+              <option value="it_software">💻 IT व सॉफ्टवेयर</option>
+              <option value="govt_service">🏛️ सरकारी / बैंक / RAS</option>
+              <option value="business_finance">📊 CA, फाइनेंस व बिजनेस</option>
+              <option value="education_teaching">📚 शिक्षण व प्राध्यापक</option>
+              <option value="design_architecture">🎨 डिज़ाइन व आर्किटेक्चर</option>
+            </select>
+          </div>
+
+          <!-- 5. Height / Kad Filter -->
+          <div class="space-y-0.5 col-span-2 sm:col-span-1">
+            <label class="text-[9.5px] font-bold text-stone-600 flex items-center gap-0.5">
+              <span>📏 कद / लंबाई</span>
+            </label>
+            <select id="quickFilterHeight" onchange="onQuickFilterChange()" class="w-full py-1.5 px-2 rounded-lg bg-stone-50 border border-stone-200 text-stone-800 text-[10.5px] font-bold focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 cursor-pointer">
+              <option value="all">सभी कद (Any Height)</option>
+              <option value="short">5'0" - 5'3"</option>
+              <option value="medium">5'4" - 5'6"</option>
+              <option value="tall">5'7" और अधिक</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Active Filter Pills Strip (Visible when any filter is non-default) -->
+        <div id="activeFilterPillsContainer" class="hidden pt-1.5 border-t border-stone-100 flex flex-wrap items-center gap-1">
+          <span class="text-[9.5px] font-bold text-stone-500 mr-0.5">लागू फ़िल्टर:</span>
+          <div id="activePillsList" class="flex flex-wrap gap-1"></div>
+        </div>
       </div>
     </section>
 
@@ -975,6 +1080,13 @@
                data-name="Priya Sharma"
                data-age="26"
                data-height="5'4&quot;"
+               data-height-inches="64"
+               data-city="Indore"
+               data-profession="it_software"
+               data-manglik="non_manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="B.Tech (Computer Science)"
                data-location="Indore, Madhya Pradesh"
                data-gotra="Kashyap"
@@ -1025,6 +1137,18 @@
             <p class="text-[11px] text-stone-600 leading-snug font-medium">
               Age: 26 <span class="text-stone-300">|</span> Height: 5'4"
             </p>
+
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-check text-[8px] text-emerald-600"></i>
+                <span>अमांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-laptop-code text-[8px] text-stone-600"></i>
+                <span>IT व सॉफ्टवेयर</span>
+              </span>
+            </div>
 
             <!-- Education -->
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">
@@ -1123,6 +1247,13 @@
                data-name="Neha Verma"
                data-age="24"
                data-height="5'3&quot;"
+               data-height-inches="63"
+               data-city="Pune"
+               data-profession="business_finance"
+               data-manglik="non_manglik"
+               data-online="false"
+               data-royal="true"
+               data-verified="true"
                data-edu="M.Sc (Biotechnology)"
                data-location="Pune, Maharashtra"
                data-gotra="Bharadwaj"
@@ -1173,6 +1304,18 @@
             <p class="text-[11px] text-stone-600 leading-snug font-medium">
               Age: 24 <span class="text-stone-300">|</span> Height: 5'3"
             </p>
+
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-check text-[8px] text-emerald-600"></i>
+                <span>अमांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-flask-vial text-[8px] text-stone-600"></i>
+                <span>बायोटेक / रिसर्च</span>
+              </span>
+            </div>
 
             <!-- Education -->
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">
@@ -1268,6 +1411,13 @@
                data-name="Anjali Singh"
                data-age="28"
                data-height="5'5&quot;"
+               data-height-inches="65"
+               data-city="Jaipur"
+               data-profession="govt_service"
+               data-manglik="manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="B.A. (English Literature)"
                data-location="Jaipur, Rajasthan"
                data-gotra="Gautam"
@@ -1318,6 +1468,18 @@
             <p class="text-[11px] text-stone-600 leading-snug font-medium">
               Age: 28 <span class="text-stone-300">|</span> Height: 5'5"
             </p>
+
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-rose-50 text-rose-800 border border-rose-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-exclamation text-[8px] text-rose-600"></i>
+                <span>मांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-landmark text-[8px] text-stone-600"></i>
+                <span>सिविल सेवा तैयारी</span>
+              </span>
+            </div>
 
             <!-- Education -->
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">
@@ -1413,6 +1575,13 @@
                data-name="Ritika Patel"
                data-age="25"
                data-height="5'6&quot;"
+               data-height-inches="66"
+               data-city="Ahmedabad"
+               data-profession="business_finance"
+               data-manglik="anshik_manglik"
+               data-online="false"
+               data-royal="true"
+               data-verified="true"
                data-edu="MBA (Finance)"
                data-location="Ahmedabad, Gujarat"
                data-gotra="Vashishtha"
@@ -1463,6 +1632,18 @@
             <p class="text-[11px] text-stone-600 leading-snug font-medium">
               Age: 25 <span class="text-stone-300">|</span> Height: 5'6"
             </p>
+
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-amber-50 text-amber-900 border border-amber-300 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-half-stroke text-[8px] text-amber-600"></i>
+                <span>आंशिक मांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-chart-line text-[8px] text-stone-600"></i>
+                <span>MBA (फाइनेंस)</span>
+              </span>
+            </div>
 
             <!-- Education -->
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">
@@ -1560,6 +1741,13 @@
                data-name="Pooja Maheshwari"
                data-age="25"
                data-height="5'3&quot;"
+               data-height-inches="63"
+               data-city="Surat"
+               data-profession="business_finance"
+               data-manglik="non_manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="CA Final (Chartered Accountant)"
                data-location="Surat, Gujarat"
                data-gotra="Somani"
@@ -1595,6 +1783,17 @@
               </span>
             </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 25 <span class="text-stone-300">|</span> Height: 5'3"</p>
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-check text-[8px] text-emerald-600"></i>
+                <span>अमांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-calculator text-[8px] text-stone-600"></i>
+                <span>CA (चार्टर्ड अकाउंटेंट)</span>
+              </span>
+            </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: CA Final (Chartered Accountant)</p>
             <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
               <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
@@ -1638,6 +1837,13 @@
                data-name="Sneha Agarwal"
                data-age="26"
                data-height="5'4&quot;"
+               data-height-inches="64"
+               data-city="Jaipur"
+               data-profession="it_software"
+               data-manglik="non_manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="M.Sc Data Science & AI"
                data-location="Jaipur, Rajasthan"
                data-gotra="Bansal"
@@ -1662,6 +1868,17 @@
               </span>
             </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 26 <span class="text-stone-300">|</span> Height: 5'4"</p>
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-check text-[8px] text-emerald-600"></i>
+                <span>अमांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-robot text-[8px] text-stone-600"></i>
+                <span>AI व Data Science</span>
+              </span>
+            </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: M.Sc Data Science & AI</p>
             <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
               <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
@@ -1690,6 +1907,13 @@
                data-name="Divya Jain"
                data-age="26"
                data-height="5'4&quot;"
+               data-height-inches="64"
+               data-city="Udaipur"
+               data-profession="design_architecture"
+               data-manglik="non_manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="B.Arch (Architecture)"
                data-location="Udaipur, Rajasthan"
                data-gotra="Oswal"
@@ -1714,6 +1938,17 @@
               </span>
             </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 26 <span class="text-stone-300">|</span> Height: 5'4"</p>
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-check text-[8px] text-emerald-600"></i>
+                <span>अमांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-compass-drafting text-[8px] text-stone-600"></i>
+                <span>B.Arch आर्किटेक्चर</span>
+              </span>
+            </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: B.Arch (Architecture)</p>
             <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
               <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
@@ -1742,6 +1977,13 @@
                data-name="Pooja Chaudhary"
                data-age="25"
                data-height="5'6&quot;"
+               data-height-inches="66"
+               data-city="Sikar"
+               data-profession="education_teaching"
+               data-manglik="non_manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="M.A. & Govt Lecturer"
                data-location="Sikar, Rajasthan"
                data-gotra="Punia"
@@ -1793,6 +2035,17 @@
               </span>
             </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 25 <span class="text-stone-300">|</span> Height: 5'6"</p>
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-check text-[8px] text-emerald-600"></i>
+                <span>अमांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-book-open-reader text-[8px] text-stone-600"></i>
+                <span>Govt Lecturer / शिक्षा</span>
+              </span>
+            </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: M.A. & Govt Lecturer</p>
             <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
               <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
@@ -1821,6 +2074,13 @@
                data-name="Kavita Yadav"
                data-age="25"
                data-height="5'4&quot;"
+               data-height-inches="64"
+               data-city="Alwar"
+               data-profession="govt_service"
+               data-manglik="manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="B.Com + Bank PO"
                data-location="Alwar, Rajasthan"
                data-gotra="Kaushik"
@@ -1845,6 +2105,17 @@
               </span>
             </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 25 <span class="text-stone-300">|</span> Height: 5'4"</p>
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-rose-50 text-rose-800 border border-rose-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-exclamation text-[8px] text-rose-600"></i>
+                <span>मांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-building-columns text-[8px] text-stone-600"></i>
+                <span>बैंक अधिकारी (PO)</span>
+              </span>
+            </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: B.Com + Bank PO</p>
             <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
               <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
@@ -1873,6 +2144,13 @@
                data-name="Aarti Gurjar"
                data-age="24"
                data-height="5'3&quot;"
+               data-height-inches="63"
+               data-city="Ajmer"
+               data-profession="education_teaching"
+               data-manglik="non_manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="M.A. & B.Ed"
                data-location="Ajmer, Rajasthan"
                data-gotra="Bainsla"
@@ -1897,6 +2175,17 @@
               </span>
             </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 24 <span class="text-stone-300">|</span> Height: 5'3"</p>
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-check text-[8px] text-emerald-600"></i>
+                <span>अमांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-graduation-cap text-[8px] text-stone-600"></i>
+                <span>शिक्षण व B.Ed</span>
+              </span>
+            </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: M.A. & B.Ed</p>
             <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
               <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
@@ -1925,6 +2214,13 @@
                data-name="Meenakshi Soni"
                data-age="25"
                data-height="5'3&quot;"
+               data-height-inches="63"
+               data-city="Jodhpur"
+               data-profession="design_architecture"
+               data-manglik="non_manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="B.Des (Jewellery Design)"
                data-location="Jodhpur, Rajasthan"
                data-gotra="Soni"
@@ -1949,6 +2245,17 @@
               </span>
             </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 25 <span class="text-stone-300">|</span> Height: 5'3"</p>
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-check text-[8px] text-emerald-600"></i>
+                <span>अमांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-gem text-[8px] text-stone-600"></i>
+                <span>B.Des ज्वेलरी डिज़ाइन</span>
+              </span>
+            </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: B.Des (Jewellery Design)</p>
             <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
               <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
@@ -1977,6 +2284,13 @@
                data-name="Sunita Saini"
                data-age="24"
                data-height="5'4&quot;"
+               data-height-inches="64"
+               data-city="Alwar"
+               data-profession="education_teaching"
+               data-manglik="non_manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="M.Com + B.Ed"
                data-location="Alwar, Rajasthan"
                data-gotra="Maurya"
@@ -2028,6 +2342,17 @@
               </span>
             </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 24 <span class="text-stone-300">|</span> Height: 5'4"</p>
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-check text-[8px] text-emerald-600"></i>
+                <span>अमांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-graduation-cap text-[8px] text-stone-600"></i>
+                <span>M.Com B.Ed शिक्षण</span>
+              </span>
+            </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: M.Com + B.Ed</p>
             <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
               <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
@@ -2056,6 +2381,13 @@
                data-name="Rekha Bishnoi"
                data-age="26"
                data-height="5'5&quot;"
+               data-height-inches="65"
+               data-city="Jodhpur"
+               data-profession="govt_service"
+               data-manglik="non_manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="RAS Officer (State Govt)"
                data-location="Jodhpur, Rajasthan"
                data-gotra="Saharan"
@@ -2080,6 +2412,17 @@
               </span>
             </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 26 <span class="text-stone-300">|</span> Height: 5'5"</p>
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-check text-[8px] text-emerald-600"></i>
+                <span>अमांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-scale-balanced text-[8px] text-stone-600"></i>
+                <span>RAS अधिकारी (Govt)</span>
+              </span>
+            </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: RAS Officer (State Govt)</p>
             <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
               <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
@@ -2108,6 +2451,13 @@
                data-name="Simran Kaur"
                data-age="26"
                data-height="5'5&quot;"
+               data-height-inches="65"
+               data-city="Chandigarh"
+               data-profession="it_software"
+               data-manglik="non_manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="B.Tech Software Engineer"
                data-location="Chandigarh, Punjab"
                data-gotra="Sandhu"
@@ -2132,6 +2482,17 @@
               </span>
             </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 26 <span class="text-stone-300">|</span> Height: 5'5"</p>
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-check text-[8px] text-emerald-600"></i>
+                <span>अमांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-laptop-code text-[8px] text-stone-600"></i>
+                <span>Software Engineer</span>
+              </span>
+            </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: B.Tech Software Engineer</p>
             <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
               <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
@@ -2160,6 +2521,13 @@
                data-name="Khushi Advani"
                data-age="25"
                data-height="5'4&quot;"
+               data-height-inches="64"
+               data-city="Jaipur"
+               data-profession="design_architecture"
+               data-manglik="anshik_manglik"
+               data-online="true"
+               data-royal="true"
+               data-verified="true"
                data-edu="Fashion Merchandiser & BBA"
                data-location="Jaipur, Rajasthan"
                data-gotra="Advani"
@@ -2184,6 +2552,17 @@
               </span>
             </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 25 <span class="text-stone-300">|</span> Height: 5'4"</p>
+            <!-- Status Badges: Manglik & Profession -->
+            <div class="flex flex-wrap items-center gap-1 my-1">
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-amber-50 text-amber-900 border border-amber-300 text-[9.5px] font-bold">
+                <i class="fa-solid fa-circle-half-stroke text-[8px] text-amber-600"></i>
+                <span>आंशिक मांगलिक</span>
+              </span>
+              <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200 text-[9.5px] font-bold">
+                <i class="fa-solid fa-shirt text-[8px] text-stone-600"></i>
+                <span>फैशन मर्चेंडाइज़र</span>
+              </span>
+            </div>
             <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: Fashion Merchandiser & BBA</p>
             <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
               <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
@@ -3132,6 +3511,209 @@
     </div>
   </div>
 
+  <!-- ==================== MODAL 7: ADVANCED MULTI-FILTER MODAL (उन्नत रिश्ते, उम्र, कद, सिटी, व्यवसाय, मांगलिक) ==================== -->
+  <div id="advancedFilterModal" class="modal-backdrop fixed inset-0 z-[160] bg-black/75 backdrop-blur-xs flex items-center justify-center p-3">
+    <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border-2 border-amber-400 flex flex-col max-h-[92vh] animate-bounce-in">
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-emerald-950 via-emerald-900 to-emerald-950 text-white p-3.5 flex items-center justify-between border-b-2 border-amber-400 shrink-0">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-emerald-950 flex items-center justify-center text-base font-black shadow-xs">
+            <i class="fa-solid fa-sliders text-base"></i>
+          </div>
+          <div>
+            <div class="text-[9.5px] uppercase font-black tracking-wider text-amber-300">पसंद अनुसार रिश्ते चुनें</div>
+            <h3 class="font-cinzel text-xs font-bold text-white">उन्नत रिश्ते व विस्तृत फ़िल्टर (Filters)</h3>
+          </div>
+        </div>
+        <button onclick="closeAdvancedFilterModal()" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xs transition cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-3.5 space-y-3.5 text-stone-800 text-xs overflow-y-auto">
+        <!-- Notice note -->
+        <div class="p-2.5 rounded-xl bg-amber-50/80 border border-amber-300 text-[10.5px] text-amber-950 flex items-start gap-2">
+          <i class="fa-solid fa-circle-info text-amber-700 mt-0.5 text-xs shrink-0"></i>
+          <div>
+            <strong>सुविधाजनक चयन:</strong> यदि किसी बात से कोई आपत्ति नहीं है, तो <em>"सभी (Doesn't Matter / कोई भी)"</em> विकल्प चुनें। जो जरूरी हो, केवल वही फ़िल्टर करें।
+          </div>
+        </div>
+
+        <!-- Section 1: उन्नत रिश्ते प्राथमिकताएं (Elite Matches) -->
+        <div class="space-y-1.5">
+          <label class="text-[11px] font-black text-emerald-950 flex items-center gap-1.5">
+            <i class="fa-solid fa-award text-amber-600"></i>
+            <span>उन्नत रिश्ते प्राथमिकताएं (Elite Matches):</span>
+          </label>
+          <div class="grid grid-cols-2 gap-2">
+            <!-- 28+ Guna Milan -->
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 hover:bg-emerald-50/50 cursor-pointer transition">
+              <input type="checkbox" id="modalAdvHighGuna" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+              <div>
+                <div class="text-[11px] font-bold text-stone-900">🌟 28+ गुण मिलान</div>
+                <div class="text-[9.5px] text-stone-500">उत्तम कुंडली मिलान</div>
+              </div>
+            </label>
+            <!-- Verified Only -->
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 hover:bg-emerald-50/50 cursor-pointer transition">
+              <input type="checkbox" id="modalAdvVerified" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+              <div>
+                <div class="text-[11px] font-bold text-stone-900">🛡️ 100% सत्यापित</div>
+                <div class="text-[9.5px] text-stone-500">आधार व बायोडाटा प्रमाणित</div>
+              </div>
+            </label>
+            <!-- Royal Biodata Only -->
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 hover:bg-emerald-50/50 cursor-pointer transition">
+              <input type="checkbox" id="modalAdvRoyal" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+              <div>
+                <div class="text-[11px] font-bold text-stone-900">👑 रॉयल बायोडाटा</div>
+                <div class="text-[9.5px] text-stone-500">गोल्डन बॉर्डर व PDF</div>
+              </div>
+            </label>
+            <!-- Online Only -->
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 hover:bg-emerald-50/50 cursor-pointer transition">
+              <input type="checkbox" id="modalAdvOnline" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+              <div>
+                <div class="text-[11px] font-bold text-stone-900">🟢 अभी ऑनलाइन</div>
+                <div class="text-[9.5px] text-stone-500">सक्रिय रिश्तेदार / सदस्य</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Section 2: मांगलिक स्थिति (Manglik Status) -->
+        <div class="space-y-1.5">
+          <label class="text-[11px] font-black text-emerald-950 flex items-center gap-1.5">
+            <i class="fa-solid fa-ring text-rose-600"></i>
+            <span>मांगलिक स्थिति (Manglik Status):</span>
+          </label>
+          <div class="grid grid-cols-2 gap-1.5">
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:border-emerald-500 transition">
+              <input type="radio" name="modalAdvManglikRadio" value="all" checked class="text-emerald-600 focus:ring-emerald-500">
+              <span class="text-[11px] font-bold text-stone-800">सभी (कोई भी / Doesn't Matter)</span>
+            </label>
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:border-emerald-500 transition">
+              <input type="radio" name="modalAdvManglikRadio" value="non_manglik" class="text-emerald-600 focus:ring-emerald-500">
+              <span class="text-[11px] font-bold text-emerald-800">🟢 केवल नॉन-मांगलिक (अमांगलिक)</span>
+            </label>
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:border-emerald-500 transition">
+              <input type="radio" name="modalAdvManglikRadio" value="manglik" class="text-emerald-600 focus:ring-emerald-500">
+              <span class="text-[11px] font-bold text-rose-800">🔴 केवल मांगलिक</span>
+            </label>
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:border-emerald-500 transition">
+              <input type="radio" name="modalAdvManglikRadio" value="anshik_manglik" class="text-emerald-600 focus:ring-emerald-500">
+              <span class="text-[11px] font-bold text-amber-800">🟡 आंशिक मांगलिक</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Section 3: उम्र सीमा (Age Range) -->
+        <div class="space-y-1.5">
+          <label class="text-[11px] font-black text-emerald-950 flex items-center gap-1.5">
+            <i class="fa-solid fa-cake-candles text-amber-600"></i>
+            <span>उम्र सीमा (Age Range):</span>
+          </label>
+          <div class="grid grid-cols-2 gap-1.5">
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:border-emerald-500 transition">
+              <input type="radio" name="modalAdvAgeRadio" value="all" checked class="text-emerald-600 focus:ring-emerald-500">
+              <span class="text-[11px] font-bold text-stone-800">सभी उम्र (कोई भी)</span>
+            </label>
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:border-emerald-500 transition">
+              <input type="radio" name="modalAdvAgeRadio" value="21-24" class="text-emerald-600 focus:ring-emerald-500">
+              <span class="text-[11px] font-bold text-stone-800">21 - 24 वर्ष</span>
+            </label>
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:border-emerald-500 transition">
+              <input type="radio" name="modalAdvAgeRadio" value="25-27" class="text-emerald-600 focus:ring-emerald-500">
+              <span class="text-[11px] font-bold text-stone-800">25 - 27 वर्ष</span>
+            </label>
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:border-emerald-500 transition">
+              <input type="radio" name="modalAdvAgeRadio" value="28-32" class="text-emerald-600 focus:ring-emerald-500">
+              <span class="text-[11px] font-bold text-stone-800">28 - 32 वर्ष</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Section 4: कद / ऊंचाई (Height) -->
+        <div class="space-y-1.5">
+          <label class="text-[11px] font-black text-emerald-950 flex items-center gap-1.5">
+            <i class="fa-solid fa-ruler-vertical text-emerald-700"></i>
+            <span>कद / लंबाई (Height):</span>
+          </label>
+          <div class="grid grid-cols-2 gap-1.5">
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:border-emerald-500 transition">
+              <input type="radio" name="modalAdvHeightRadio" value="all" checked class="text-emerald-600 focus:ring-emerald-500">
+              <span class="text-[11px] font-bold text-stone-800">सभी कद (कोई भी)</span>
+            </label>
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:border-emerald-500 transition">
+              <input type="radio" name="modalAdvHeightRadio" value="short" class="text-emerald-600 focus:ring-emerald-500">
+              <span class="text-[11px] font-bold text-stone-800">5'0" - 5'3" (152-160 cm)</span>
+            </label>
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:border-emerald-500 transition">
+              <input type="radio" name="modalAdvHeightRadio" value="medium" class="text-emerald-600 focus:ring-emerald-500">
+              <span class="text-[11px] font-bold text-stone-800">5'4" - 5'6" (162-168 cm)</span>
+            </label>
+            <label class="flex items-center space-x-2 p-2 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:border-emerald-500 transition">
+              <input type="radio" name="modalAdvHeightRadio" value="tall" class="text-emerald-600 focus:ring-emerald-500">
+              <span class="text-[11px] font-bold text-stone-800">5'7" और अधिक (170+ cm)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Section 5: सिटी व व्यवसाय (City & Profession Dropdowns) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div class="space-y-1">
+            <label class="text-[11px] font-black text-emerald-950 flex items-center gap-1">
+              <i class="fa-solid fa-city text-emerald-700"></i>
+              <span>सिटी / शहर (City):</span>
+            </label>
+            <select id="modalAdvCity" class="w-full py-2 px-2.5 rounded-xl bg-stone-50 border border-stone-200 text-stone-800 text-xs font-bold focus:ring-2 focus:ring-emerald-500 cursor-pointer">
+              <option value="all">सभी शहर (All Cities - Doesn't Matter)</option>
+              <option value="Jaipur">जयपुर (Jaipur)</option>
+              <option value="Indore">इन्दौर (Indore)</option>
+              <option value="Pune">पुणे (Pune)</option>
+              <option value="Surat">सूरत (Surat)</option>
+              <option value="Ahmedabad">अहमदाबाद (Ahmedabad)</option>
+              <option value="Udaipur">उदयपुर (Udaipur)</option>
+              <option value="Jodhpur">जोधपुर (Jodhpur)</option>
+              <option value="Sikar">सीकर (Sikar)</option>
+              <option value="Alwar">अलवर (Alwar)</option>
+              <option value="Ajmer">अजमेर (Ajmer)</option>
+              <option value="Chandigarh">चंडीगढ़ (Chandigarh)</option>
+            </select>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-[11px] font-black text-emerald-950 flex items-center gap-1">
+              <i class="fa-solid fa-briefcase text-emerald-700"></i>
+              <span>व्यवसाय / पेशा (Profession):</span>
+            </label>
+            <select id="modalAdvProfession" class="w-full py-2 px-2.5 rounded-xl bg-stone-50 border border-stone-200 text-stone-800 text-xs font-bold focus:ring-2 focus:ring-emerald-500 cursor-pointer">
+              <option value="all">सभी व्यवसाय (Any Profession - Doesn't Matter)</option>
+              <option value="it_software">💻 IT व सॉफ्टवेयर (Software / IT)</option>
+              <option value="govt_service">🏛️ सरकारी / बैंक / RAS (Govt / Civil)</option>
+              <option value="business_finance">📊 CA, फाइनेंस व व्यापार (Finance / CA)</option>
+              <option value="education_teaching">📚 शिक्षण व प्राध्यापक (Teaching / Lecturer)</option>
+              <option value="design_architecture">🎨 डिज़ाइन व आर्किटेक्चर (Design / Architecture)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-3 bg-stone-50 border-t border-stone-200 flex items-center justify-between gap-2 shrink-0">
+        <button type="button" onclick="resetAllFiltersFromModal()" class="px-3 py-2 rounded-xl bg-stone-200 hover:bg-rose-100 text-stone-700 hover:text-rose-800 font-bold text-xs transition cursor-pointer flex items-center gap-1">
+          <i class="fa-solid fa-rotate-left text-[10px]"></i>
+          <span>सभी रीसेट करें</span>
+        </button>
+        <button type="button" onclick="applyAdvancedModalFilters()" class="flex-1 py-2 px-4 rounded-xl bg-gradient-to-r from-emerald-800 via-emerald-700 to-emerald-900 text-white font-black text-xs shadow-md transition active:scale-95 flex items-center justify-center space-x-1.5 cursor-pointer">
+          <i class="fa-solid fa-check text-amber-300"></i>
+          <span>फ़िल्टर लागू करें</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   <script>
     // Desktop Viewport Switcher
@@ -3235,6 +3817,324 @@
       applyCombinedFilters();
     }
 
+    // ==========================================
+    // MULTI-FILTER STATE & LOGIC
+    // (उन्नत रिश्ते, उम्र, कद, सिटी, व्यवसाय, मांगलिक)
+    // ==========================================
+    let activeMultiFilters = {
+      manglik: 'all',
+      age: 'all',
+      city: 'all',
+      profession: 'all',
+      height: 'all',
+      highGuna: false,
+      verifiedOnly: false,
+      royalOnly: false,
+      onlineOnly: false
+    };
+
+    function onQuickFilterChange() {
+      const qManglik = document.getElementById('quickFilterManglik')?.value || 'all';
+      const qAge = document.getElementById('quickFilterAge')?.value || 'all';
+      const qCity = document.getElementById('quickFilterCity')?.value || 'all';
+      const qProf = document.getElementById('quickFilterProfession')?.value || 'all';
+      const qHeight = document.getElementById('quickFilterHeight')?.value || 'all';
+
+      activeMultiFilters.manglik = qManglik;
+      activeMultiFilters.age = qAge;
+      activeMultiFilters.city = qCity;
+      activeMultiFilters.profession = qProf;
+      activeMultiFilters.height = qHeight;
+
+      syncModalInputsFromState();
+      applyCombinedFilters();
+      renderActiveFilterPills();
+    }
+
+    function syncModalInputsFromState() {
+      const rManglik = document.querySelector(`input[name="modalAdvManglikRadio"][value="${activeMultiFilters.manglik}"]`);
+      if (rManglik) rManglik.checked = true;
+
+      const rAge = document.querySelector(`input[name="modalAdvAgeRadio"][value="${activeMultiFilters.age}"]`);
+      if (rAge) rAge.checked = true;
+
+      const rHeight = document.querySelector(`input[name="modalAdvHeightRadio"][value="${activeMultiFilters.height}"]`);
+      if (rHeight) rHeight.checked = true;
+
+      const mCity = document.getElementById('modalAdvCity');
+      if (mCity) mCity.value = activeMultiFilters.city;
+
+      const mProf = document.getElementById('modalAdvProfession');
+      if (mProf) mProf.value = activeMultiFilters.profession;
+
+      const chkGuna = document.getElementById('modalAdvHighGuna');
+      if (chkGuna) chkGuna.checked = !!activeMultiFilters.highGuna;
+
+      const chkVer = document.getElementById('modalAdvVerified');
+      if (chkVer) chkVer.checked = !!activeMultiFilters.verifiedOnly;
+
+      const chkRoyal = document.getElementById('modalAdvRoyal');
+      if (chkRoyal) chkRoyal.checked = !!activeMultiFilters.royalOnly;
+
+      const chkOnline = document.getElementById('modalAdvOnline');
+      if (chkOnline) chkOnline.checked = !!activeMultiFilters.onlineOnly;
+    }
+
+    function syncQuickDropdownsFromState() {
+      const qManglik = document.getElementById('quickFilterManglik');
+      if (qManglik) qManglik.value = activeMultiFilters.manglik;
+
+      const qAge = document.getElementById('quickFilterAge');
+      if (qAge) qAge.value = activeMultiFilters.age;
+
+      const qCity = document.getElementById('quickFilterCity');
+      if (qCity) qCity.value = activeMultiFilters.city;
+
+      const qProf = document.getElementById('quickFilterProfession');
+      if (qProf) qProf.value = activeMultiFilters.profession;
+
+      const qHeight = document.getElementById('quickFilterHeight');
+      if (qHeight) qHeight.value = activeMultiFilters.height;
+    }
+
+    function openAdvancedFilterModal() {
+      syncModalInputsFromState();
+      document.getElementById('advancedFilterModal').classList.add('open');
+    }
+
+    function closeAdvancedFilterModal() {
+      document.getElementById('advancedFilterModal').classList.remove('open');
+    }
+
+    function applyAdvancedModalFilters() {
+      const rManglik = document.querySelector('input[name="modalAdvManglikRadio"]:checked')?.value || 'all';
+      const rAge = document.querySelector('input[name="modalAdvAgeRadio"]:checked')?.value || 'all';
+      const rHeight = document.querySelector('input[name="modalAdvHeightRadio"]:checked')?.value || 'all';
+      const mCity = document.getElementById('modalAdvCity')?.value || 'all';
+      const mProf = document.getElementById('modalAdvProfession')?.value || 'all';
+
+      const chkGuna = document.getElementById('modalAdvHighGuna')?.checked || false;
+      const chkVer = document.getElementById('modalAdvVerified')?.checked || false;
+      const chkRoyal = document.getElementById('modalAdvRoyal')?.checked || false;
+      const chkOnline = document.getElementById('modalAdvOnline')?.checked || false;
+
+      activeMultiFilters = {
+        manglik: rManglik,
+        age: rAge,
+        city: mCity,
+        profession: mProf,
+        height: rHeight,
+        highGuna: chkGuna,
+        verifiedOnly: chkVer,
+        royalOnly: chkRoyal,
+        onlineOnly: chkOnline
+      };
+
+      syncQuickDropdownsFromState();
+      closeAdvancedFilterModal();
+      applyCombinedFilters();
+      renderActiveFilterPills();
+
+      showToast('फ़िल्टर लागू हो गए 🎯', 'आपकी पसंद के अनुसार रिश्ते फिल्टर कर दिए गए हैं।', 'fa-filter');
+    }
+
+    function resetAllFiltersFromModal() {
+      resetAllFilters();
+      syncModalInputsFromState();
+      closeAdvancedFilterModal();
+    }
+
+    function resetAllFilters() {
+      activeMultiFilters = {
+        manglik: 'all',
+        age: 'all',
+        city: 'all',
+        profession: 'all',
+        height: 'all',
+        highGuna: false,
+        verifiedOnly: false,
+        royalOnly: false,
+        onlineOnly: false
+      };
+
+      syncQuickDropdownsFromState();
+      syncModalInputsFromState();
+      applyCombinedFilters();
+      renderActiveFilterPills();
+
+      showToast('फ़िल्टर रीसेट 🔄', 'सभी फ़िल्टर हटा दिए गए हैं।', 'fa-rotate-left');
+    }
+
+    function removeSingleFilter(key) {
+      if (key === 'highGuna' || key === 'verifiedOnly' || key === 'royalOnly' || key === 'onlineOnly') {
+        activeMultiFilters[key] = false;
+      } else {
+        activeMultiFilters[key] = 'all';
+      }
+
+      syncQuickDropdownsFromState();
+      syncModalInputsFromState();
+      applyCombinedFilters();
+      renderActiveFilterPills();
+    }
+
+    function checkCardMultiFilters(card) {
+      // 1. Manglik check
+      if (activeMultiFilters.manglik !== 'all') {
+        const cardManglik = card.getAttribute('data-manglik') || '';
+        if (cardManglik !== activeMultiFilters.manglik) return false;
+      }
+
+      // 2. Age check
+      if (activeMultiFilters.age !== 'all') {
+        const age = parseInt(card.getAttribute('data-age') || '0', 10);
+        if (activeMultiFilters.age === '21-24' && (age < 21 || age > 24)) return false;
+        if (activeMultiFilters.age === '25-27' && (age < 25 || age > 27)) return false;
+        if (activeMultiFilters.age === '28-32' && (age < 28 || age > 32)) return false;
+      }
+
+      // 3. City check
+      if (activeMultiFilters.city !== 'all') {
+        const cardCity = (card.getAttribute('data-city') || '').toLowerCase();
+        const cardLoc = (card.getAttribute('data-location') || '').toLowerCase();
+        const targetCity = activeMultiFilters.city.toLowerCase();
+        if (!cardCity.includes(targetCity) && !cardLoc.includes(targetCity)) return false;
+      }
+
+      // 4. Profession check
+      if (activeMultiFilters.profession !== 'all') {
+        const cardProf = card.getAttribute('data-profession') || '';
+        if (cardProf !== activeMultiFilters.profession) return false;
+      }
+
+      // 5. Height check
+      if (activeMultiFilters.height !== 'all') {
+        const inches = parseInt(card.getAttribute('data-height-inches') || '0', 10);
+        if (activeMultiFilters.height === 'short' && (inches < 60 || inches > 63)) return false;
+        if (activeMultiFilters.height === 'medium' && (inches < 64 || inches > 66)) return false;
+        if (activeMultiFilters.height === 'tall' && inches < 67) return false;
+      }
+
+      // 6. Highlights / Elite checks (उन्नत रिश्ते)
+      if (activeMultiFilters.highGuna) {
+        const guna = parseInt(card.getAttribute('data-guna') || '0', 10);
+        if (guna < 28) return false;
+      }
+
+      if (activeMultiFilters.verifiedOnly) {
+        const cats = card.getAttribute('data-categories') || '';
+        const isVer = card.getAttribute('data-verified') === 'true' || cats.includes('verified');
+        if (!isVer) return false;
+      }
+
+      if (activeMultiFilters.royalOnly) {
+        const isRoyal = card.getAttribute('data-royal') === 'true';
+        if (!isRoyal) return false;
+      }
+
+      if (activeMultiFilters.onlineOnly) {
+        const isOnline = card.getAttribute('data-online') === 'true';
+        if (!isOnline) return false;
+      }
+
+      return true;
+    }
+
+    function renderActiveFilterPills() {
+      const container = document.getElementById('activeFilterPillsContainer');
+      const listEl = document.getElementById('activePillsList');
+      const resetBtn = document.getElementById('btnResetFilters');
+      const badge = document.getElementById('activeFilterBadge');
+
+      if (!container || !listEl) return;
+
+      listEl.innerHTML = '';
+      let activeCount = 0;
+
+      const labels = {
+        manglik: {
+          'non_manglik': '🟢 अमांगलिक',
+          'manglik': '🔴 मांगलिक',
+          'anshik_manglik': '🟡 आंशिक मांगलिक'
+        },
+        age: {
+          '21-24': '🎂 21-24 वर्ष',
+          '25-27': '🎂 25-27 वर्ष',
+          '28-32': '🎂 28-32 वर्ष'
+        },
+        height: {
+          'short': '📏 5\'0"-5\'3"',
+          'medium': '📏 5\'4"-5\'6"',
+          'tall': '📏 5\'7"+'
+        },
+        profession: {
+          'it_software': '💻 IT व सॉफ्टवेयर',
+          'govt_service': '🏛️ सरकारी सेवा / Bank',
+          'business_finance': '📊 CA व फाइनेंस',
+          'education_teaching': '📚 शिक्षण व B.Ed',
+          'design_architecture': '🎨 डिज़ाइन व आर्किटेक्चर'
+        }
+      };
+
+      if (activeMultiFilters.manglik !== 'all') {
+        createPillChip(labels.manglik[activeMultiFilters.manglik] || 'मांगलिक', 'manglik');
+        activeCount++;
+      }
+      if (activeMultiFilters.age !== 'all') {
+        createPillChip(labels.age[activeMultiFilters.age] || 'उम्र', 'age');
+        activeCount++;
+      }
+      if (activeMultiFilters.city !== 'all') {
+        createPillChip(`🏙️ ${activeMultiFilters.city}`, 'city');
+        activeCount++;
+      }
+      if (activeMultiFilters.profession !== 'all') {
+        createPillChip(labels.profession[activeMultiFilters.profession] || 'व्यवसाय', 'profession');
+        activeCount++;
+      }
+      if (activeMultiFilters.height !== 'all') {
+        createPillChip(labels.height[activeMultiFilters.height] || 'कद', 'height');
+        activeCount++;
+      }
+
+      if (activeMultiFilters.highGuna) {
+        createPillChip('🌟 28+ गुण मिलान', 'highGuna');
+        activeCount++;
+      }
+      if (activeMultiFilters.verifiedOnly) {
+        createPillChip('🛡️ 100% सत्यापित', 'verifiedOnly');
+        activeCount++;
+      }
+      if (activeMultiFilters.royalOnly) {
+        createPillChip('👑 रॉयल बायोडाटा', 'royalOnly');
+        activeCount++;
+      }
+      if (activeMultiFilters.onlineOnly) {
+        createPillChip('🟢 ऑनलाइन सदस्य', 'onlineOnly');
+        activeCount++;
+      }
+
+      function createPillChip(text, key) {
+        const chip = document.createElement('span');
+        chip.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-300 text-[10px] font-bold shadow-2xs animate-fade-in';
+        chip.innerHTML = `<span>${text}</span> <button type="button" onclick="removeSingleFilter('${key}')" class="text-emerald-700 hover:text-rose-600 transition ml-0.5 cursor-pointer font-black text-[11px]">&times;</button>`;
+        listEl.appendChild(chip);
+      }
+
+      if (activeCount > 0) {
+        container.classList.remove('hidden');
+        if (resetBtn) resetBtn.classList.remove('hidden');
+        if (badge) {
+          badge.textContent = activeCount;
+          badge.classList.remove('hidden');
+        }
+      } else {
+        container.classList.add('hidden');
+        if (resetBtn) resetBtn.classList.add('hidden');
+        if (badge) badge.classList.add('hidden');
+      }
+    }
+
     function applyCombinedFilters() {
       const cards = document.querySelectorAll('.candidate-card');
       let visibleCount = 0;
@@ -3253,7 +4153,10 @@
         // Category check
         const matchCategory = (currentFilter === 'all' || cardCats.includes(currentFilter));
 
-        if (matchSamaj && matchCategory) {
+        // Multi-Filters check (उन्नत रिश्ते, उम्र, कद, सिटी, व्यवसाय, मांगलिक)
+        const matchMulti = checkCardMultiFilters(card);
+
+        if (matchSamaj && matchCategory && matchMulti) {
           card.style.display = 'block';
           visibleCount++;
         } else {
@@ -4020,6 +4923,8 @@
     // Initialize on DOM Ready
     document.addEventListener('DOMContentLoaded', function() {
       renderSamajDrawerPills();
+      syncQuickDropdownsFromState();
+      renderActiveFilterPills();
       filterMatchesBySamaj(currentSamajFilter);
     });
   </script>
