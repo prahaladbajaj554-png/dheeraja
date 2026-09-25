@@ -369,6 +369,95 @@
       background: #059669;
     }
 
+    /* ==============================================================
+       PHOTO PRIVACY & SECURITY WATERMARK SYSTEM (फोटो सुरक्षा व प्राइवेसी)
+       ============================================================== */
+    .photo-container-shield {
+      position: relative;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+    .photo-container-shield img {
+      pointer-events: none;
+      -webkit-user-drag: none;
+    }
+    /* Repeating Diagonal Security Watermark Overlay */
+    .photo-watermark-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, transparent 80%);
+      transition: opacity 0.25s ease;
+    }
+    .photo-watermark-overlay.disabled {
+      display: none !important;
+    }
+    .photo-watermark-text {
+      position: absolute;
+      transform: rotate(-32deg);
+      white-space: nowrap;
+      color: rgba(255, 255, 255, 0.42);
+      font-size: 7.5px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85), 0 0 1px rgba(0, 0, 0, 0.95);
+      user-select: none;
+      pointer-events: none;
+    }
+    .photo-watermark-text.row-top { top: 20%; }
+    .photo-watermark-text.row-mid { top: 50%; }
+    .photo-watermark-text.row-bot { top: 80%; }
+
+    /* Security Watermark Badge on bottom right of candidate photo */
+    .photo-security-pill {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      padding: 1px 4px;
+      border-radius: 4px;
+      background: rgba(6, 78, 59, 0.90);
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(212, 175, 55, 0.7);
+      color: #FFF2C2;
+      font-size: 7.5px;
+      font-weight: 800;
+      font-family: monospace;
+      display: flex;
+      align-items: center;
+      gap: 2.5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+      z-index: 12;
+      pointer-events: none;
+    }
+
+    /* Privacy Blur Shield (फोटो निजी है / केवल अनुरोध पर) */
+    .photo-blur-active {
+      filter: blur(8px) saturate(0.8);
+      transform: scale(1.08);
+      transition: filter 0.35s ease, transform 0.35s ease;
+    }
+    .photo-privacy-guard {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(3px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4px;
+      z-index: 15;
+      transition: all 0.3s ease;
+    }
+
     /* Royal Golden Ornate Border & Biodata Styles */
     .royal-border-outer {
       padding: 10px;
@@ -851,6 +940,28 @@
         <span id="filterStatusText"><i class="fa-solid fa-list-check text-emerald-700 mr-1.5"></i> सभी योग्य रिश्ते (All Matches): <strong>4 प्रोफाइल</strong></span>
         <span class="text-[10px] text-stone-500 font-mono">100% Verified</span>
       </div>
+
+      <!-- 4.1 PHOTO PRIVACY & SECURITY WATERMARK CONTROL BANNER -->
+      <div class="mt-1.5">
+        <button type="button" onclick="openPhotoPrivacyModal()" class="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-emerald-950 via-emerald-900 to-emerald-950 border border-amber-400 text-white text-xs flex items-center justify-between shadow-xs hover:border-amber-300 transition active:scale-[0.99] cursor-pointer group">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 text-emerald-950 flex items-center justify-center text-xs font-black shadow-inner shrink-0 group-hover:scale-105 transition">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="text-left">
+              <div class="text-white text-[11px] font-black leading-tight flex items-center gap-1.5">
+                <span>फोटो प्राइवेसी व सुरक्षा वाटरमार्क</span>
+                <span class="text-[8.5px] bg-emerald-400 text-emerald-950 px-1.5 py-0.2 rounded font-black tracking-wider uppercase">सक्रिय 🔒</span>
+              </div>
+              <p class="text-[9.5px] text-amber-200/90 leading-tight mt-0.5">स्क्रीनशॉट लॉक • 'केवल रिश्ते हेतु' मुहर • दृश्यता नियंत्रण</p>
+            </div>
+          </div>
+          <span class="text-[10px] text-amber-300 font-extrabold bg-white/10 px-2 py-1 rounded-lg border border-amber-400/40 group-hover:bg-amber-400 group-hover:text-emerald-950 transition flex items-center gap-1">
+            <span>सेटिंग्स</span>
+            <i class="fa-solid fa-sliders text-[9px]"></i>
+          </span>
+        </button>
+      </div>
     </section>
 
     <!-- 5. CANDIDATE MATCHES LIST (तालिका कार्ड्स) -->
@@ -874,12 +985,23 @@
         <!-- Top Main Info Flex Row -->
         <div class="flex items-start space-x-2.5">
           <!-- Left: Portrait Photo with Online Badge -->
-          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
-            <img src="/assets/images/match_priya.jpg" alt="Priya Sharma" class="w-full h-full object-cover">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200 photo-container-shield">
+            <img src="/assets/images/match_priya.jpg" alt="Priya Sharma" class="w-full h-full object-cover select-none pointer-events-none" draggable="false" oncontextmenu="return false;">
             <!-- Online Pill Badge -->
-            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300 z-12">
               <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
               <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+            <!-- Security Watermark Overlay -->
+            <div class="photo-watermark-overlay">
+              <span class="photo-watermark-text row-top">DHEERAJA • DH-101</span>
+              <span class="photo-watermark-text row-mid">केवल रिश्ते हेतु • सुरक्षित</span>
+              <span class="photo-watermark-text row-bot">DHEERAJA VERIFIED</span>
+            </div>
+            <!-- Security Pill -->
+            <div class="photo-security-pill" title="धीरजा सुरक्षा वाटरमार्क">
+              <i class="fa-solid fa-shield-halved text-amber-300"></i>
+              <span>DH-101</span>
             </div>
           </div>
 
@@ -1011,12 +1133,23 @@
         <!-- Top Main Info Flex Row -->
         <div class="flex items-start space-x-2.5">
           <!-- Left: Portrait Photo with Offline Badge -->
-          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
-            <img src="/assets/images/match_neha.jpg" alt="Neha Verma" class="w-full h-full object-cover">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200 photo-container-shield">
+            <img src="/assets/images/match_neha.jpg" alt="Neha Verma" class="w-full h-full object-cover select-none pointer-events-none" draggable="false" oncontextmenu="return false;">
             <!-- Offline Pill Badge -->
-            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-stone-300">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-stone-300 z-12">
               <span class="w-1.5 h-1.5 rounded-full bg-stone-400"></span>
               <span class="text-[8.5px] font-bold text-stone-600 leading-none">Offline</span>
+            </div>
+            <!-- Security Watermark Overlay -->
+            <div class="photo-watermark-overlay">
+              <span class="photo-watermark-text row-top">DHEERAJA • DH-102</span>
+              <span class="photo-watermark-text row-mid">केवल रिश्ते हेतु • सुरक्षित</span>
+              <span class="photo-watermark-text row-bot">DHEERAJA VERIFIED</span>
+            </div>
+            <!-- Security Pill -->
+            <div class="photo-security-pill" title="धीरजा सुरक्षा वाटरमार्क">
+              <i class="fa-solid fa-shield-halved text-amber-300"></i>
+              <span>DH-102</span>
             </div>
           </div>
 
@@ -1145,12 +1278,23 @@
         <!-- Top Main Info Flex Row -->
         <div class="flex items-start space-x-2.5">
           <!-- Left: Portrait Photo with Online Badge -->
-          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
-            <img src="/assets/images/match_anjali.jpg" alt="Anjali Singh" class="w-full h-full object-cover">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200 photo-container-shield">
+            <img src="/assets/images/match_anjali.jpg" alt="Anjali Singh" class="w-full h-full object-cover select-none pointer-events-none" draggable="false" oncontextmenu="return false;">
             <!-- Online Pill Badge -->
-            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300 z-12">
               <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
               <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+            <!-- Security Watermark Overlay -->
+            <div class="photo-watermark-overlay">
+              <span class="photo-watermark-text row-top">DHEERAJA • DH-103</span>
+              <span class="photo-watermark-text row-mid">केवल रिश्ते हेतु • सुरक्षित</span>
+              <span class="photo-watermark-text row-bot">DHEERAJA VERIFIED</span>
+            </div>
+            <!-- Security Pill -->
+            <div class="photo-security-pill" title="धीरजा सुरक्षा वाटरमार्क">
+              <i class="fa-solid fa-shield-halved text-amber-300"></i>
+              <span>DH-103</span>
             </div>
           </div>
 
@@ -1279,12 +1423,23 @@
         <!-- Top Main Info Flex Row -->
         <div class="flex items-start space-x-2.5">
           <!-- Left: Portrait Photo with Offline Badge -->
-          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
-            <img src="/assets/images/match_ritika.jpg" alt="Ritika Patel" class="w-full h-full object-cover">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200 photo-container-shield">
+            <img src="/assets/images/match_ritika.jpg" alt="Ritika Patel" class="w-full h-full object-cover select-none pointer-events-none" draggable="false" oncontextmenu="return false;">
             <!-- Offline Pill Badge -->
-            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-stone-300">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-stone-300 z-12">
               <span class="w-1.5 h-1.5 rounded-full bg-stone-400"></span>
               <span class="text-[8.5px] font-bold text-stone-600 leading-none">Offline</span>
+            </div>
+            <!-- Security Watermark Overlay -->
+            <div class="photo-watermark-overlay">
+              <span class="photo-watermark-text row-top">DHEERAJA • DH-104</span>
+              <span class="photo-watermark-text row-mid">केवल रिश्ते हेतु • सुरक्षित</span>
+              <span class="photo-watermark-text row-bot">DHEERAJA VERIFIED</span>
+            </div>
+            <!-- Security Pill -->
+            <div class="photo-security-pill" title="धीरजा सुरक्षा वाटरमार्क">
+              <i class="fa-solid fa-shield-halved text-amber-300"></i>
+              <span>DH-104</span>
             </div>
           </div>
 
@@ -1412,11 +1567,22 @@
                data-phone="+91 98251 67890"
                data-father="श्री घनश्याम दास सोमानी (पिताजी)">
         <div class="flex items-start space-x-2.5">
-          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
-            <img src="/assets/images/match_priya.jpg" alt="Pooja Maheshwari" class="w-full h-full object-cover">
-            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200 photo-container-shield">
+            <img src="/assets/images/match_priya.jpg" alt="Pooja Maheshwari" class="w-full h-full object-cover select-none pointer-events-none" draggable="false" oncontextmenu="return false;">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300 z-12">
               <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
               <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+            <!-- Security Watermark Overlay -->
+            <div class="photo-watermark-overlay">
+              <span class="photo-watermark-text row-top">DHEERAJA • DH-105</span>
+              <span class="photo-watermark-text row-mid">केवल रिश्ते हेतु • सुरक्षित</span>
+              <span class="photo-watermark-text row-bot">DHEERAJA VERIFIED</span>
+            </div>
+            <!-- Security Pill -->
+            <div class="photo-security-pill" title="धीरजा सुरक्षा वाटरमार्क">
+              <i class="fa-solid fa-shield-halved text-amber-300"></i>
+              <span>DH-105</span>
             </div>
           </div>
           <div class="flex-1 min-w-0 pr-1">
@@ -1583,11 +1749,38 @@
                data-phone="+91 94145 11223"
                data-father="श्री रामनिवास पूनिया (पिताजी)">
         <div class="flex items-start space-x-2.5">
-          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
-            <img src="/assets/images/match_anjali.jpg" alt="Pooja Chaudhary" class="w-full h-full object-cover">
-            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200 photo-container-shield">
+            <img id="cardPhotoImg-8" src="/assets/images/match_anjali.jpg" alt="Pooja Chaudhary" class="w-full h-full object-cover select-none pointer-events-none photo-blur-active" draggable="false" oncontextmenu="return false;">
+            
+            <!-- Online Pill Badge -->
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300 z-12">
               <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
               <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+
+            <!-- Privacy Blur Lock Guard (कन्या पक्ष प्राइवेसी सुरक्षा) -->
+            <div id="cardPrivacyGuard-8" class="photo-privacy-guard">
+              <div class="w-6 h-6 rounded-full bg-amber-400 text-emerald-950 flex items-center justify-center text-[10px] mb-1 shadow-xs">
+                <i class="fa-solid fa-lock"></i>
+              </div>
+              <span class="text-[8px] font-black text-white leading-tight">फोटो निजी है</span>
+              <button type="button" onclick="requestPhotoAccess(this, 'Pooja Chaudhary', '8')" class="mt-1 px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white text-[8px] font-black tracking-tight shadow-xs transition cursor-pointer flex items-center space-x-1">
+                <i class="fa-solid fa-camera text-[7.5px]"></i>
+                <span>अनुरोध भेजें</span>
+              </button>
+            </div>
+
+            <!-- Protective Watermark Overlay -->
+            <div class="photo-watermark-overlay">
+              <span class="photo-watermark-text row-top">DHEERAJA • DH-108</span>
+              <span class="photo-watermark-text row-mid">केवल रिश्ते हेतु • सुरक्षित</span>
+              <span class="photo-watermark-text row-bot">DHEERAJA VERIFIED</span>
+            </div>
+
+            <!-- Security Pill -->
+            <div class="photo-security-pill" title="धीरजा सुरक्षा वाटरमार्क">
+              <i class="fa-solid fa-shield-halved text-amber-300"></i>
+              <span>DH-108</span>
             </div>
           </div>
           <div class="flex-1 min-w-0 pr-1">
@@ -1791,11 +1984,38 @@
                data-phone="+91 94141 99001"
                data-father="श्री प्रभुदयाल मौर्य (पिताजी)">
         <div class="flex items-start space-x-2.5">
-          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
-            <img src="/assets/images/match_neha.jpg" alt="Sunita Saini" class="w-full h-full object-cover">
-            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200 photo-container-shield">
+            <img id="cardPhotoImg-12" src="/assets/images/match_neha.jpg" alt="Sunita Saini" class="w-full h-full object-cover select-none pointer-events-none photo-blur-active" draggable="false" oncontextmenu="return false;">
+            
+            <!-- Online Pill Badge -->
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300 z-12">
               <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
               <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+
+            <!-- Privacy Blur Lock Guard (केवल अनुरोध पर फोटो दृश्यता) -->
+            <div id="cardPrivacyGuard-12" class="photo-privacy-guard">
+              <div class="w-6 h-6 rounded-full bg-amber-400 text-emerald-950 flex items-center justify-center text-[10px] mb-1 shadow-xs">
+                <i class="fa-solid fa-lock"></i>
+              </div>
+              <span class="text-[8px] font-black text-white leading-tight">फोटो निजी है</span>
+              <button type="button" onclick="requestPhotoAccess(this, 'Sunita Saini', '12')" class="mt-1 px-2 py-0.5 rounded-md bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white text-[8px] font-black tracking-tight shadow-xs transition cursor-pointer flex items-center space-x-1">
+                <i class="fa-solid fa-camera text-[7.5px]"></i>
+                <span>अनुरोध भेजें</span>
+              </button>
+            </div>
+
+            <!-- Protective Watermark Overlay -->
+            <div class="photo-watermark-overlay">
+              <span class="photo-watermark-text row-top">DHEERAJA • DH-112</span>
+              <span class="photo-watermark-text row-mid">केवल रिश्ते हेतु • सुरक्षित</span>
+              <span class="photo-watermark-text row-bot">DHEERAJA VERIFIED</span>
+            </div>
+
+            <!-- Security Pill -->
+            <div class="photo-security-pill" title="धीरजा सुरक्षा वाटरमार्क">
+              <i class="fa-solid fa-shield-halved text-amber-300"></i>
+              <span>DH-112</span>
             </div>
           </div>
           <div class="flex-1 min-w-0 pr-1">
@@ -2766,6 +2986,150 @@
       </div>
 
     </div>
+  <!-- ==================== MODAL 6: PHOTO PRIVACY & SECURITY WATERMARK ==================== -->
+  <div id="photoPrivacyModal" class="modal-backdrop fixed inset-0 z-[160] bg-black/75 backdrop-blur-xs flex items-center justify-center p-3">
+    <div class="bg-white rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl border-2 border-amber-400 flex flex-col max-h-[92vh] animate-bounce-in">
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-emerald-950 via-emerald-900 to-emerald-950 text-white p-3.5 flex items-center justify-between border-b-2 border-amber-400 shrink-0">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-emerald-950 flex items-center justify-center text-base font-black shadow-xs">
+            <i class="fa-solid fa-shield-halved text-base"></i>
+          </div>
+          <div>
+            <div class="text-[9.5px] uppercase font-black tracking-wider text-amber-300">कन्या व वर सुरक्षा शील्ड</div>
+            <h3 class="font-cinzel text-xs font-bold text-white">फोटो प्राइवेसी एवं सुरक्षा वाटरमार्क</h3>
+          </div>
+        </div>
+        <button onclick="closePhotoPrivacyModal()" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xs transition cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-3.5 space-y-3.5 text-stone-800 text-xs overflow-y-auto">
+        <!-- Live Photo Preview Box with Watermark Toggle Demonstration -->
+        <div class="bg-gradient-to-b from-stone-50 to-stone-100 rounded-2xl p-3 border border-stone-200 text-center">
+          <div class="text-[10px] font-extrabold text-stone-600 uppercase tracking-wider mb-2 flex items-center justify-center gap-1">
+            <i class="fa-solid fa-eye text-emerald-700"></i>
+            <span>आपकी फोटो का लाइव सुरक्षा दृश्य (Live Preview)</span>
+          </div>
+
+          <div class="relative w-28 h-32 mx-auto rounded-2xl overflow-hidden border-2 border-amber-400 shadow-md bg-stone-200 photo-container-shield">
+            <img id="privacyPreviewImg" src="/assets/images/match_priya.jpg" alt="Preview" class="w-full h-full object-cover select-none pointer-events-none" draggable="false" oncontextmenu="return false;">
+            
+            <!-- Dynamic Watermark Layer inside Preview -->
+            <div id="previewWatermarkLayer" class="photo-watermark-overlay">
+              <span class="photo-watermark-text row-top">Dheeraja • DH-9821</span>
+              <span class="photo-watermark-text row-mid">धीरजा सुरक्षा • केवल रिश्ते हेतु</span>
+              <span class="photo-watermark-text row-bot">Dheeraja Verified</span>
+            </div>
+
+            <!-- Security Pill in Preview -->
+            <div id="previewSecurityPill" class="photo-security-pill">
+              <i class="fa-solid fa-shield-halved text-amber-300"></i>
+              <span>DH-9821</span>
+            </div>
+
+            <!-- Preview Privacy Blur Lock Overlay (Dynamic) -->
+            <div id="previewBlurLayer" class="photo-privacy-guard hidden">
+              <div class="w-7 h-7 rounded-full bg-amber-400 text-emerald-950 flex items-center justify-center text-xs mb-1 shadow-sm">
+                <i class="fa-solid fa-lock"></i>
+              </div>
+              <span class="text-[9px] font-extrabold text-white leading-tight">फोटो सुरक्षित है</span>
+              <span class="text-[7.5px] text-amber-200 mt-0.5">केवल अनुमति पर दिखेगी</span>
+            </div>
+          </div>
+
+          <p class="text-[10px] text-emerald-800 font-bold mt-2 flex items-center justify-center gap-1">
+            <i class="fa-solid fa-circle-check text-emerald-600" id="previewStatusIcon"></i>
+            <span id="previewStatusText">सुरक्षा वाटरमार्क सक्रिय है (Anti-Theft Active)</span>
+          </p>
+        </div>
+
+        <!-- Setting 1: Watermark Switch -->
+        <div class="p-2.5 rounded-2xl bg-amber-50/70 border border-amber-300 flex items-center justify-between">
+          <div class="pr-2">
+            <div class="text-xs font-black text-amber-950 flex items-center gap-1.5">
+              <i class="fa-solid fa-stamp text-amber-700"></i>
+              <span>धीरजा सुरक्षा वाटरमार्क (Watermark)</span>
+            </div>
+            <p class="text-[10px] text-stone-600 mt-0.5 leading-snug">
+              फोटो पर 'केवल रिश्ते हेतु' की मुहर लगाएं ताकि फोटो का स्क्रीनशॉट व दुरुपयोग रोका जा सके।
+            </p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer shrink-0">
+            <input type="checkbox" id="toggleWatermarkSwitch" checked onchange="updatePhotoPrivacyPreview()" class="sr-only peer">
+            <div class="w-10 h-5 bg-stone-300 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+          </label>
+        </div>
+
+        <!-- Setting 2: Who can view full clear photo -->
+        <div class="space-y-1.5">
+          <div class="text-[10.5px] font-extrabold text-stone-800 uppercase tracking-wider flex items-center gap-1">
+            <i class="fa-solid fa-user-lock text-emerald-800"></i>
+            <span>आपकी फोटो कौन देख सकता है?</span>
+          </div>
+
+          <!-- Option 1: Public with Watermark -->
+          <label id="lblPhotoOptPublic" class="flex items-start space-x-2.5 p-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-50/60 cursor-pointer transition hover:bg-emerald-50" onclick="setPhotoPrivacyMode('public')">
+            <input type="radio" name="photo_visibility_mode" value="public" checked onchange="updatePhotoPrivacyPreview()" class="mt-0.5 text-emerald-700 focus:ring-emerald-500">
+            <div class="min-w-0 flex-1">
+              <span class="text-xs font-black text-emerald-950 block">सभी सदस्यों को दिखे (वाटरमार्क के साथ)</span>
+              <span class="text-[10px] text-stone-600 leading-snug block mt-0.5">
+                अधिक से अधिक और शीघ्र रिश्ते आने हेतु अनुशंसित। फोटो पर सुरक्षित वाटरमार्क हमेशा रहेगा।
+              </span>
+            </div>
+          </label>
+
+          <!-- Option 2: Mutual / Accepted Interest Only -->
+          <label id="lblPhotoOptMutual" class="flex items-start space-x-2.5 p-2.5 rounded-xl border border-stone-200 bg-white cursor-pointer transition hover:border-amber-400 hover:bg-amber-50/30" onclick="setPhotoPrivacyMode('mutual')">
+            <input type="radio" name="photo_visibility_mode" value="mutual" onchange="updatePhotoPrivacyPreview()" class="mt-0.5 text-emerald-700 focus:ring-emerald-500">
+            <div class="min-w-0 flex-1">
+              <span class="text-xs font-black text-stone-900 block flex items-center gap-1.5">
+                <span>केवल परस्पर रुचि / स्वीकृत रिश्तों को दिखे</span>
+                <span class="text-[8.5px] bg-rose-100 text-rose-800 px-1.5 py-0.2 rounded font-bold">कन्या पक्ष प्रिय</span>
+              </span>
+              <span class="text-[10px] text-stone-500 leading-snug block mt-0.5">
+                जब तक आप सामने वाले का रिश्ता स्वीकार नहीं करते, उन्हें फोटो धुंधली (Blur 🔒) दिखेगी।
+              </span>
+            </div>
+          </label>
+
+          <!-- Option 3: Request Only -->
+          <label id="lblPhotoOptRequest" class="flex items-start space-x-2.5 p-2.5 rounded-xl border border-stone-200 bg-white cursor-pointer transition hover:border-amber-400 hover:bg-amber-50/30" onclick="setPhotoPrivacyMode('request')">
+            <input type="radio" name="photo_visibility_mode" value="request" onchange="updatePhotoPrivacyPreview()" class="mt-0.5 text-emerald-700 focus:ring-emerald-500">
+            <div class="min-w-0 flex-1">
+              <span class="text-xs font-black text-stone-900 block">केवल अनुमति अनुरोध स्वीकारने पर दिखे</span>
+              <span class="text-[10px] text-stone-500 leading-snug block mt-0.5">
+                सदस्य फोटो देखने के लिए "अनुरोध" भेजेंगे। आपकी स्वीकृति के बाद ही फोटो खुलेगी।
+              </span>
+            </div>
+          </label>
+        </div>
+
+        <!-- Setting 3: Anti-Theft Shield Summary -->
+        <div class="p-2.5 rounded-xl bg-stone-100 border border-stone-200 text-[10.5px] text-stone-700 space-y-1">
+          <div class="font-extrabold text-stone-900 flex items-center gap-1">
+            <i class="fa-solid fa-shield-virus text-emerald-700"></i>
+            <span>अतिरिक्त धीरजा सुरक्षा शील्ड (Active Protection):</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-emerald-800 font-semibold">
+            <i class="fa-solid fa-check text-[10px]"></i>
+            <span>राइट-क्लिक एवं "Save Image" स्थायी रूप से अवरुद्ध (Blocked)</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-emerald-800 font-semibold">
+            <i class="fa-solid fa-check text-[10px]"></i>
+            <span>स्क्रीनशॉट लेने पर वॉटरमार्क व सदस्य आईडी स्वतः दर्ज</span>
+          </div>
+        </div>
+
+        <!-- Action Button: Save Settings -->
+        <button type="button" onclick="savePhotoPrivacySettings()" class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-800 via-emerald-700 to-emerald-900 text-white font-black text-xs shadow-md transition active:scale-95 flex items-center justify-center space-x-1.5 cursor-pointer">
+          <i class="fa-solid fa-floppy-disk text-amber-300"></i>
+          <span>प्राइवेसी व वाटरमार्क सेटिंग्स सुरक्षित करें</span>
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- ==================== JAVASCRIPT LOGIC ==================== -->
@@ -3528,6 +3892,129 @@
 
     function toggleSideMenu() {
       alert("धीरजा रॉयल मैट्रिमोनी मेनू:\n\n• 1. कवर पेज (/cover)\n• 2. वेलकम स्क्रीन (/welcome)\n• 3. बायोडाटा फॉर्म (/biodata)\n• 4. तालिका / रिश्ते (/matches)\n• 👑 VIP सदस्यता एवं पेमेंट (/membership)\n• हेल्प & सपोर्ट");
+    }
+
+    // ==================== PHOTO PRIVACY & WATERMARK CONTROLS ====================
+    let userPhotoPrivacy = {
+      watermarkEnabled: true,
+      visibilityMode: 'public', // 'public', 'mutual', 'request'
+      antiTheftEnabled: true
+    };
+
+    function openPhotoPrivacyModal() {
+      // Sync form with current state
+      const wmSwitch = document.getElementById('toggleWatermarkSwitch');
+      if (wmSwitch) wmSwitch.checked = userPhotoPrivacy.watermarkEnabled;
+
+      const radio = document.querySelector(`input[name="photo_visibility_mode"][value="${userPhotoPrivacy.visibilityMode}"]`);
+      if (radio) radio.checked = true;
+
+      updatePhotoPrivacyPreview();
+      document.getElementById('photoPrivacyModal').classList.add('open');
+    }
+
+    function closePhotoPrivacyModal() {
+      document.getElementById('photoPrivacyModal').classList.remove('open');
+    }
+
+    function setPhotoPrivacyMode(mode) {
+      userPhotoPrivacy.visibilityMode = mode;
+      
+      const lblPublic = document.getElementById('lblPhotoOptPublic');
+      const lblMutual = document.getElementById('lblPhotoOptMutual');
+      const lblRequest = document.getElementById('lblPhotoOptRequest');
+      
+      if (lblPublic && lblMutual && lblRequest) {
+        lblPublic.className = (mode === 'public')
+          ? 'flex items-start space-x-2.5 p-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-50/60 cursor-pointer transition'
+          : 'flex items-start space-x-2.5 p-2.5 rounded-xl border border-stone-200 bg-white cursor-pointer transition hover:border-amber-400';
+          
+        lblMutual.className = (mode === 'mutual')
+          ? 'flex items-start space-x-2.5 p-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-50/60 cursor-pointer transition'
+          : 'flex items-start space-x-2.5 p-2.5 rounded-xl border border-stone-200 bg-white cursor-pointer transition hover:border-amber-400';
+          
+        lblRequest.className = (mode === 'request')
+          ? 'flex items-start space-x-2.5 p-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-50/60 cursor-pointer transition'
+          : 'flex items-start space-x-2.5 p-2.5 rounded-xl border border-stone-200 bg-white cursor-pointer transition hover:border-amber-400';
+      }
+
+      updatePhotoPrivacyPreview();
+    }
+
+    function updatePhotoPrivacyPreview() {
+      const wmSwitch = document.getElementById('toggleWatermarkSwitch');
+      const isWmOn = wmSwitch ? wmSwitch.checked : true;
+      const selectedMode = document.querySelector('input[name="photo_visibility_mode"]:checked')?.value || userPhotoPrivacy.visibilityMode;
+      
+      const wmLayers = document.getElementById('previewWatermarkLayer');
+      const secPill = document.getElementById('previewSecurityPill');
+      const blurLayer = document.getElementById('previewBlurLayer');
+      const prevImg = document.getElementById('privacyPreviewImg');
+      const statusText = document.getElementById('previewStatusText');
+      const statusIcon = document.getElementById('previewStatusIcon');
+
+      // Watermark visibility
+      if (isWmOn) {
+        if (wmLayers) wmLayers.classList.remove('disabled');
+        if (secPill) secPill.classList.remove('hidden');
+      } else {
+        if (wmLayers) wmLayers.classList.add('disabled');
+        if (secPill) secPill.classList.add('hidden');
+      }
+
+      // Blur layer according to selected mode
+      if (selectedMode === 'public') {
+        if (blurLayer) blurLayer.classList.add('hidden');
+        if (prevImg) prevImg.classList.remove('photo-blur-active');
+        if (statusText) statusText.textContent = isWmOn ? 'सार्वजनिक दृश्य • सुरक्षा वाटरमार्क सक्रिय' : 'सार्वजनिक दृश्य • वाटरमार्क निष्क्रिय';
+        if (statusIcon) statusIcon.className = 'fa-solid fa-circle-check text-emerald-600';
+      } else if (selectedMode === 'mutual') {
+        if (blurLayer) blurLayer.classList.remove('hidden');
+        if (prevImg) prevImg.classList.add('photo-blur-active');
+        if (statusText) statusText.textContent = 'परस्पर रुचि स्वीकार होने पर ही स्पष्ट दिखेगी (Blur 🔒)';
+        if (statusIcon) statusIcon.className = 'fa-solid fa-shield-heart text-rose-500';
+      } else if (selectedMode === 'request') {
+        if (blurLayer) blurLayer.classList.remove('hidden');
+        if (prevImg) prevImg.classList.add('photo-blur-active');
+        if (statusText) statusText.textContent = 'केवल अनुमति अनुरोध स्वीकारने पर दिखेगी (Request 🔒)';
+        if (statusIcon) statusIcon.className = 'fa-solid fa-lock text-amber-600';
+      }
+    }
+
+    function savePhotoPrivacySettings() {
+      const wmSwitch = document.getElementById('toggleWatermarkSwitch');
+      userPhotoPrivacy.watermarkEnabled = wmSwitch ? wmSwitch.checked : true;
+      userPhotoPrivacy.visibilityMode = document.querySelector('input[name="photo_visibility_mode"]:checked')?.value || 'public';
+      
+      closePhotoPrivacyModal();
+      
+      const modeLabel = {
+        'public': 'सार्वजनिक (वाटरमार्क सहित)',
+        'mutual': 'केवल परस्पर रुचि स्वीकारने पर (Blur 🔒)',
+        'request': 'केवल अनुमति अनुरोध पर (Request 🔒)'
+      }[userPhotoPrivacy.visibilityMode];
+
+      showToast('प्राइवेसी सेटिंग्स सुरक्षित! 🛡️', `फोटो दृश्यता: ${modeLabel} | सुरक्षा वाटरमार्क: ${userPhotoPrivacy.watermarkEnabled ? 'सक्रिय' : 'निष्क्रिय'}`, 'fa-shield-halved');
+    }
+
+    function requestPhotoAccess(btn, name, cardId) {
+      btn.disabled = true;
+      btn.className = 'mt-1 px-2 py-0.5 rounded-md bg-emerald-800 text-emerald-200 text-[8px] font-bold tracking-tight shadow-xs flex items-center space-x-1 cursor-default';
+      btn.innerHTML = '<i class="fa-solid fa-check text-[7.5px]"></i><span>अनुरोध भेजा</span>';
+
+      showToast('फोटो अनुरोध भेजा गया 📩', `${name} के परिवार को आपका फोटो देखने का अनुरोध पहुंच गया है। स्वीकृति मिलते ही फोटो स्वतः दिख जाएगी।`, 'fa-camera');
+
+      // Live demonstration simulation: after 2.5 seconds, simulate accepted access!
+      setTimeout(() => {
+        const img = document.getElementById(`cardPhotoImg-${cardId}`);
+        const guard = document.getElementById(`cardPrivacyGuard-${cardId}`);
+        if (img && guard) {
+          img.classList.remove('photo-blur-active');
+          guard.style.opacity = '0';
+          setTimeout(() => guard.classList.add('hidden'), 300);
+          showToast('फोटो अनुमति स्वीकृत! 🔓', `${name} के परिवार ने आपकी फोटो देखने की अनुमति स्वीकार कर ली है।`, 'fa-lock-open');
+        }
+      }, 2500);
     }
 
     // Initialize on DOM Ready

@@ -224,6 +224,56 @@ $autoDownload = !empty($auto_download);
       border-radius: 12px;
       display: block;
       border: 2px solid #FFFDF9;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* Photo Security Watermark Shield */
+    .photo-watermark-overlay {
+      position: absolute;
+      inset: 4px;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, transparent 80%);
+    }
+    .photo-watermark-text {
+      position: absolute;
+      transform: rotate(-32deg);
+      white-space: nowrap;
+      color: rgba(255, 255, 255, 0.45);
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+      user-select: none;
+      pointer-events: none;
+    }
+    .photo-security-pill {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(6, 78, 59, 0.90);
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(212, 175, 55, 0.8);
+      color: #FFF2C2;
+      font-size: 8px;
+      font-weight: 800;
+      font-family: monospace;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      z-index: 12;
+      pointer-events: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
 
     /* Print Specific Styles */
@@ -377,8 +427,19 @@ $autoDownload = !empty($auto_download);
           <div class="relative z-10 mt-4 mb-3 flex flex-col sm:flex-row items-center sm:items-start gap-4 pb-3 border-b border-[#E5D5BA]">
             <!-- Candidate Photo with Golden Framing -->
             <div class="shrink-0 text-center">
-              <div class="photo-gold-frame">
-                <img src="<?= htmlspecialchars($c['photo']) ?>" alt="<?= htmlspecialchars($c['raw_name']) ?>" onerror="this.src='/assets/images/dheeraja_dm_logo_clean.jpg'">
+              <div class="photo-gold-frame relative overflow-hidden select-none">
+                <img src="<?= htmlspecialchars($c['photo']) ?>" alt="<?= htmlspecialchars($c['raw_name']) ?>" onerror="this.src='/assets/images/dheeraja_dm_logo_clean.jpg'" class="pointer-events-none select-none" draggable="false" oncontextmenu="return false;">
+                <!-- Security Watermark Overlay -->
+                <div class="photo-watermark-overlay">
+                  <span class="photo-watermark-text" style="top: 25%;">DHEERAJA • <?= htmlspecialchars($c['id']) ?></span>
+                  <span class="photo-watermark-text" style="top: 50%;">धीरजा सुरक्षा • केवल रिश्ते हेतु</span>
+                  <span class="photo-watermark-text" style="top: 75%;">ROYAL VERIFIED</span>
+                </div>
+                <!-- Security Pill Badge -->
+                <div class="photo-security-pill" title="धीरजा सुरक्षा वाटरमार्क">
+                  <i class="fa-solid fa-shield-halved text-amber-300"></i>
+                  <span><?= htmlspecialchars($c['id']) ?></span>
+                </div>
               </div>
               <div class="mt-1">
                 <span class="inline-block px-3 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 text-[#064E3B] font-extrabold text-[9.5px] uppercase tracking-wider shadow-sm">
