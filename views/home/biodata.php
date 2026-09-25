@@ -540,13 +540,13 @@
         <!-- ################# LEFT COLUMN ################# -->
         <div class="space-y-5 sm:space-y-6">
           
-          <!-- ================= CARD 1: Personal Details (व्यक्तिगत जानकारी) ================= -->
+          <!-- ================= CARD 1: व्यक्तिगत एवं वैवाहिक पहचान (Personal & Marital Details) ================= -->
           <div class="form-card" id="sec_basic">
             <!-- Header Bar -->
             <div class="card-header-bar">
               <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-user-circle text-amber-300 text-sm"></i>
-                <h2 class="font-bold text-xs sm:text-sm tracking-wide">Personal Details (व्यक्तिगत जानकारी)</h2>
+                <i class="fa-solid fa-id-card-clip text-amber-300 text-sm"></i>
+                <h2 class="font-bold text-xs sm:text-sm tracking-wide">व्यक्तिगत एवं वैवाहिक पहचान (Personal & Marital Details)</h2>
               </div>
               <span class="text-[11px] text-red-300 font-bold tracking-wide">* Required Field</span>
             </div>
@@ -554,7 +554,73 @@
             <!-- Body -->
             <div class="p-4 sm:p-5 space-y-3.5">
               
-              <!-- 1. Full Name -->
+              <!-- 1. व्यक्तिगत एवं वैवाहिक पहचान - एक छोटी सी लाइन में ऑप्शन लिस्ट (Single Compact Line Option List) -->
+              <div class="p-3 rounded-2xl bg-emerald-50/70 border border-emerald-200/90 space-y-2">
+                <div class="flex items-center justify-between">
+                  <label class="block text-xs font-extrabold text-[#064E3B] flex items-center space-x-1.5">
+                    <i class="fa-solid fa-user-check text-emerald-700"></i>
+                    <span>व्यक्तिगत एवं वैवाहिक पहचान (Profile & Marital Option List) *</span>
+                  </label>
+                  <span class="text-[9.5px] font-bold text-emerald-800 bg-white px-2 py-0.5 rounded-full border border-emerald-300">
+                    एक लाइन में ऑप्शन लिस्ट
+                  </span>
+                </div>
+
+                <!-- Single Line 3-Column Grid for Option Lists -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  
+                  <!-- 1. किसके लिए रिश्ता देख रहे हैं (Option List) -->
+                  <div>
+                    <label class="block text-[11px] font-bold text-stone-700 mb-1">
+                      किसके लिए रिश्ता? *
+                    </label>
+                    <div class="input-wrapper">
+                      <i class="fa-solid fa-user-tag input-icon"></i>
+                      <select name="profile_for" id="profileForSelect" class="royal-input font-bold text-xs bg-white text-stone-800" onchange="updateFormProgress();">
+                        <option value="myself" selected>👤 स्वयं के लिए (Self)</option>
+                        <option value="son">👦 बेटे के लिए (Son)</option>
+                        <option value="daughter">👧 बेटी के लिए (Daughter)</option>
+                        <option value="brother">👨 भाई के लिए (Brother)</option>
+                        <option value="sister">👩 बहन के लिए (Sister)</option>
+                        <option value="relative">🤝 रिश्तेदार / मित्र (Relative)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- 2. उम्मीदवार लिंग: वर या वधू (Option List) -->
+                  <div>
+                    <label class="block text-[11px] font-bold text-stone-700 mb-1">
+                      वर या वधू (Gender) *
+                    </label>
+                    <div class="input-wrapper">
+                      <i class="fa-solid fa-venus-mars input-icon"></i>
+                      <select name="gender" id="genderSelect" class="royal-input font-bold text-xs bg-white text-stone-800" onchange="updateGenderChoice(this.value); updateFormProgress();">
+                        <option value="male" selected>🤵 वर (Groom / Male)</option>
+                        <option value="female">👰 वधू (Bride / Female)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- 3. वैवाहिक पहचान / स्थिति (Option List) -->
+                  <div>
+                    <label class="block text-[11px] font-bold text-stone-700 mb-1">
+                      वैवाहिक स्थिति (Marital) *
+                    </label>
+                    <div class="input-wrapper">
+                      <i class="fa-solid fa-ring input-icon"></i>
+                      <select name="marital_status" id="maritalStatusSelect" class="royal-input font-bold text-xs bg-white text-stone-800" onchange="updateFormProgress();">
+                        <option value="never_married" selected>💍 अविवाहित (Never Married)</option>
+                        <option value="divorced">📄 तलाकशुदा (Divorced)</option>
+                        <option value="widowed">🕊️ विधुर / विधवा (Widowed)</option>
+                        <option value="separated">⚖️ अलग रह रहे (Separated)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- 2. Full Name -->
               <div>
                 <label class="block text-xs font-bold text-stone-700 mb-1">
                   Full Name (पूरा नाम) *
@@ -566,7 +632,7 @@
                     name="full_name" 
                     id="fullNameInput" 
                     placeholder="Enter your full name (जैसे: राहुल शर्मा)" 
-                    class="royal-input" 
+                    class="royal-input font-bold" 
                     required 
                     oninput="handleFullNameSplit(this.value); updateFormProgress();"
                   >
@@ -576,7 +642,7 @@
                 </div>
               </div>
 
-              <!-- 2. Date of Birth & Time of Birth (2-Col Grid) -->
+              <!-- 3. Date of Birth & Time of Birth (2-Col Grid) -->
               <div class="grid grid-cols-2 gap-2.5">
                 <div>
                   <label class="block text-xs font-bold text-stone-700 mb-1 flex items-center justify-between">
@@ -610,7 +676,7 @@
                 </div>
               </div>
 
-              <!-- 3. Place of Birth -->
+              <!-- 4. Place of Birth -->
               <div>
                 <label class="block text-xs font-bold text-stone-700 mb-1">Place of Birth (जन्म स्थान) *</label>
                 <div class="input-wrapper">
@@ -626,7 +692,7 @@
                 </div>
               </div>
 
-              <!-- 4. Height & Weight (2-Col Grid) -->
+              <!-- 5. Height & Weight (2-Col Grid) -->
               <div class="grid grid-cols-2 gap-2.5">
                 <div>
                   <label class="block text-xs font-bold text-stone-700 mb-1 flex items-center justify-between">
@@ -674,7 +740,7 @@
                 </div>
               </div>
 
-              <!-- 5. Complexion & Blood Group (2-Col Grid) -->
+              <!-- 6. Complexion & Blood Group (2-Col Grid) -->
               <div class="grid grid-cols-2 gap-2.5">
                 <div>
                   <label class="block text-xs font-bold text-stone-700 mb-1">Complexion (वर्ण) *</label>
@@ -707,23 +773,12 @@
                 </div>
               </div>
 
-              <!-- 6. Marital Status & Mobile No. (2-Col Grid) -->
+              <!-- 7. Mobile No. & Email ID (2-Col Grid) -->
               <div class="grid grid-cols-2 gap-2.5">
-                <div>
-                  <label class="block text-xs font-bold text-stone-700 mb-1">Marital Status *</label>
-                  <div class="input-wrapper">
-                    <i class="fa-solid fa-ring input-icon"></i>
-                    <select name="marital_status" class="royal-input" onchange="updateFormProgress();">
-                      <option value="never_married" selected>अविवाहित (Never Married)</option>
-                      <option value="divorced">तलाकशुदा (Divorced)</option>
-                      <option value="widowed">विधुर / विधवा (Widowed)</option>
-                    </select>
-                  </div>
-                </div>
                 <div>
                   <label class="block text-xs font-bold text-stone-700 mb-1">Mobile No. *</label>
                   <div class="flex items-center">
-                    <span class="inline-flex items-center px-2.5 py-2 rounded-l-xl border border-r-0 border-[#CFE6D4] bg-emerald-50 text-emerald-900 font-bold text-xs">
+                    <span class="inline-flex items-center px-2 py-2 rounded-l-xl border border-r-0 border-[#CFE6D4] bg-emerald-50 text-emerald-900 font-bold text-xs">
                       +91
                     </span>
                     <input 
@@ -737,89 +792,22 @@
                     >
                   </div>
                 </div>
-              </div>
-
-              <!-- 7. Email ID -->
-              <div>
-                <label class="block text-xs font-bold text-stone-700 mb-1">Email ID (ईमेल आईडी) *</label>
-                <div class="input-wrapper">
-                  <i class="fa-solid fa-envelope input-icon"></i>
-                  <input 
-                    type="email" 
-                    name="email" 
-                    placeholder="Enter your email address" 
-                    class="royal-input"
-                    oninput="updateFormProgress();"
-                  >
-                </div>
-              </div>
-
-              <!-- 8. Profile Created For (Option Buttons matching reference image) -->
-              <div>
-                <label class="block text-xs font-bold text-stone-700 mb-1.5 flex items-center justify-between">
-                  <span>Profile Created For (किसके लिए रिश्ता देख रहे हैं?) *</span>
-                  <span class="text-[10px] text-emerald-800 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                    विकल्प चुनें
-                  </span>
-                </label>
-                <div class="grid grid-cols-4 gap-1.5 text-center text-xs">
-                  <div>
-                    <input type="radio" name="profile_for" value="myself" id="pfor_myself" class="hidden pill-radio" checked onchange="updateFormProgress()">
-                    <label for="pfor_myself" class="block py-2 px-1 rounded-xl border border-emerald-200 bg-white text-[#064E3B] font-bold cursor-pointer transition shadow-2xs hover:border-emerald-400">
-                      <i class="fa-solid fa-user pill-icon text-xs block mb-0.5 text-emerald-700"></i>
-                      <span class="block text-[11px]">Self</span>
-                      <span class="text-[9px] text-stone-400">(स्वयं)</span>
-                    </label>
-                  </div>
-                  <div>
-                    <input type="radio" name="profile_for" value="son_daughter" id="pfor_son_daughter" class="hidden pill-radio" onchange="updateFormProgress()">
-                    <label for="pfor_son_daughter" class="block py-2 px-1 rounded-xl border border-emerald-200 bg-white text-[#064E3B] font-bold cursor-pointer transition shadow-2xs hover:border-emerald-400">
-                      <i class="fa-solid fa-child pill-icon text-xs block mb-0.5 text-emerald-700"></i>
-                      <span class="block text-[11px]">Son/Daughter</span>
-                      <span class="text-[9px] text-stone-400">(बेटा/बेटी)</span>
-                    </label>
-                  </div>
-                  <div>
-                    <input type="radio" name="profile_for" value="brother_sister" id="pfor_brother_sister" class="hidden pill-radio" onchange="updateFormProgress()">
-                    <label for="pfor_brother_sister" class="block py-2 px-1 rounded-xl border border-emerald-200 bg-white text-[#064E3B] font-bold cursor-pointer transition shadow-2xs hover:border-emerald-400">
-                      <i class="fa-solid fa-user-group pill-icon text-xs block mb-0.5 text-emerald-700"></i>
-                      <span class="block text-[11px]">Brother/Sister</span>
-                      <span class="text-[9px] text-stone-400">(भाई/बहन)</span>
-                    </label>
-                  </div>
-                  <div>
-                    <input type="radio" name="profile_for" value="relative" id="pfor_relative" class="hidden pill-radio" onchange="updateFormProgress()">
-                    <label for="pfor_relative" class="block py-2 px-1 rounded-xl border border-emerald-200 bg-white text-[#064E3B] font-bold cursor-pointer transition shadow-2xs hover:border-emerald-400">
-                      <i class="fa-solid fa-handshake-angle pill-icon text-xs block mb-0.5 text-emerald-700"></i>
-                      <span class="block text-[11px]">Relative</span>
-                      <span class="text-[9px] text-stone-400">(रिश्तेदार)</span>
-                    </label>
+                <div>
+                  <label class="block text-xs font-bold text-stone-700 mb-1">Email ID (ईमेल आईडी) *</label>
+                  <div class="input-wrapper">
+                    <i class="fa-solid fa-envelope input-icon"></i>
+                    <input 
+                      type="email" 
+                      name="email" 
+                      placeholder="Enter email address" 
+                      class="royal-input"
+                      oninput="updateFormProgress();"
+                    >
                   </div>
                 </div>
               </div>
 
-              <!-- Gender Selection (वर या वधू) -->
-              <div>
-                <label class="block text-xs font-bold text-stone-700 mb-1.5">Candidate Gender (लिंग) *</label>
-                <div class="grid grid-cols-2 gap-2 text-center">
-                  <div>
-                    <input type="radio" name="gender" value="male" id="gender_male" class="hidden pill-radio" checked onchange="updateGenderChoice('male')">
-                    <label for="gender_male" class="block py-2.5 px-3 rounded-xl border-2 border-emerald-200 bg-emerald-50/60 text-[#064E3B] font-bold text-xs cursor-pointer transition">
-                      <i class="fa-solid fa-mars pill-icon text-sm mr-1"></i>
-                      <span>वर (Groom / Male)</span>
-                    </label>
-                  </div>
-                  <div>
-                    <input type="radio" name="gender" value="female" id="gender_female" class="hidden pill-radio" onchange="updateGenderChoice('female')">
-                    <label for="gender_female" class="block py-2.5 px-3 rounded-xl border-2 border-emerald-200 bg-emerald-50/60 text-[#064E3B] font-bold text-xs cursor-pointer transition">
-                      <i class="fa-solid fa-venus pill-icon text-sm mr-1"></i>
-                      <span>वधू (Bride / Female)</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 9. About Myself / Short Introduction -->
+              <!-- 8. About Myself / Short Introduction -->
               <div>
                 <label class="block text-xs font-bold text-stone-700 mb-1">About Myself / Short Introduction</label>
                 <div class="input-wrapper">
