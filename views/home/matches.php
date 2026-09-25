@@ -746,6 +746,66 @@
       </div>
     </section>
 
+    <!-- 3.5. DEDICATED SAMAJ COMMUNITY EXCLUSIVE GROUP GATE -->
+    <section class="px-3 pt-1 pb-1">
+      <div id="samajCommunityBanner" class="bg-gradient-to-r from-emerald-950 via-emerald-900 to-emerald-950 text-white rounded-2xl p-3 border-2 border-amber-400 shadow-md relative overflow-hidden">
+        <!-- Background Decorative Watermark -->
+        <div class="absolute -right-3 -bottom-3 text-emerald-800/25 text-7xl font-serif select-none pointer-events-none">
+          <i class="fa-solid fa-users-line"></i>
+        </div>
+
+        <div class="relative z-10">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-emerald-950 flex items-center justify-center text-lg font-black shadow-inner shrink-0">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <div>
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-[9.5px] uppercase tracking-wider font-black text-amber-300 bg-amber-950/70 px-2 py-0.5 rounded-full border border-amber-500/30">
+                    🔒 समाज विशिष्ट ग्रुप
+                  </span>
+                  <span class="text-[9.5px] text-emerald-300 font-bold">100% समाज सुरक्षा</span>
+                </div>
+                <h3 class="text-sm font-black text-white mt-0.5 flex items-center gap-1.5">
+                  <span id="activeSamajTitle"><?= htmlspecialchars($user_samaj ?? 'ब्राह्मण') ?></span> समाज वैवाहिक ग्रुप
+                </h3>
+              </div>
+            </div>
+
+            <!-- Switch Samaj Pill button -->
+            <button type="button" onclick="toggleSamajDropdown()" class="text-[10px] font-bold bg-white/10 hover:bg-white/20 text-amber-200 border border-amber-400/40 px-2.5 py-1.5 rounded-xl transition shrink-0 flex items-center space-x-1 shadow-xs cursor-pointer">
+              <i class="fa-solid fa-users-rays text-amber-300"></i>
+              <span>समाज बदलें</span>
+              <i class="fa-solid fa-chevron-down text-[8px] ml-0.5"></i>
+            </button>
+          </div>
+
+          <!-- Community Rule Explanation -->
+          <div class="mt-2 pt-2 border-t border-emerald-800/80 flex items-center justify-between text-[10.5px]">
+            <span class="text-emerald-200 flex items-center gap-1">
+              <i class="fa-solid fa-lock text-amber-400 text-[10px]"></i>
+              <span>केवल <strong><span id="activeSamajSubtitle"><?= htmlspecialchars($user_samaj ?? 'ब्राह्मण') ?></span></strong> समाज के सदस्य व रिश्ते</span>
+            </span>
+            <span class="font-extrabold text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-400/30 text-[10px]" id="samajTotalCountBadge">
+              <span id="samajCountNumber">4</span> रिश्ते उपलब्ध
+            </span>
+          </div>
+
+          <!-- Quick Samaj Switcher Drawer (Toggleable) -->
+          <div id="samajSwitcherDrawer" class="hidden mt-2 pt-2 border-t border-emerald-800">
+            <div class="text-[10px] font-bold text-amber-300 mb-1.5 flex items-center justify-between">
+              <span>अन्य अधिकृत समाज ग्रुप देखें (Demonstration Switcher):</span>
+              <span class="text-stone-300 cursor-pointer text-[10px]" onclick="toggleSamajDropdown()">✕ बंद करें</span>
+            </div>
+            <div class="flex flex-wrap gap-1 max-h-28 overflow-y-auto pr-1" id="samajQuickPills">
+              <!-- Rendered dynamically via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- 4. CATEGORY FILTER PILLS (8 Buttons in 2 Rows x 4 Columns) -->
     <section class="px-3 py-2">
       <div class="grid grid-cols-4 gap-1.5">
@@ -798,6 +858,7 @@
 
       <!-- ==================== CARD 1: PRIYA SHARMA ==================== -->
       <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="ब्राह्मण"
                data-categories="all,viewed_me,mutual,verified"
                data-id="1"
                data-name="Priya Sharma"
@@ -934,6 +995,7 @@
 
       <!-- ==================== CARD 2: NEHA VERMA ==================== -->
       <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="कायस्थ"
                data-categories="all,interests_received,verified"
                data-id="2"
                data-name="Neha Verma"
@@ -1067,6 +1129,7 @@
 
       <!-- ==================== CARD 3: ANJALI SINGH ==================== -->
       <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="राजपूत"
                data-categories="all,chat_history,mutual,verified"
                data-id="3"
                data-name="Anjali Singh"
@@ -1200,6 +1263,7 @@
 
       <!-- ==================== CARD 4: RITIKA PATEL ==================== -->
       <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="पाटीदार"
                data-categories="all,viewed_me,verified"
                data-id="4"
                data-name="Ritika Patel"
@@ -1328,6 +1392,595 @@
             <i class="fa-solid fa-xmark text-[10px]"></i>
             <span>Skip</span>
           </button>
+        </div>
+      </article>
+
+      <!-- ==================== SAMAJ COMMUNITY CANDIDATES ==================== -->
+
+      <!-- CARD: POOJA MAHESHWARI (माहेश्वरी) -->
+      <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="माहेश्वरी"
+               data-categories="all,viewed_me,mutual,verified"
+               data-id="5"
+               data-name="Pooja Maheshwari"
+               data-age="25"
+               data-height="5'3&quot;"
+               data-edu="CA Final (Chartered Accountant)"
+               data-location="Surat, Gujarat"
+               data-gotra="Somani"
+               data-guna="30"
+               data-phone="+91 98251 67890"
+               data-father="श्री घनश्याम दास सोमानी (पिताजी)">
+        <div class="flex items-start space-x-2.5">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
+            <img src="/assets/images/match_priya.jpg" alt="Pooja Maheshwari" class="w-full h-full object-cover">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0 pr-1">
+            <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+              <h3 class="text-sm font-extrabold text-stone-900 leading-none truncate">Pooja Maheshwari</h3>
+              <span class="text-blue-600 text-xs"><i class="fa-solid fa-circle-check"></i></span>
+              <span onclick="openKundaliModal('Pooja Maheshwari', 30, 'Somani', 'Maheshwari', 'Surat')" class="cursor-pointer bg-amber-50 text-amber-900 border border-amber-300 rounded-full px-1.5 py-0.5 text-[9px] font-bold flex items-center space-x-0.5 hover:bg-amber-100 transition shadow-2xs">
+                <i class="fa-solid fa-dharmachakra text-[9px] text-amber-600"></i>
+                <span>30/36 गुण मिलान</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 25 <span class="text-stone-300">|</span> Height: 5'3"</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: CA Final (Chartered Accountant)</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
+              <span class="truncate">Surat / Bhilwara</span>
+            </p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1">
+              <i class="fa-solid fa-tree text-emerald-700 text-[10px]"></i>
+              <span>Gotra: Somani (माहेश्वरी)</span>
+            </p>
+          </div>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 grid grid-cols-5 gap-1.5">
+          <button onclick="openRoyalBiodataModal('Pooja Maheshwari')" class="card-btn btn-biodata" title="रॉयल बायोडाटा देखें">
+            <i class="fa-solid fa-file-invoice text-[10px]"></i>
+            <span>बायोडाटा</span>
+          </button>
+          <button onclick="sendInterest(this, 'Pooja Maheshwari')" class="card-btn btn-interest" title="रुचि भेजें">
+            <i class="fa-solid fa-heart text-[10px]"></i>
+            <span>Interest</span>
+          </button>
+          <button onclick="openKundaliModal('Pooja Maheshwari', 30, 'Somani', 'Maheshwari', 'Surat')" class="card-btn btn-kundali" title="कुंडली मिलान">
+            <i class="fa-solid fa-dharmachakra text-[10px]"></i>
+            <span>Kundali</span>
+          </button>
+          <button onclick="openContactModal('Pooja Maheshwari', '+91 98251 67890', 'श्री घनश्याम दास सोमानी (पिताजी)', 'Surat, Gujarat')" class="card-btn btn-contact" title="संपर्क विवरण">
+            <i class="fa-solid fa-phone text-[10px]"></i>
+            <span>Contact</span>
+          </button>
+          <button onclick="skipCard(this, 'Pooja Maheshwari')" class="card-btn btn-skip" title="छोड़ें">
+            <i class="fa-solid fa-xmark text-[10px]"></i>
+            <span>Skip</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- CARD: SNEHA AGARWAL (अग्रवाल) -->
+      <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="अग्रवाल"
+               data-categories="all,viewed_me,interests_received,verified"
+               data-id="6"
+               data-name="Sneha Agarwal"
+               data-age="26"
+               data-height="5'4&quot;"
+               data-edu="M.Sc Data Science & AI"
+               data-location="Jaipur, Rajasthan"
+               data-gotra="Bansal"
+               data-guna="29"
+               data-phone="+91 94140 33445"
+               data-father="श्री विष्णु कुमार बंसल (पिताजी)">
+        <div class="flex items-start space-x-2.5">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
+            <img src="/assets/images/match_neha.jpg" alt="Sneha Agarwal" class="w-full h-full object-cover">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0 pr-1">
+            <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+              <h3 class="text-sm font-extrabold text-stone-900 leading-none truncate">Sneha Agarwal</h3>
+              <span class="text-blue-600 text-xs"><i class="fa-solid fa-circle-check"></i></span>
+              <span onclick="openKundaliModal('Sneha Agarwal', 29, 'Bansal', 'Agarwal', 'Jaipur')" class="cursor-pointer bg-amber-50 text-amber-900 border border-amber-300 rounded-full px-1.5 py-0.5 text-[9px] font-bold flex items-center space-x-0.5 hover:bg-amber-100 transition shadow-2xs">
+                <i class="fa-solid fa-dharmachakra text-[9px] text-amber-600"></i>
+                <span>29/36 गुण मिलान</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 26 <span class="text-stone-300">|</span> Height: 5'4"</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: M.Sc Data Science & AI</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
+              <span class="truncate">Jaipur, Rajasthan</span>
+            </p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1">
+              <i class="fa-solid fa-tree text-emerald-700 text-[10px]"></i>
+              <span>Gotra: Bansal (अग्रवाल)</span>
+            </p>
+          </div>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 grid grid-cols-5 gap-1.5">
+          <button onclick="openRoyalBiodataModal('Sneha Agarwal')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
+          <button onclick="sendInterest(this, 'Sneha Agarwal')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
+          <button onclick="openKundaliModal('Sneha Agarwal', 29, 'Bansal', 'Agarwal', 'Jaipur')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
+          <button onclick="openContactModal('Sneha Agarwal', '+91 94140 33445', 'श्री विष्णु कुमार बंसल (पिताजी)', 'Jaipur, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="skipCard(this, 'Sneha Agarwal')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
+        </div>
+      </article>
+
+      <!-- CARD: DIVYA JAIN (जैन) -->
+      <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="जैन"
+               data-categories="all,viewed_me,mutual,verified"
+               data-id="7"
+               data-name="Divya Jain"
+               data-age="26"
+               data-height="5'4&quot;"
+               data-edu="B.Arch (Architecture)"
+               data-location="Udaipur, Rajasthan"
+               data-gotra="Oswal"
+               data-guna="27"
+               data-phone="+91 94142 88990"
+               data-father="श्री शांतिलाल जैन (पिताजी)">
+        <div class="flex items-start space-x-2.5">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
+            <img src="/assets/images/match_priya.jpg" alt="Divya Jain" class="w-full h-full object-cover">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0 pr-1">
+            <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+              <h3 class="text-sm font-extrabold text-stone-900 leading-none truncate">Divya Jain</h3>
+              <span class="text-blue-600 text-xs"><i class="fa-solid fa-circle-check"></i></span>
+              <span onclick="openKundaliModal('Divya Jain', 27, 'Oswal', 'Jain', 'Udaipur')" class="cursor-pointer bg-amber-50 text-amber-900 border border-amber-300 rounded-full px-1.5 py-0.5 text-[9px] font-bold flex items-center space-x-0.5 hover:bg-amber-100 transition shadow-2xs">
+                <i class="fa-solid fa-dharmachakra text-[9px] text-amber-600"></i>
+                <span>27/36 गुण मिलान</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 26 <span class="text-stone-300">|</span> Height: 5'4"</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: B.Arch (Architecture)</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
+              <span class="truncate">Udaipur, Rajasthan</span>
+            </p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1">
+              <i class="fa-solid fa-tree text-emerald-700 text-[10px]"></i>
+              <span>Gotra: Oswal (जैन समाज)</span>
+            </p>
+          </div>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 grid grid-cols-5 gap-1.5">
+          <button onclick="openRoyalBiodataModal('Divya Jain')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
+          <button onclick="sendInterest(this, 'Divya Jain')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
+          <button onclick="openKundaliModal('Divya Jain', 27, 'Oswal', 'Jain', 'Udaipur')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
+          <button onclick="openContactModal('Divya Jain', '+91 94142 88990', 'श्री शांतिलाल जैन (पिताजी)', 'Udaipur, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="skipCard(this, 'Divya Jain')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
+        </div>
+      </article>
+
+      <!-- CARD: POOJA CHAUDHARY (जाट) -->
+      <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="जाट"
+               data-categories="all,viewed_me,verified"
+               data-id="8"
+               data-name="Pooja Chaudhary"
+               data-age="25"
+               data-height="5'6&quot;"
+               data-edu="M.A. & Govt Lecturer"
+               data-location="Sikar, Rajasthan"
+               data-gotra="Punia"
+               data-guna="31"
+               data-phone="+91 94145 11223"
+               data-father="श्री रामनिवास पूनिया (पिताजी)">
+        <div class="flex items-start space-x-2.5">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
+            <img src="/assets/images/match_anjali.jpg" alt="Pooja Chaudhary" class="w-full h-full object-cover">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0 pr-1">
+            <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+              <h3 class="text-sm font-extrabold text-stone-900 leading-none truncate">Pooja Chaudhary</h3>
+              <span class="text-blue-600 text-xs"><i class="fa-solid fa-circle-check"></i></span>
+              <span onclick="openKundaliModal('Pooja Chaudhary', 31, 'Punia', 'Jat', 'Sikar')" class="cursor-pointer bg-amber-50 text-amber-900 border border-amber-300 rounded-full px-1.5 py-0.5 text-[9px] font-bold flex items-center space-x-0.5 hover:bg-amber-100 transition shadow-2xs">
+                <i class="fa-solid fa-dharmachakra text-[9px] text-amber-600"></i>
+                <span>31/36 गुण मिलान</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 25 <span class="text-stone-300">|</span> Height: 5'6"</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: M.A. & Govt Lecturer</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
+              <span class="truncate">Sikar / Jaipur</span>
+            </p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1">
+              <i class="fa-solid fa-tree text-emerald-700 text-[10px]"></i>
+              <span>Gotra: Punia (जाट समाज)</span>
+            </p>
+          </div>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 grid grid-cols-5 gap-1.5">
+          <button onclick="openRoyalBiodataModal('Pooja Chaudhary')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
+          <button onclick="sendInterest(this, 'Pooja Chaudhary')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
+          <button onclick="openKundaliModal('Pooja Chaudhary', 31, 'Punia', 'Jat', 'Sikar')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
+          <button onclick="openContactModal('Pooja Chaudhary', '+91 94145 11223', 'श्री रामनिवास पूनिया (पिताजी)', 'Sikar, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="skipCard(this, 'Pooja Chaudhary')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
+        </div>
+      </article>
+
+      <!-- CARD: KAVITA YADAV (यादव) -->
+      <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="यादव"
+               data-categories="all,viewed_me,mutual,verified"
+               data-id="9"
+               data-name="Kavita Yadav"
+               data-age="25"
+               data-height="5'4&quot;"
+               data-edu="B.Com + Bank PO"
+               data-location="Alwar, Rajasthan"
+               data-gotra="Kaushik"
+               data-guna="26"
+               data-phone="+91 94148 44556"
+               data-father="श्री ओमप्रकाश यादव (पिताजी)">
+        <div class="flex items-start space-x-2.5">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
+            <img src="/assets/images/match_priya.jpg" alt="Kavita Yadav" class="w-full h-full object-cover">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0 pr-1">
+            <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+              <h3 class="text-sm font-extrabold text-stone-900 leading-none truncate">Kavita Yadav</h3>
+              <span class="text-blue-600 text-xs"><i class="fa-solid fa-circle-check"></i></span>
+              <span onclick="openKundaliModal('Kavita Yadav', 26, 'Kaushik', 'Yadav', 'Alwar')" class="cursor-pointer bg-amber-50 text-amber-900 border border-amber-300 rounded-full px-1.5 py-0.5 text-[9px] font-bold flex items-center space-x-0.5 hover:bg-amber-100 transition shadow-2xs">
+                <i class="fa-solid fa-dharmachakra text-[9px] text-amber-600"></i>
+                <span>26/36 गुण मिलान</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 25 <span class="text-stone-300">|</span> Height: 5'4"</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: B.Com + Bank PO</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
+              <span class="truncate">Alwar / Jaipur</span>
+            </p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1">
+              <i class="fa-solid fa-tree text-emerald-700 text-[10px]"></i>
+              <span>Gotra: Kaushik (यादव समाज)</span>
+            </p>
+          </div>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 grid grid-cols-5 gap-1.5">
+          <button onclick="openRoyalBiodataModal('Kavita Yadav')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
+          <button onclick="sendInterest(this, 'Kavita Yadav')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
+          <button onclick="openKundaliModal('Kavita Yadav', 26, 'Kaushik', 'Yadav', 'Alwar')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
+          <button onclick="openContactModal('Kavita Yadav', '+91 94148 44556', 'श्री ओमप्रकाश यादव (पिताजी)', 'Alwar, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="skipCard(this, 'Kavita Yadav')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
+        </div>
+      </article>
+
+      <!-- CARD: AARTI GURJAR (गुर्जर) -->
+      <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="गुर्जर"
+               data-categories="all,viewed_me,verified"
+               data-id="10"
+               data-name="Aarti Gurjar"
+               data-age="24"
+               data-height="5'3&quot;"
+               data-edu="M.A. & B.Ed"
+               data-location="Ajmer, Rajasthan"
+               data-gotra="Bainsla"
+               data-guna="28"
+               data-phone="+91 94147 66778"
+               data-father="श्री कन्हैया लाल बैंसला (पिताजी)">
+        <div class="flex items-start space-x-2.5">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
+            <img src="/assets/images/match_anjali.jpg" alt="Aarti Gurjar" class="w-full h-full object-cover">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0 pr-1">
+            <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+              <h3 class="text-sm font-extrabold text-stone-900 leading-none truncate">Aarti Gurjar</h3>
+              <span class="text-blue-600 text-xs"><i class="fa-solid fa-circle-check"></i></span>
+              <span onclick="openKundaliModal('Aarti Gurjar', 28, 'Bainsla', 'Gurjar', 'Ajmer')" class="cursor-pointer bg-amber-50 text-amber-900 border border-amber-300 rounded-full px-1.5 py-0.5 text-[9px] font-bold flex items-center space-x-0.5 hover:bg-amber-100 transition shadow-2xs">
+                <i class="fa-solid fa-dharmachakra text-[9px] text-amber-600"></i>
+                <span>28/36 गुण मिलान</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 24 <span class="text-stone-300">|</span> Height: 5'3"</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: M.A. & B.Ed</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
+              <span class="truncate">Ajmer / Tonk</span>
+            </p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1">
+              <i class="fa-solid fa-tree text-emerald-700 text-[10px]"></i>
+              <span>Gotra: Bainsla (गुर्जर समाज)</span>
+            </p>
+          </div>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 grid grid-cols-5 gap-1.5">
+          <button onclick="openRoyalBiodataModal('Aarti Gurjar')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
+          <button onclick="sendInterest(this, 'Aarti Gurjar')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
+          <button onclick="openKundaliModal('Aarti Gurjar', 28, 'Bainsla', 'Gurjar', 'Ajmer')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
+          <button onclick="openContactModal('Aarti Gurjar', '+91 94147 66778', 'श्री कन्हैया लाल बैंसला (पिताजी)', 'Ajmer, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="skipCard(this, 'Aarti Gurjar')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
+        </div>
+      </article>
+
+      <!-- CARD: MEENAKSHI SONI (सोनी) -->
+      <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="सोनी"
+               data-categories="all,viewed_me,mutual,verified"
+               data-id="11"
+               data-name="Meenakshi Soni"
+               data-age="25"
+               data-height="5'3&quot;"
+               data-edu="B.Des (Jewellery Design)"
+               data-location="Jodhpur, Rajasthan"
+               data-gotra="Soni"
+               data-guna="29"
+               data-phone="+91 94149 88112"
+               data-father="श्री बद्री प्रसाद सोनी (पिताजी)">
+        <div class="flex items-start space-x-2.5">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
+            <img src="/assets/images/match_priya.jpg" alt="Meenakshi Soni" class="w-full h-full object-cover">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0 pr-1">
+            <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+              <h3 class="text-sm font-extrabold text-stone-900 leading-none truncate">Meenakshi Soni</h3>
+              <span class="text-blue-600 text-xs"><i class="fa-solid fa-circle-check"></i></span>
+              <span onclick="openKundaliModal('Meenakshi Soni', 29, 'Soni', 'Soni', 'Jodhpur')" class="cursor-pointer bg-amber-50 text-amber-900 border border-amber-300 rounded-full px-1.5 py-0.5 text-[9px] font-bold flex items-center space-x-0.5 hover:bg-amber-100 transition shadow-2xs">
+                <i class="fa-solid fa-dharmachakra text-[9px] text-amber-600"></i>
+                <span>29/36 गुण मिलान</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 25 <span class="text-stone-300">|</span> Height: 5'3"</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: B.Des (Jewellery Design)</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
+              <span class="truncate">Jodhpur / Jaipur</span>
+            </p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1">
+              <i class="fa-solid fa-tree text-emerald-700 text-[10px]"></i>
+              <span>Gotra: Soni (सोनी स्वर्णकार)</span>
+            </p>
+          </div>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 grid grid-cols-5 gap-1.5">
+          <button onclick="openRoyalBiodataModal('Meenakshi Soni')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
+          <button onclick="sendInterest(this, 'Meenakshi Soni')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
+          <button onclick="openKundaliModal('Meenakshi Soni', 29, 'Soni', 'Soni', 'Jodhpur')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
+          <button onclick="openContactModal('Meenakshi Soni', '+91 94149 88112', 'श्री बद्री प्रसाद सोनी (पिताजी)', 'Jodhpur, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="skipCard(this, 'Meenakshi Soni')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
+        </div>
+      </article>
+
+      <!-- CARD: SUNITA SAINI (सैनी) -->
+      <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="सैनी"
+               data-categories="all,interests_sent,verified"
+               data-id="12"
+               data-name="Sunita Saini"
+               data-age="24"
+               data-height="5'4&quot;"
+               data-edu="M.Com + B.Ed"
+               data-location="Alwar, Rajasthan"
+               data-gotra="Maurya"
+               data-guna="27"
+               data-phone="+91 94141 99001"
+               data-father="श्री प्रभुदयाल मौर्य (पिताजी)">
+        <div class="flex items-start space-x-2.5">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
+            <img src="/assets/images/match_neha.jpg" alt="Sunita Saini" class="w-full h-full object-cover">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0 pr-1">
+            <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+              <h3 class="text-sm font-extrabold text-stone-900 leading-none truncate">Sunita Saini</h3>
+              <span class="text-blue-600 text-xs"><i class="fa-solid fa-circle-check"></i></span>
+              <span onclick="openKundaliModal('Sunita Saini', 27, 'Maurya', 'Saini', 'Alwar')" class="cursor-pointer bg-amber-50 text-amber-900 border border-amber-300 rounded-full px-1.5 py-0.5 text-[9px] font-bold flex items-center space-x-0.5 hover:bg-amber-100 transition shadow-2xs">
+                <i class="fa-solid fa-dharmachakra text-[9px] text-amber-600"></i>
+                <span>27/36 गुण मिलान</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 24 <span class="text-stone-300">|</span> Height: 5'4"</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: M.Com + B.Ed</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
+              <span class="truncate">Alwar, Rajasthan</span>
+            </p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1">
+              <i class="fa-solid fa-tree text-emerald-700 text-[10px]"></i>
+              <span>Gotra: Maurya (सैनी / माली)</span>
+            </p>
+          </div>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 grid grid-cols-5 gap-1.5">
+          <button onclick="openRoyalBiodataModal('Sunita Saini')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
+          <button onclick="sendInterest(this, 'Sunita Saini')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
+          <button onclick="openKundaliModal('Sunita Saini', 27, 'Maurya', 'Saini', 'Alwar')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
+          <button onclick="openContactModal('Sunita Saini', '+91 94141 99001', 'श्री प्रभुदयाल मौर्य (पिताजी)', 'Alwar, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="skipCard(this, 'Sunita Saini')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
+        </div>
+      </article>
+
+      <!-- CARD: REKHA BISHNOI (बिश्नोई) -->
+      <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="बिश्नोई"
+               data-categories="all,viewed_me,mutual,verified"
+               data-id="13"
+               data-name="Rekha Bishnoi"
+               data-age="26"
+               data-height="5'5&quot;"
+               data-edu="RAS Officer (State Govt)"
+               data-location="Jodhpur, Rajasthan"
+               data-gotra="Saharan"
+               data-guna="32"
+               data-phone="+91 94143 55667"
+               data-father="श्री रामेश्वर लाल सहारण (पिताजी)">
+        <div class="flex items-start space-x-2.5">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
+            <img src="/assets/images/match_priya.jpg" alt="Rekha Bishnoi" class="w-full h-full object-cover">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0 pr-1">
+            <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+              <h3 class="text-sm font-extrabold text-stone-900 leading-none truncate">Rekha Bishnoi</h3>
+              <span class="text-blue-600 text-xs"><i class="fa-solid fa-circle-check"></i></span>
+              <span onclick="openKundaliModal('Rekha Bishnoi', 32, 'Saharan', 'Bishnoi', 'Jodhpur')" class="cursor-pointer bg-amber-50 text-amber-900 border border-amber-300 rounded-full px-1.5 py-0.5 text-[9px] font-bold flex items-center space-x-0.5 hover:bg-amber-100 transition shadow-2xs">
+                <i class="fa-solid fa-dharmachakra text-[9px] text-amber-600"></i>
+                <span>32/36 गुण मिलान</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 26 <span class="text-stone-300">|</span> Height: 5'5"</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: RAS Officer (State Govt)</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
+              <span class="truncate">Jodhpur / Bikaner</span>
+            </p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1">
+              <i class="fa-solid fa-tree text-emerald-700 text-[10px]"></i>
+              <span>Gotra: Saharan (बिश्नोई समाज)</span>
+            </p>
+          </div>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 grid grid-cols-5 gap-1.5">
+          <button onclick="openRoyalBiodataModal('Rekha Bishnoi')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
+          <button onclick="sendInterest(this, 'Rekha Bishnoi')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
+          <button onclick="openKundaliModal('Rekha Bishnoi', 32, 'Saharan', 'Bishnoi', 'Jodhpur')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
+          <button onclick="openContactModal('Rekha Bishnoi', '+91 94143 55667', 'श्री रामेश्वर लाल सहारण (पिताजी)', 'Jodhpur, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="skipCard(this, 'Rekha Bishnoi')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
+        </div>
+      </article>
+
+      <!-- CARD: SIMRAN KAUR (सिख) -->
+      <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="सिख"
+               data-categories="all,viewed_me,mutual,verified"
+               data-id="14"
+               data-name="Simran Kaur"
+               data-age="26"
+               data-height="5'5&quot;"
+               data-edu="B.Tech Software Engineer"
+               data-location="Chandigarh, Punjab"
+               data-gotra="Sandhu"
+               data-guna="29"
+               data-phone="+91 98140 22334"
+               data-father="स सरदार हरप्रीत सिंह संधू (पिताजी)">
+        <div class="flex items-start space-x-2.5">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
+            <img src="/assets/images/match_priya.jpg" alt="Simran Kaur" class="w-full h-full object-cover">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0 pr-1">
+            <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+              <h3 class="text-sm font-extrabold text-stone-900 leading-none truncate">Simran Kaur</h3>
+              <span class="text-blue-600 text-xs"><i class="fa-solid fa-circle-check"></i></span>
+              <span onclick="openKundaliModal('Simran Kaur', 29, 'Sandhu', 'Sikh', 'Chandigarh')" class="cursor-pointer bg-amber-50 text-amber-900 border border-amber-300 rounded-full px-1.5 py-0.5 text-[9px] font-bold flex items-center space-x-0.5 hover:bg-amber-100 transition shadow-2xs">
+                <i class="fa-solid fa-dharmachakra text-[9px] text-amber-600"></i>
+                <span>29/36 गुण मिलान</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 26 <span class="text-stone-300">|</span> Height: 5'5"</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: B.Tech Software Engineer</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
+              <span class="truncate">Chandigarh / Mohali</span>
+            </p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1">
+              <i class="fa-solid fa-tree text-emerald-700 text-[10px]"></i>
+              <span>Gotra: Sandhu (सिख समाज)</span>
+            </p>
+          </div>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 grid grid-cols-5 gap-1.5">
+          <button onclick="openRoyalBiodataModal('Simran Kaur')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
+          <button onclick="sendInterest(this, 'Simran Kaur')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
+          <button onclick="openKundaliModal('Simran Kaur', 29, 'Sandhu', 'Sikh', 'Chandigarh')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
+          <button onclick="openContactModal('Simran Kaur', '+91 98140 22334', 'स सरदार हरप्रीत सिंह संधू (पिताजी)', 'Chandigarh, Punjab')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="skipCard(this, 'Simran Kaur')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
+        </div>
+      </article>
+
+      <!-- CARD: KHUSHI ADVANI (सिंधी) -->
+      <article class="candidate-card bg-white rounded-2xl p-3 border border-stone-200 shadow-sm transition hover:shadow-md relative"
+               data-caste="सिंधी"
+               data-categories="all,viewed_me,verified"
+               data-id="15"
+               data-name="Khushi Advani"
+               data-age="25"
+               data-height="5'4&quot;"
+               data-edu="Fashion Merchandiser & BBA"
+               data-location="Jaipur, Rajasthan"
+               data-gotra="Advani"
+               data-guna="28"
+               data-phone="+91 98290 66554"
+               data-father="श्री किशन लाल अडवाणी (पिताजी)">
+        <div class="flex items-start space-x-2.5">
+          <div class="relative shrink-0 w-[94px] h-[104px] rounded-xl overflow-hidden bg-stone-100 border border-stone-200">
+            <img src="/assets/images/match_priya.jpg" alt="Khushi Advani" class="w-full h-full object-cover">
+            <div class="absolute top-1 left-1 bg-white/95 backdrop-blur-xs px-1.5 py-0.5 rounded-full flex items-center space-x-1 shadow-xs border border-emerald-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-beacon"></span>
+              <span class="text-[8.5px] font-extrabold text-emerald-800 leading-none">ऑनलाइन</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0 pr-1">
+            <div class="flex flex-wrap items-center gap-1.5 mb-0.5">
+              <h3 class="text-sm font-extrabold text-stone-900 leading-none truncate">Khushi Advani</h3>
+              <span class="text-blue-600 text-xs"><i class="fa-solid fa-circle-check"></i></span>
+              <span onclick="openKundaliModal('Khushi Advani', 28, 'Advani', 'Sindhi', 'Jaipur')" class="cursor-pointer bg-amber-50 text-amber-900 border border-amber-300 rounded-full px-1.5 py-0.5 text-[9px] font-bold flex items-center space-x-0.5 hover:bg-amber-100 transition shadow-2xs">
+                <i class="fa-solid fa-dharmachakra text-[9px] text-amber-600"></i>
+                <span>28/36 गुण मिलान</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium">Age: 25 <span class="text-stone-300">|</span> Height: 5'4"</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium truncate">Education: Fashion Merchandiser & BBA</p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1 mt-0.5">
+              <i class="fa-solid fa-location-dot text-rose-500 text-[10px]"></i>
+              <span class="truncate">Jaipur, Rajasthan</span>
+            </p>
+            <p class="text-[11px] text-stone-600 leading-snug font-medium flex items-center space-x-1">
+              <i class="fa-solid fa-tree text-emerald-700 text-[10px]"></i>
+              <span>Gotra: Advani (सिंधी समाज)</span>
+            </p>
+          </div>
+        </div>
+        <div class="mt-2.5 pt-2 border-t border-stone-100 grid grid-cols-5 gap-1.5">
+          <button onclick="openRoyalBiodataModal('Khushi Advani')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
+          <button onclick="sendInterest(this, 'Khushi Advani')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
+          <button onclick="openKundaliModal('Khushi Advani', 28, 'Advani', 'Sindhi', 'Jaipur')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
+          <button onclick="openContactModal('Khushi Advani', '+91 98290 66554', 'श्री किशन लाल अडवाणी (पिताजी)', 'Jaipur, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="skipCard(this, 'Khushi Advani')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
         </div>
       </article>
 
@@ -2024,7 +2677,73 @@
     }
 
     // 8-Filter Pills Logic
+    // 8-Filter Pills Logic + Dedicated Samaj Group Filter
+    let currentSamajFilter = <?= json_encode($user_samaj ?? 'ब्राह्मण') ?>;
     let currentFilter = 'all';
+
+    const ALL_SAMAJ_LIST = [
+      { name: 'ब्राह्मण', label: 'ब्राह्मण (Brahmin)', icon: '🕉️' },
+      { name: 'माहेश्वरी', label: 'माहेश्वरी (Maheshwari)', icon: '💎' },
+      { name: 'अग्रवाल', label: 'अग्रवाल (Agarwal)', icon: '🪙' },
+      { name: 'राजपूत', label: 'राजपूत (Rajput)', icon: '⚔️' },
+      { name: 'जैन', label: 'जैन (Jain)', icon: '🪷' },
+      { name: 'जाट', label: 'जाट (Jat)', icon: '🌾' },
+      { name: 'यादव', label: 'यादव (Yadav)', icon: '🦚' },
+      { name: 'गुर्जर', label: 'गुर्जर (Gurjar)', icon: '🛡️' },
+      { name: 'सोनी', label: 'सोनी (Soni)', icon: '✨' },
+      { name: 'सैनी', label: 'सैनी (Saini)', icon: '🌸' },
+      { name: 'पाटीदार', label: 'पाटीदार (Patidar)', icon: '🚜' },
+      { name: 'बिश्नोई', label: 'बिश्नोई (Bishnoi)', icon: '🌾' },
+      { name: 'सिख', label: 'सिख (Sikh)', icon: 'ੴ' },
+      { name: 'सिंधी', label: 'सिंधी (Sindhi)', icon: '🌟' },
+      { name: 'कायस्थ', label: 'कायस्थ (Kayastha)', icon: '📜' },
+      { name: 'all', label: 'सभी समाज (All)', icon: '🌐' }
+    ];
+
+    function renderSamajDrawerPills() {
+      const container = document.getElementById('samajQuickPills');
+      if (!container) return;
+      container.innerHTML = '';
+
+      ALL_SAMAJ_LIST.forEach(s => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        const isActive = (currentSamajFilter === s.name || (s.name === 'all' && currentSamajFilter === 'all'));
+        btn.className = `text-[9.5px] font-bold px-2 py-1 rounded-lg border transition flex items-center space-x-1 cursor-pointer ${
+          isActive 
+            ? 'bg-amber-400 text-emerald-950 border-amber-300 shadow-xs' 
+            : 'bg-white/10 hover:bg-white/20 text-stone-200 border-white/20'
+        }`;
+        btn.innerHTML = `<span>${s.icon}</span><span>${s.label}</span>`;
+        btn.onclick = () => {
+          filterMatchesBySamaj(s.name);
+          toggleSamajDropdown();
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function toggleSamajDropdown() {
+      const drawer = document.getElementById('samajSwitcherDrawer');
+      if (drawer) {
+        drawer.classList.toggle('hidden');
+      }
+    }
+
+    function filterMatchesBySamaj(samajName) {
+      currentSamajFilter = samajName;
+      const titleEl = document.getElementById('activeSamajTitle');
+      const subEl = document.getElementById('activeSamajSubtitle');
+      const displayTitle = (samajName === 'all') ? 'समस्त समाज' : samajName;
+
+      if (titleEl) titleEl.textContent = displayTitle;
+      if (subEl) subEl.textContent = displayTitle;
+
+      renderSamajDrawerPills();
+      applyCombinedFilters();
+      showToast('समाज ग्रुप सक्रिय 🔒', `केवल ${displayTitle} समाज के रिश्ते दिख रहे हैं।`, 'fa-shield-halved');
+    }
+
     function filterByCategory(cat, btnElem) {
       currentFilter = cat;
       // Update pills styles
@@ -2037,13 +2756,28 @@
         const target = document.getElementById('pill-' + cat);
         if (target) target.classList.add('active');
       }
+      applyCombinedFilters();
+    }
 
-      // Filter cards
+    function applyCombinedFilters() {
       const cards = document.querySelectorAll('.candidate-card');
       let visibleCount = 0;
+
       cards.forEach(card => {
+        const cardCaste = (card.getAttribute('data-caste') || '').toLowerCase().trim();
         const cardCats = card.getAttribute('data-categories') || '';
-        if (cat === 'all' || cardCats.includes(cat)) {
+
+        // Samaj check
+        let matchSamaj = true;
+        if (currentSamajFilter && currentSamajFilter !== 'all') {
+          const target = currentSamajFilter.toLowerCase().trim();
+          matchSamaj = cardCaste.includes(target) || target.includes(cardCaste);
+        }
+
+        // Category check
+        const matchCategory = (currentFilter === 'all' || cardCats.includes(currentFilter));
+
+        if (matchSamaj && matchCategory) {
           card.style.display = 'block';
           visibleCount++;
         } else {
@@ -2051,7 +2785,10 @@
         }
       });
 
-      // Update count banner text
+      // Update count indicators
+      const countNumberEl = document.getElementById('samajCountNumber');
+      if (countNumberEl) countNumberEl.textContent = visibleCount;
+
       const banner = document.getElementById('filterStatusText');
       const catNames = {
         'all': 'सभी योग्य रिश्ते (All Matches)',
@@ -2063,7 +2800,11 @@
         'shortlisted': 'पसंदीदा प्रोफाइल (Shortlisted)',
         'verified': 'सत्यापित रिश्ते (100% Verified)'
       };
-      banner.innerHTML = `<i class="fa-solid fa-list-check text-emerald-700 mr-1.5"></i> ${catNames[cat] || cat}: <strong>${visibleCount} प्रोफाइल</strong>`;
+
+      if (banner) {
+        const activeName = (currentSamajFilter === 'all') ? 'समस्त समाज' : `${currentSamajFilter} समाज`;
+        banner.innerHTML = `<i class="fa-solid fa-shield-halved text-emerald-700 mr-1.5"></i> <strong>${activeName}:</strong> ${visibleCount} प्रोफाइल (${catNames[currentFilter] || currentFilter})`;
+      }
     }
 
     // Send Interest Button Click (Connected to Backend Database & Notifications)
@@ -2574,6 +3315,12 @@
     function toggleSideMenu() {
       alert("धीरजा रॉयल मैट्रिमोनी मेनू:\n\n• 1. कवर पेज (/cover)\n• 2. वेलकम स्क्रीन (/welcome)\n• 3. बायोडाटा फॉर्म (/biodata)\n• 4. तालिका / रिश्ते (/matches)\n• 👑 VIP सदस्यता एवं पेमेंट (/membership)\n• हेल्प & सपोर्ट");
     }
+
+    // Initialize on DOM Ready
+    document.addEventListener('DOMContentLoaded', function() {
+      renderSamajDrawerPills();
+      filterMatchesBySamaj(currentSamajFilter);
+    });
   </script>
 
 </body>

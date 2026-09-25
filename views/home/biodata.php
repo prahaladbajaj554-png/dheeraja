@@ -282,6 +282,70 @@
       border-color: #E6C254;
       box-shadow: 0 2px 8px rgba(6, 78, 59, 0.25);
     }
+    /* Alphabet Quick Filter Pills */
+    .alphabet-pill {
+      background: #FFFFFF;
+      border: 1.5px solid #CFE6D4;
+      color: #064E3B;
+      border-radius: 8px;
+      padding: 3px 6px;
+      font-size: 10px;
+      font-weight: 800;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 2.5px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .alphabet-pill:hover {
+      background: #E8F5EB;
+      border-color: #059669;
+      transform: translateY(-1px);
+    }
+    .alphabet-pill.active {
+      background: linear-gradient(135deg, #065F46 0%, #033626 100%) !important;
+      color: #FFFFFF !important;
+      border-color: #D4AF37 !important;
+      box-shadow: 0 2px 6px rgba(6, 78, 59, 0.35);
+    }
+    .alphabet-pill.active span {
+      color: #FDE68A !important;
+    }
+    /* Caste Live Result Card */
+    .caste-result-card {
+      background: #FFFFFF;
+      border: 1.5px solid #D1E5D7;
+      border-radius: 10px;
+      padding: 6px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .caste-result-card:hover {
+      background: #F0FDF4;
+      border-color: #059669;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 5px rgba(6, 78, 59, 0.08);
+    }
+    .caste-result-card.selected {
+      background: linear-gradient(135deg, #065F46 0%, #033626 100%) !important;
+      border-color: #D4AF37 !important;
+      box-shadow: 0 3px 8px rgba(6, 78, 59, 0.25);
+    }
+    .caste-result-card.selected .caste-name-hi {
+      color: #FFFFFF !important;
+    }
+    .caste-result-card.selected .caste-name-en {
+      color: #FDE68A !important;
+    }
+    .caste-result-card.selected .caste-check-icon {
+      display: flex !important;
+    }
     .gotra-pill {
       display: inline-flex;
       align-items: center;
@@ -1126,80 +1190,101 @@
                 </div>
               </div>
 
-              <!-- Caste / Samaj with Strict Community Eligibility Gate -->
-              <div>
-                <div class="flex items-center justify-between mb-1">
-                  <label class="block text-xs font-bold text-stone-800 flex items-center space-x-1">
-                    <i class="fa-solid fa-shield-halved text-emerald-700"></i>
-                    <span>Caste / Samaj (जाति समाज) *</span>
+              <!-- Caste / Samaj with Instant Letter-Search (अक्षर दबाते ही तुरंत खोज) & Strict Samaj Exclusivity Gate -->
+              <div class="bg-gradient-to-b from-emerald-50/80 via-white to-amber-50/60 p-3 rounded-2xl border-2 border-emerald-300 shadow-xs">
+                <div class="flex items-center justify-between mb-1.5">
+                  <label class="block text-xs font-black text-stone-900 flex items-center space-x-1.5">
+                    <span class="w-5 h-5 rounded-md bg-emerald-700 text-white flex items-center justify-center text-[10px]">
+                      <i class="fa-solid fa-users-line"></i>
+                    </span>
+                    <span>Caste / Samaj (जाति समाज चुनें) *</span>
                   </label>
-                  <span class="text-[9.5px] font-extrabold text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full">
-                    🔒 अधिकृत समाज गेट
+                  <span class="text-[9.5px] font-black text-amber-950 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
+                    <i class="fa-solid fa-shield-halved text-emerald-700"></i>
+                    <span>🔒 केवल अपने समाज का ग्रुप</span>
                   </span>
                 </div>
 
-                <!-- Verified Samaj Dropdown Selector -->
-                <div class="input-wrapper mb-2">
-                  <i class="fa-solid fa-users input-icon"></i>
-                  <select id="casteDropdownSelect" class="royal-input font-bold text-stone-800 bg-white border-2 border-emerald-300" onchange="handleCasteSelectDropdown(this.value)">
-                    <option value="">-- अपनी जाति / समाज चुनें --</option>
-                    <optgroup label="प्रमुख समाज (Popular Castes)">
-                      <option value="ब्राह्मण (Brahmin)">ब्राह्मण समाज (Brahmin)</option>
-                      <option value="राजपूत (Rajput)">राजपूत समाज (Rajput Kshatriya)</option>
-                      <option value="माहेश्वरी (Maheshwari)">माहेश्वरी समाज (Maheshwari)</option>
-                      <option value="अग्रवाल (Agarwal)">अग्रवाल समाज (Agarwal)</option>
-                      <option value="जैन (Jain)">जैन समाज (Jain - दिगंबर/श्वेतांबर)</option>
-                      <option value="खंडेलवाल (Khandelwal)">खंडेलवाल समाज (Khandelwal)</option>
-                      <option value="पाटीदार / पटेल (Patidar)">पाटीदार / पटेल समाज (Patidar)</option>
-                      <option value="कायस्थ (Kayastha)">कायस्थ समाज (Kayastha)</option>
-                      <option value="जाट (Jat)">जाट समाज (Jat Samaj)</option>
-                      <option value="यादव (Yadav)">यादव समाज (Yadav Samaj)</option>
-                      <option value="गुर्जर (Gurjar)">गुर्जर समाज (Gurjar Samaj)</option>
-                      <option value="सिख (Sikh)">सिख समाज (Sikh Samaj)</option>
-                      <option value="सैनी / माली (Saini)">सैनी / माली समाज (Saini / Mali)</option>
-                      <option value="सोनी / स्वर्णकार (Soni)">सोनी / स्वर्णकार समाज (Swarnakar)</option>
-                      <option value="जांगिड़ / विश्वकर्मा (Jangid)">जांगिड़ / विश्वकर्मा समाज (Jangid)</option>
-                      <option value="चौधरी / बिश्नोई (Bishnoi)">बिश्नोई समाज (Bishnoi Samaj)</option>
-                      <option value="सिंधी (Sindhi)">सिंधी समाज (Sindhi Samaj)</option>
-                      <option value="अन्य समाज (Other)">अन्य समाज (नीचे दर्ज करें)</option>
-                    </optgroup>
-                  </select>
+                <p class="text-[11px] text-stone-600 mb-2 leading-tight">
+                  ⚡ <strong>तत्काल खोज (Instant Filter):</strong> नीचे कोई भी अक्षर (<strong>S, B, J, Y, M, R, A, K...</strong>) दबाएं या बॉक्स में टाइप करें। संबंधित जातियां तुरंत सामने आ जाएंगी।
+                </p>
+
+                <!-- Alphabet Quick-Access Filter Bar (अक्षर त्वरित बार) -->
+                <div class="mb-2">
+                  <div class="flex items-center justify-between text-[10px] font-bold text-stone-500 mb-1">
+                    <span><i class="fa-solid fa-arrow-down-a-z text-emerald-700 mr-1"></i>अक्षर चुनें (1-टैप त्वरित फ़िल्टर):</span>
+                    <span class="text-[9.5px] text-emerald-700 font-semibold cursor-pointer hover:underline" onclick="filterCasteByLetter('ALL', this)">🔄 सभी देखें</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1" id="alphabetFilterBar">
+                    <button type="button" class="alphabet-pill active" onclick="filterCasteByLetter('ALL', this)">सभी (All)</button>
+                    <button type="button" class="alphabet-pill" onclick="filterCasteByLetter('S', this)">S / स <span class="text-[9px] opacity-75">(सोनी, सैनी, सिख)</span></button>
+                    <button type="button" class="alphabet-pill" onclick="filterCasteByLetter('B', this)">B / ब <span class="text-[9px] opacity-75">(ब्राह्मण, बिश्नोई)</span></button>
+                    <button type="button" class="alphabet-pill" onclick="filterCasteByLetter('J', this)">J / ज <span class="text-[9px] opacity-75">(जैन, जाट, जांगिड़)</span></button>
+                    <button type="button" class="alphabet-pill" onclick="filterCasteByLetter('Y', this)">Y / य <span class="text-[9px] opacity-75">(यादव / अहीर)</span></button>
+                    <button type="button" class="alphabet-pill" onclick="filterCasteByLetter('M', this)">M / म <span class="text-[9px] opacity-75">(माहेश्वरी, माली)</span></button>
+                    <button type="button" class="alphabet-pill" onclick="filterCasteByLetter('R', this)">R / र <span class="text-[9px] opacity-75">(राजपूत, रैगर)</span></button>
+                    <button type="button" class="alphabet-pill" onclick="filterCasteByLetter('A', this)">A / अ <span class="text-[9px] opacity-75">(अग्रवाल, अरोड़ा)</span></button>
+                    <button type="button" class="alphabet-pill" onclick="filterCasteByLetter('K', this)">K / क <span class="text-[9px] opacity-75">(खंडेलवाल, कायस्थ)</span></button>
+                    <button type="button" class="alphabet-pill" onclick="filterCasteByLetter('G', this)">G / ग <span class="text-[9px] opacity-75">(गुर्जर, गौड़)</span></button>
+                    <button type="button" class="alphabet-pill" onclick="filterCasteByLetter('P', this)">P / प <span class="text-[9px] opacity-75">(पटेल, प्रजापति)</span></button>
+                    <button type="button" class="alphabet-pill" onclick="filterCasteByLetter('C', this)">C / च <span class="text-[9px] opacity-75">(चौधरी)</span></button>
+                  </div>
                 </div>
 
-                <!-- Caste Input with Verified Check & Autocomplete suggestions -->
-                <div class="relative">
+                <!-- Instant Search Input Box -->
+                <div class="relative mb-2">
                   <div class="input-wrapper">
-                    <i class="fa-solid fa-pen-to-square input-icon"></i>
+                    <i class="fa-solid fa-magnifying-glass input-icon text-emerald-700"></i>
                     <input 
                       type="text" 
-                      name="caste" 
-                      id="casteInput" 
-                      placeholder="अपनी जाति / समाज ऊपर से चुनें या लिखें..." 
-                      class="royal-input pr-28 font-bold text-stone-800"
-                      oninput="handleCasteInput(this.value)"
-                      required
+                      id="casteLiveSearchInput" 
+                      placeholder="अक्षर दबाएं (जैसे: S, B, J, Y) या जाति का नाम लिखें..." 
+                      class="royal-input pl-9 pr-8 font-bold text-stone-900 border-2 border-emerald-400 focus:border-gold-500 bg-white shadow-xs"
+                      oninput="handleInstantCasteSearch(this.value)"
+                      autocomplete="off"
                     >
                   </div>
-                  <!-- Verified Community Badge -->
-                  <div id="casteSelectedBadge" class="hidden absolute inset-y-1.5 right-1.5 flex items-center pr-1.5 pointer-events-none">
-                    <span class="text-[10px] font-extrabold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-md flex items-center space-x-1 shadow-2xs">
-                      <i class="fa-solid fa-circle-check text-emerald-600 text-[11px]"></i>
-                      <span id="casteBadgeText">सत्यापित समाज</span>
+                  <!-- Clear / Reset Search icon -->
+                  <button type="button" id="clearCasteSearchBtn" onclick="clearCasteSearch()" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 w-5 h-5 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                  </button>
+                </div>
+
+                <!-- Live Matching Caste Grid -->
+                <div class="mb-2">
+                  <div class="flex items-center justify-between text-[10.5px] font-bold text-stone-600 mb-1 px-1">
+                    <span id="casteMatchCountLabel"><i class="fa-solid fa-list-check text-emerald-600 mr-1"></i>उपलब्ध समाज सूची (क्लिक करके चुनें):</span>
+                    <span class="text-[9.5px] text-stone-500 font-normal">तत्काल चयन</span>
+                  </div>
+                  <div id="casteLiveResultBox" class="grid grid-cols-2 gap-1.5 max-h-[220px] overflow-y-auto pr-0.5 p-1 rounded-xl bg-white/90 border border-emerald-200">
+                    <!-- Populated dynamically via JS -->
+                  </div>
+                </div>
+
+                <!-- Selected Caste Confirmation Banner (Hidden until chosen) -->
+                <div id="casteSelectedBanner" class="hidden mb-2 p-2.5 bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 text-white rounded-xl border-2 border-amber-400 shadow-sm">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                      <span id="casteSelectedIcon" class="text-xl">🕉️</span>
+                      <div>
+                        <div class="text-[9.5px] text-amber-300 font-black uppercase tracking-wider">सत्यापित चयन • समाज ग्रुप लॉक</div>
+                        <div class="text-sm font-black text-white" id="casteSelectedNameDisplay">ब्राह्मण समाज (Brahmin)</div>
+                      </div>
+                    </div>
+                    <span class="w-6 h-6 rounded-full bg-amber-400 text-emerald-950 flex items-center justify-center text-xs font-bold shadow-xs">
+                      <i class="fa-solid fa-check"></i>
                     </span>
                   </div>
                 </div>
 
-                <!-- 1-Tap Quick Caste Chips -->
-                <div class="mt-2">
-                  <div class="text-[10px] text-stone-500 font-bold mb-1">त्वरित चयन समाज:</div>
-                  <div id="casteChipsContainer" class="flex flex-wrap gap-1.5"></div>
-                </div>
+                <!-- Hidden Input bound to form submission -->
+                <input type="hidden" name="caste" id="casteInput" value="" required>
 
-                <!-- Mandatory Samaj Declaration Checkbox -->
-                <div class="mt-2.5 p-2.5 rounded-xl bg-amber-50/80 border border-amber-300 flex items-start space-x-2">
+                <!-- Samaj Group Exclusivity Notice -->
+                <div class="p-2.5 rounded-xl bg-amber-50/90 border border-amber-300 flex items-start space-x-2">
                   <input type="checkbox" id="samajDeclaration" name="samaj_declaration" checked required class="mt-0.5 w-4 h-4 rounded text-emerald-700 focus:ring-emerald-500 border-amber-300 cursor-pointer">
                   <label for="samajDeclaration" class="text-[10.5px] text-stone-700 font-semibold cursor-pointer select-none leading-snug">
-                    <strong class="text-amber-950 font-bold">समाज सदस्यता पुष्टि:</strong> मैं पुष्टि करता/करती हूँ कि मैं चुने हुए समाज का प्रामाणिक सदस्य हूँ और केवल संबंधित समाज के सदस्य ही इस ऐप में प्रवेश कर सकते हैं।
+                    <strong class="text-amber-950 font-bold"><i class="fa-solid fa-lock text-emerald-700 mr-1"></i>समाज ग्रुप सुरक्षा नियम:</strong> जिस समाज का सदस्य ग्रुप देख रहा है, वह केवल अपने समाज के ग्रुप में ही अपना बायोडाटा दर्ज कर सकता है और तालिका में केवल अपने ही समाज के रिश्ते देख सकता है।
                   </label>
                 </div>
               </div>
@@ -2048,172 +2133,411 @@
       updateFormProgress();
     }
 
-    // Comprehensive Caste & Gotra Database
-    const CASTE_DATABASE = {
-      'Hindu': [
-        {
-          name: 'ब्राह्मण (Brahmin)', cleanName: 'ब्राह्मण', icon: '🕉️',
-          gotras: ['भारद्वाज', 'कश्यप', 'वत्स', 'शांडिल्य', 'गौतम', 'पाराशर', 'गर्ग', 'कौशिक', 'वशिष्ठ', 'अंगिरस', 'हरितस']
-        },
-        {
-          name: 'राजपूत (Rajput)', cleanName: 'राजपूत', icon: '⚔️',
-          gotras: ['राठौड़', 'चौहान', 'सिसोदिया', 'शेखावत', 'कछवाहा', 'भाटी', 'पंवार', 'सोलंकी', 'तोमर', 'झाला']
-        },
-        {
-          name: 'माहेश्वरी (Maheshwari)', cleanName: 'माहेश्वरी', icon: '💎',
-          gotras: ['सोमानी', 'बिहानी', 'डागा', 'राठी', 'बिड़ला', 'बाहेती', 'मालू', 'तोश Rival', 'काकानी', 'लाखोटिया']
-        },
-        {
-          name: 'अग्रवाल (Agarwal)', cleanName: 'अग्रवाल', icon: '🪙',
-          gotras: ['गर्ग', 'गोयल', 'बंसल', 'मित्तल', 'सिंघल', 'जिंदल', 'कुच्छल', 'कंसल', 'नांगल', 'ऐरण', 'धारण']
-        },
-        {
-          name: 'खंडेलवाल (Khandelwal)', cleanName: 'खंडेलवाल', icon: '🌿',
-          gotras: ['रावत', 'नाटाणी', 'धूत', 'कायथवाल', 'कुलवाल', 'माथेरिया', 'बड़ाया', 'तांबी', 'वैद्य']
-        },
-        {
-          name: 'जाट (Jat)', cleanName: 'जाट', icon: '🌾',
-          gotras: ['पूनिया', 'चौधरी', 'गोदारा', 'धायल', 'बेनीवाल', 'डोटासरा', 'जाखड़', 'सहारण', 'ढाका', 'कस्वां']
-        },
-        {
-          name: 'यादव / अहीर (Yadav)', cleanName: 'यादव', icon: '🦚',
-          gotras: ['यादव', 'अहिर', 'कौशिक', 'वत्स', 'अत्रि', 'भारद्वाज', 'शांडिल्य']
-        },
-        {
-          name: 'गुर्जर (Gurjar)', cleanName: 'गुर्जर', icon: '🛡️',
-          gotras: ['बैंसला', 'खटाना', 'अवाना', 'पोसवाल', 'तंवर', 'चावड़ी', 'धाभाई']
-        },
-        {
-          name: 'पाटीदार / पटेल (Patidar)', cleanName: 'पाटीदार', icon: '🚜',
-          gotras: ['पटेल', 'अमीन', 'देसाई', 'पटेलिया', 'चौधरी', 'कश्यप']
-        },
-        {
-          name: 'सैनी / माली (Saini)', cleanName: 'सैनी', icon: '🌸',
-          gotras: ['सैनी', 'मौर्य', 'कुशवाह', 'शाक्य', 'भागीरथी']
-        },
-        {
-          name: 'सोनी / स्वर्णकार (Soni)', cleanName: 'सोनी', icon: '✨',
-          gotras: ['सोनी', 'स्वर्णकार', 'जांगिड़', 'कश्यप', 'गौतम']
-        }
-      ],
-      'Jain': [
-        {
-          name: 'श्वेतांबर जैन (Shwetambar)', cleanName: 'श्वेतांबर जैन', icon: '🪷',
-          gotras: ['ओसवाल', 'लोढ़ा', 'मेहता', 'कोठारी', 'भंसाली', 'शाह', 'गांधी']
-        },
-        {
-          name: 'दिगंबर जैन (Digambar)', cleanName: 'दिगंबर जैन', icon: '🪷',
-          gotras: ['खंडेलवाल जैन', 'कासलीवाल', 'पंड्या', 'गंगवाल', 'सेठी', 'बड़जात्या']
-        }
-      ],
-      'Sikh': [
-        {
-          name: 'जाट सिख (Jat Sikh)', cleanName: 'जाट सिख', icon: 'ੴ',
-          gotras: ['संधू', 'गिल', 'सिद्धू', 'ढिल्लों', 'ग्रेवाल', 'चीमा', 'मान', 'औलख']
-        },
-        {
-          name: 'अरोड़ा / खत्री सिख (Khatri)', cleanName: 'अरोड़ा / खत्री', icon: 'ੴ',
-          gotras: ['साहनी', 'आनंद', 'चोपड़ा', 'मल्होत्रा', 'बेदी', 'सोढ़ी', 'कपूर', 'खन्ना']
-        }
-      ],
-      'Other': [
-        {
-          name: 'कायस्थ (Kayastha)', cleanName: 'कायस्थ', icon: '📜',
-          gotras: ['माथुर', 'सक्सेना', 'श्रीवास्तव', 'भटनागर', 'निगम', 'कुलश्रेष्ठ']
-        },
-        {
-          name: 'सिंधी (Sindhi)', cleanName: 'सिंधी', icon: '🌟',
-          gotras: ['अडवाणी', 'आहूजा', 'माखीजा', 'चावला', 'भाटिया', 'वासवानी']
-        }
-      ]
-    };
+    // Comprehensive Caste & Community Database with Instant Letter Mappings
+    const ALL_CASTES = [
+      // S - सोनी, सैनी, सिख, सिंधी, शर्मा (ब्राह्मण)
+      {
+        cleanName: 'सोनी',
+        fullName: 'सोनी / स्वर्णकार (Soni Swarnakar)',
+        icon: '✨',
+        letters: ['S', 's', 'स'],
+        searchTerms: ['soni', 'swarnakar', 'sonkar', 'सोनी', 'स्वर्णकार', 's'],
+        gotras: ['सोनी', 'स्वर्णकार', 'जांगिड़', 'कश्यप', 'गौतम', 'वशिष्ठ', 'भारद्वाज']
+      },
+      {
+        cleanName: 'सैनी',
+        fullName: 'सैनी / माली (Saini Mali)',
+        icon: '🌸',
+        letters: ['S', 's', 'स', 'M', 'm', 'म'],
+        searchTerms: ['saini', 'mali', 'maurya', 'kushwaha', 'सैनी', 'माली', 'मौर्य', 'कुशवाहा', 's', 'm'],
+        gotras: ['सैनी', 'मौर्य', 'कुशवाह', 'शाक्य', 'भागीरथी', 'पवार', 'सोलंकी']
+      },
+      {
+        cleanName: 'सिख',
+        fullName: 'सिख समाज (Sikh Samaj)',
+        icon: 'ੴ',
+        letters: ['S', 's', 'स'],
+        searchTerms: ['sikh', 'singh', 'kaur', 'khatri', 'jat sikh', 'सिख', 'सिंह', 's'],
+        gotras: ['संधू', 'गिल', 'सिद्धू', 'ढिल्लों', 'ग्रेवाल', 'चीमा', 'साहनी', 'आनंद', 'चोपड़ा']
+      },
+      {
+        cleanName: 'सिंधी',
+        fullName: 'सिंधी समाज (Sindhi)',
+        icon: '🌟',
+        letters: ['S', 's', 'स'],
+        searchTerms: ['sindhi', 'advani', 'ahuja', 'सिंधी', 's'],
+        gotras: ['अडवाणी', 'आहूजा', 'माखीजा', 'चावला', 'भाटिया', 'वासवानी', 'खुबचंदानी']
+      },
+
+      // B - ब्राह्मण, बिश्नोई, बैरवा, बनिया, भाटिया
+      {
+        cleanName: 'ब्राह्मण',
+        fullName: 'ब्राह्मण समाज (Brahmin)',
+        icon: '🕉️',
+        letters: ['B', 'b', 'ब', 'भ', 'S', 's', 'श'],
+        searchTerms: ['brahmin', 'brahman', 'sharma', 'pandit', 'gaur', 'dadhich', 'tiwari', 'mishra', 'ब्राह्मण', 'पंडित', 'शर्मा', 'गौड़', 'दाधीच', 'तिवारी', 'मिश्रा', 'b', 's'],
+        gotras: ['भारद्वाज', 'कश्यप', 'वत्स', 'शांडिल्य', 'गौतम', 'पाराशर', 'गर्ग', 'कौशिक', 'वशिष्ठ', 'अंगिरस', 'हरितस']
+      },
+      {
+        cleanName: 'बिश्नोई',
+        fullName: 'बिश्नोई समाज (Bishnoi)',
+        icon: '🌾',
+        letters: ['B', 'b', 'ब', 'भ'],
+        searchTerms: ['bishnoi', 'vishnoi', 'बिश्नोई', 'विश्नोई', 'b'],
+        gotras: ['सहारण', 'खीचड़', 'जाणी', 'लोहमरोड़', 'मांझू', 'गोदारा', 'कड़वासरा', 'सुआ']
+      },
+      {
+        cleanName: 'बैरवा',
+        fullName: 'बैरवा समाज (Bairwa)',
+        icon: '🛡️',
+        letters: ['B', 'b', 'ब', 'भ'],
+        searchTerms: ['bairwa', 'berwa', 'बैरवा', 'b'],
+        gotras: ['मरोठिया', 'चंदेल', 'गौतम', 'काश्यप', 'पिपलोदा', 'बड़ोदिया', 'जाटव']
+      },
+      {
+        cleanName: 'बनिया / वैश्य',
+        fullName: 'बनिया / वैश्य (Bania)',
+        icon: '⚖️',
+        letters: ['B', 'b', 'ब', 'भ', 'V', 'v', 'व'],
+        searchTerms: ['bania', 'vaishya', 'gupta', 'बनिया', 'वैश्य', 'गुप्ता', 'b', 'v'],
+        gotras: ['कश्यप', 'गर्ग', 'गोयल', 'मित्तल', 'बंसल', 'सिंघल', 'जिंदल']
+      },
+      {
+        cleanName: 'भाटिया',
+        fullName: 'भाटिया समाज (Bhatia)',
+        icon: '🌟',
+        letters: ['B', 'b', 'Bh', 'bh', 'भ', 'ब'],
+        searchTerms: ['bhatia', 'भाटिया', 'b', 'bh'],
+        gotras: ['बब्बर', 'गांधी', 'ढिंगरा', 'वर्मा', 'सोढ़ी', 'कपूर']
+      },
+
+      // J - जैन, जाट, जांगिड़
+      {
+        cleanName: 'जैन',
+        fullName: 'जैन समाज (Jain - दिगंबर/श्वेतांबर)',
+        icon: '🪷',
+        letters: ['J', 'j', 'ज', 'Z', 'z'],
+        searchTerms: ['jain', 'shwetambar', 'digambar', 'oswal', 'जैन', 'श्वेतांबर', 'दिगंबर', 'ओसवाल', 'j'],
+        gotras: ['ओसवाल', 'लोढ़ा', 'मेहता', 'कोठारी', 'भंसाली', 'शाह', 'गांधी', 'कासलीवाल', 'सेठी', 'बड़जात्या']
+      },
+      {
+        cleanName: 'जाट',
+        fullName: 'जाट समाज (Jat Samaj)',
+        icon: '🌾',
+        letters: ['J', 'j', 'ज', 'C', 'c', 'च'],
+        searchTerms: ['jat', 'chaudhary', 'choudhary', 'जाट', 'चौधरी', 'j', 'c'],
+        gotras: ['पूनिया', 'चौधरी', 'गोदारा', 'धायल', 'बेनीवाल', 'डोटासरा', 'जाखड़', 'सहारण', 'ढाका', 'कस्वां']
+      },
+      {
+        cleanName: 'जांगिड़',
+        fullName: 'जांगिड़ / विश्वकर्मा (Jangid Suthar)',
+        icon: '🪚',
+        letters: ['J', 'j', 'ज', 'V', 'v', 'व'],
+        searchTerms: ['jangid', 'vishwakarma', 'suthar', 'shilpkar', 'जांगिड़', 'विश्वकर्मा', 'सुथार', 'j', 'v'],
+        gotras: ['जांगिड़', 'कौशिक', 'अंगिरस', 'भारद्वाज', 'कश्यप', 'वशिष्ठ', 'गौतम']
+      },
+
+      // Y - यादव / अहीर
+      {
+        cleanName: 'यादव',
+        fullName: 'यादव / अहीर (Yadav Ahir)',
+        icon: '🦚',
+        letters: ['Y', 'y', 'य', 'J', 'j', 'ज', 'A', 'a', 'अ'],
+        searchTerms: ['yadav', 'ahir', 'yadu', 'यादव', 'अहीर', 'y', 'j', 'a'],
+        gotras: ['यादव', 'अहिर', 'कौशिक', 'वत्स', 'अत्रि', 'भारद्वाज', 'शांडिल्य', 'महावर']
+      },
+
+      // M - माहेश्वरी, माली, मीना, मेघवाल
+      {
+        cleanName: 'माहेश्वरी',
+        fullName: 'माहेश्वरी समाज (Maheshwari)',
+        icon: '💎',
+        letters: ['M', 'm', 'म'],
+        searchTerms: ['maheshwari', 'marwari', 'somani', 'rathi', 'birla', 'माहेश्वरी', 'मारवाड़ी', 'm'],
+        gotras: ['सोमानी', 'बिहानी', 'डागा', 'राठी', 'बिड़ला', 'बाहेती', 'मालू', 'काकानी', 'लाखोटिया', 'मूंदड़ा']
+      },
+      {
+        cleanName: 'मीना',
+        fullName: 'मीना समाज (Meena)',
+        icon: '🏹',
+        letters: ['M', 'm', 'म'],
+        searchTerms: ['meena', 'mina', 'मीना', 'm'],
+        gotras: ['कटारा', 'डामोर', 'रोत', 'भगोरा', 'तंवर', 'मीणा', 'चौहान']
+      },
+      {
+        cleanName: 'मेघवाल',
+        fullName: 'मेघवाल समाज (Meghwal)',
+        icon: '☀️',
+        letters: ['M', 'm', 'म'],
+        searchTerms: ['meghwal', 'meghwanshi', 'मेघवाल', 'm'],
+        gotras: ['परमार', 'चौहान', 'राठौड़', 'पंवार', 'सोलंकी', 'भाटी']
+      },
+
+      // R - राजपूत, रैगर
+      {
+        cleanName: 'राजपूत',
+        fullName: 'राजपूत समाज (Rajput Kshatriya)',
+        icon: '⚔️',
+        letters: ['R', 'r', 'र', 'K', 'k', 'क'],
+        searchTerms: ['rajput', 'kshatriya', 'rathore', 'chauhan', 'shekhawat', 'राजपूत', 'क्षत्रिय', 'राठौड़', 'चौहान', 'शेखावत', 'r'],
+        gotras: ['राठौड़', 'चौहान', 'सिसोदिया', 'शेखावत', 'कछवाहा', 'भाटी', 'पंवार', 'सोलंकी', 'तोमर', 'झाला']
+      },
+      {
+        cleanName: 'रैगर',
+        fullName: 'रैगर समाज (Raigar)',
+        icon: '🛡️',
+        letters: ['R', 'r', 'र'],
+        searchTerms: ['raigar', 'reger', 'regal', 'रैगर', 'रेगर', 'r'],
+        gotras: ['जाटोलिया', 'बंसीवाल', 'सवारिया', 'सिंघारिया', 'चौहान', 'कान्द्रा', 'राठौड़']
+      },
+
+      // A - अग्रवाल, अरोड़ा
+      {
+        cleanName: 'अग्रवाल',
+        fullName: 'अग्रवाल समाज (Agarwal)',
+        icon: '🪙',
+        letters: ['A', 'a', 'अ'],
+        searchTerms: ['agarwal', 'agrawal', 'gupta', 'bansal', 'goyal', 'mittal', 'अग्रवाल', 'अग्रहरि', 'a'],
+        gotras: ['गर्ग', 'गोयल', 'बंसल', 'मित्तल', 'सिंघल', 'जिंदल', 'कुच्छल', 'कंसल', 'नांगल', 'ऐरण', 'धारण', 'मधुकुल']
+      },
+      {
+        cleanName: 'अरोड़ा / खत्री',
+        fullName: 'अरोड़ा / खत्री (Arora Khatri)',
+        icon: '🏛️',
+        letters: ['A', 'a', 'अ', 'K', 'k', 'ख'],
+        searchTerms: ['arora', 'khatri', 'kapoor', 'khanna', 'malhotra', 'अरोड़ा', 'खत्री', 'a', 'k'],
+        gotras: ['साहनी', 'आनंद', 'चोपड़ा', 'मल्होत्रा', 'बेदी', 'सोढ़ी', 'कपूर', 'खन्ना', 'धवन', 'सरीन']
+      },
+
+      // K - खंडेलवाल, कायस्थ
+      {
+        cleanName: 'खंडेलवाल',
+        fullName: 'खंडेलवाल समाज (Khandelwal)',
+        icon: '🌿',
+        letters: ['K', 'k', 'क', 'ख'],
+        searchTerms: ['khandelwal', 'vaishya', 'rawat', 'खंडेलवाल', 'k'],
+        gotras: ['रावत', 'नाटाणी', 'धूत', 'कायथवाल', 'कुलवाल', 'माथेरिया', 'बड़ाया', 'तांबी', 'वैद्य', 'सौखिया']
+      },
+      {
+        cleanName: 'कायस्थ',
+        fullName: 'कायस्थ समाज (Kayastha)',
+        icon: '📜',
+        letters: ['K', 'k', 'क'],
+        searchTerms: ['kayastha', 'mathur', 'saxena', 'shrivastava', 'bhatnagar', 'कायस्थ', 'माथुर', 'सक्सेना', 'श्रीवास्तव', 'k'],
+        gotras: ['माथुर', 'सक्सेना', 'श्रीवास्तव', 'भटनागर', 'निगम', 'कुलश्रेष्ठ', 'कर्ण', 'अम्बष्ठ']
+      },
+
+      // G - गुर्जर
+      {
+        cleanName: 'गुर्जर',
+        fullName: 'गुर्जर समाज (Gurjar Samaj)',
+        icon: '🛡️',
+        letters: ['G', 'g', 'ग'],
+        searchTerms: ['gurjar', 'gujjar', 'bainsla', 'गुर्जर', 'गूर्जर', 'g'],
+        gotras: ['बैंसला', 'खटाना', 'अवाना', 'पोसवाल', 'तंवर', 'चावड़ी', 'धाभाई', 'लोहमरोड़']
+      },
+
+      // P - पाटीदार / पटेल, प्रजापति
+      {
+        cleanName: 'पाटीदार / पटेल',
+        fullName: 'पाटीदार / पटेल (Patidar)',
+        icon: '🚜',
+        letters: ['P', 'p', 'प'],
+        searchTerms: ['patidar', 'patel', 'kurmi', 'पाटीदार', 'पटेल', 'कुर्मी', 'p'],
+        gotras: ['पटेल', 'अमीन', 'देसाई', 'पटेलिया', 'चौधरी', 'कश्यप', 'पाटीदार']
+      },
+      {
+        cleanName: 'प्रजापति',
+        fullName: 'प्रजापति / कुम्हार (Prajapati)',
+        icon: '🏺',
+        letters: ['P', 'p', 'प', 'K', 'k', 'क'],
+        searchTerms: ['prajapati', 'kumhar', 'prajapat', 'प्रजापति', 'कुम्हार', 'p'],
+        gotras: ['कश्यप', 'मरोठिया', 'चौहान', 'राठौड़', 'भाटी', 'गौतम']
+      },
+
+      // C - चौधरी
+      {
+        cleanName: 'चौधरी',
+        fullName: 'चौधरी समाज (Choudhary)',
+        icon: '🌾',
+        letters: ['C', 'c', 'च', 'Ch', 'ch'],
+        searchTerms: ['chaudhary', 'choudhary', 'चौधरी', 'c'],
+        gotras: ['पूनिया', 'गोदारा', 'धायल', 'बेनीवाल', 'जाखड़', 'सहारण', 'ढाका', 'कस्वां']
+      }
+    ];
 
     let currentSelectedCaste = '';
     let lastCelebratedMilestone = 0;
 
-    // Filter and Render Caste Chips
-    function filterCastesByReligion(religion) {
-      const container = document.getElementById('casteChipsContainer');
+    // Render Caste Grid
+    function renderCasteList(list) {
+      const container = document.getElementById('casteLiveResultBox');
+      const countLabel = document.getElementById('casteMatchCountLabel');
       if (!container) return;
-      const list = CASTE_DATABASE[religion] || CASTE_DATABASE['Hindu'];
+
       container.innerHTML = '';
+      if (countLabel) {
+        countLabel.innerHTML = `<i class="fa-solid fa-list-check text-emerald-600 mr-1"></i>उपलब्ध समाज (${list.length} उपलब्ध - क्लिक करें):`;
+      }
 
-      list.forEach(item => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'caste-chip' + (currentSelectedCaste === item.cleanName ? ' active' : '');
-        btn.innerHTML = `<span>${item.icon}</span> <span>${item.cleanName}</span>`;
-        btn.onclick = () => selectCaste(item.cleanName, item.name);
-        container.appendChild(btn);
-      });
-      updateFormProgress();
-    }
-
-    // Caste Dropdown Handler
-    function handleCasteSelectDropdown(val) {
-      if (!val) return;
-      if (val.includes('अन्य')) {
-        const casteInput = document.getElementById('casteInput');
-        if (casteInput) {
-          casteInput.value = '';
-          casteInput.placeholder = 'कृपया अपना समाज यहाँ दर्ज करें...';
-          casteInput.focus();
-        }
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-2 text-center py-4 px-2 text-stone-500">
+            <p class="text-xs font-bold text-stone-700">कोई संबंधित समाज नहीं मिला</p>
+            <p class="text-[10px] mt-0.5">कृपया सही अक्षर दबाएं या 'अन्य समाज' के रूप में अपना समाज दर्ज करें।</p>
+          </div>
+        `;
         return;
       }
-      const cleanName = val.split('(')[0].trim();
-      selectCaste(cleanName, val);
+
+      list.forEach(item => {
+        const isSelected = (currentSelectedCaste === item.cleanName);
+        const card = document.createElement('div');
+        card.className = 'caste-result-card' + (isSelected ? ' selected' : '');
+        card.setAttribute('data-caste', item.cleanName);
+        card.onclick = () => selectCaste(item.cleanName, item.fullName, item.icon);
+        
+        card.innerHTML = `
+          <div class="flex items-center space-x-1.5 min-w-0 pr-1">
+            <span class="text-base shrink-0">${item.icon}</span>
+            <div class="min-w-0">
+              <div class="caste-name-hi text-[11px] font-black text-stone-900 leading-tight truncate">${item.cleanName}</div>
+              <div class="caste-name-en text-[9.5px] font-semibold text-stone-500 leading-tight truncate">${item.fullName.split('(')[1]?.replace(')', '') || item.cleanName}</div>
+            </div>
+          </div>
+          <span class="caste-check-icon ${isSelected ? 'flex' : 'hidden'} w-4 h-4 rounded-full bg-amber-400 text-emerald-950 items-center justify-center text-[9px] font-black shrink-0 shadow-2xs">
+            <i class="fa-solid fa-check"></i>
+          </span>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Filter Caste By Alphabet Pill
+    function filterCasteByLetter(letter, btnEl) {
+      document.querySelectorAll('.alphabet-pill').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      const searchInput = document.getElementById('casteLiveSearchInput');
+      if (letter === 'ALL') {
+        if (searchInput) searchInput.value = '';
+        const clearBtn = document.getElementById('clearCasteSearchBtn');
+        if (clearBtn) clearBtn.classList.add('hidden');
+        renderCasteList(ALL_CASTES);
+        return;
+      }
+
+      if (searchInput) searchInput.value = letter;
+      handleInstantCasteSearch(letter);
+    }
+
+    function highlightMatchingAlphabetPill(letter) {
+      const pills = document.querySelectorAll('.alphabet-pill');
+      pills.forEach(pill => {
+        const text = pill.textContent.toUpperCase();
+        if ((!letter || letter === 'ALL') && text.includes('ALL')) {
+          pill.classList.add('active');
+        } else if (letter && letter !== 'ALL' && (text.includes(letter.toUpperCase()) || text.includes(letter))) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+    }
+
+    // Instant Search Input Handler (Keypress / Typeahead)
+    function handleInstantCasteSearch(query) {
+      const q = query.trim().toLowerCase();
+      const clearBtn = document.getElementById('clearCasteSearchBtn');
+      if (clearBtn) {
+        clearBtn.classList.toggle('hidden', q.length === 0);
+      }
+
+      highlightMatchingAlphabetPill(q || 'ALL');
+
+      if (!q) {
+        renderCasteList(ALL_CASTES);
+        return;
+      }
+
+      const isSingleLetter = (q.length === 1);
+      const filtered = ALL_CASTES.filter(item => {
+        // Direct letter check (e.g. 's', 'b', 'j', 'y', 'स', 'ब', 'ज', 'य', 'म', 'र')
+        if (item.letters.some(l => l.toLowerCase() === q)) return true;
+
+        if (isSingleLetter) {
+          if (item.cleanName.toLowerCase().startsWith(q)) return true;
+          if (item.searchTerms.some(st => st.startsWith(q))) return true;
+          if (item.fullName.toLowerCase().split(/[ \/\(\)]+/).some(w => w !== 'समाज' && w !== 'samaj' && w.startsWith(q))) return true;
+          return false;
+        } else {
+          // Multi-character substring search
+          if (item.cleanName.toLowerCase().includes(q)) return true;
+          if (item.fullName.toLowerCase().includes(q)) return true;
+          if (item.searchTerms.some(st => st.includes(q))) return true;
+          return false;
+        }
+      });
+
+      renderCasteList(filtered);
+
+      // If user typed a custom caste name not in list, sync with hidden input
+      const casteInput = document.getElementById('casteInput');
+      if (casteInput && filtered.length === 0) {
+        casteInput.value = query.trim();
+        updateFormProgress();
+      }
+    }
+
+    // Clear Caste Search Input
+    function clearCasteSearch() {
+      const searchInput = document.getElementById('casteLiveSearchInput');
+      if (searchInput) {
+        searchInput.value = '';
+        searchInput.focus();
+      }
+      filterCasteByLetter('ALL', document.querySelector('.alphabet-pill'));
     }
 
     // Select Caste Action
-    function selectCaste(cleanName, fullName) {
+    function selectCaste(cleanName, fullName, icon) {
       currentSelectedCaste = cleanName;
       const casteInput = document.getElementById('casteInput');
-      const badge = document.getElementById('casteSelectedBadge');
-      const badgeText = document.getElementById('casteBadgeText');
-      const dropdown = document.getElementById('casteDropdownSelect');
-
       if (casteInput) casteInput.value = cleanName;
-      if (badge) {
-        badge.classList.remove('hidden');
-        if (badgeText) badgeText.textContent = cleanName + ' (सत्यापित)';
+
+      // Update Selected Banner
+      const banner = document.getElementById('casteSelectedBanner');
+      const nameDisp = document.getElementById('casteSelectedNameDisplay');
+      const iconDisp = document.getElementById('casteSelectedIcon');
+      if (banner && nameDisp) {
+        banner.classList.remove('hidden');
+        nameDisp.textContent = `${cleanName} समाज (${fullName || cleanName})`;
+        if (iconDisp) iconDisp.textContent = icon || '🕉️';
       }
 
-      if (dropdown && cleanName) {
-        for (let i = 0; i < dropdown.options.length; i++) {
-          if (dropdown.options[i].value.includes(cleanName) || dropdown.options[i].text.includes(cleanName)) {
-            dropdown.selectedIndex = i;
-            break;
-          }
-        }
-      }
-
-      const chips = document.querySelectorAll('.caste-chip');
-      chips.forEach(chip => {
-        if (chip.textContent.includes(cleanName)) {
-          chip.classList.add('active');
-        } else {
-          chip.classList.remove('active');
+      // Visual Selection on Cards
+      document.querySelectorAll('.caste-result-card').forEach(card => {
+        const isMatch = (card.getAttribute('data-caste') === cleanName);
+        card.classList.toggle('selected', isMatch);
+        const check = card.querySelector('.caste-check-icon');
+        if (check) {
+          check.classList.toggle('flex', isMatch);
+          check.classList.toggle('hidden', !isMatch);
         }
       });
 
       // Find matching gotras
-      let foundObj = null;
-      for (const rel in CASTE_DATABASE) {
-        const item = CASTE_DATABASE[rel].find(c => c.cleanName === cleanName || c.name === fullName);
-        if (item) { foundObj = item; break; }
-      }
-
+      const item = ALL_CASTES.find(c => c.cleanName === cleanName || c.fullName === fullName);
       const gotraContainer = document.getElementById('gotraSuggestionsContainer');
       const gotraListEl = document.getElementById('gotraSuggestions');
       const gotraHeading = document.getElementById('gotraSugHeading');
 
-      if (foundObj && foundObj.gotras && foundObj.gotras.length > 0) {
+      if (item && item.gotras && item.gotras.length > 0) {
         if (gotraContainer) gotraContainer.classList.remove('hidden');
         if (gotraHeading) gotraHeading.textContent = `${cleanName} समाज के प्रमुख गोत्र:`;
         if (gotraListEl) {
           gotraListEl.innerHTML = '';
-          foundObj.gotras.forEach(gotra => {
+          item.gotras.forEach(gotra => {
             const pill = document.createElement('button');
             pill.type = 'button';
             pill.className = 'gotra-pill';
@@ -2230,6 +2554,13 @@
         }
       }
 
+      showCelebrationToast("✨ समाज चयनित!", `${cleanName} समाज ग्रुप सक्रिय किया गया। केवल इसी समाज के रिश्ते दिखेंगे।`, "+15%", "fa-shield-halved");
+      updateFormProgress();
+    }
+
+    // Backwards Compatibility for religion filter
+    function filterCastesByReligion(religion) {
+      renderCasteList(ALL_CASTES);
       updateFormProgress();
     }
 
@@ -2246,37 +2577,6 @@
           p.classList.remove('selected');
         }
       });
-      updateFormProgress();
-    }
-
-    function handleCasteInput(val) {
-      const trimmed = val.trim();
-      currentSelectedCaste = trimmed;
-      const badge = document.getElementById('casteSelectedBadge');
-
-      if (!trimmed) {
-        if (badge) badge.classList.add('hidden');
-        return;
-      }
-
-      let match = null;
-      for (const rel in CASTE_DATABASE) {
-        const item = CASTE_DATABASE[rel].find(c => c.cleanName === trimmed || trimmed.includes(c.cleanName));
-        if (item) { match = item; break; }
-      }
-
-      if (match) {
-        if (badge) {
-          badge.classList.remove('hidden');
-          const badgeText = document.getElementById('casteBadgeText');
-          if (badgeText) badgeText.textContent = match.cleanName + ' (सत्यापित)';
-        }
-        selectCaste(match.cleanName, match.name);
-      } else {
-        if (badge) badge.classList.add('hidden');
-        const chips = document.querySelectorAll('.caste-chip');
-        chips.forEach(c => c.classList.remove('active'));
-      }
       updateFormProgress();
     }
 

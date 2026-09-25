@@ -256,8 +256,17 @@ $router->post('/biodata/save', function (Request $request) {
         @exec("php {$root}/bin/send_async_mail.php '{$payload}' > /dev/null 2>&1 &");
     } catch (\Throwable $e) {}
 
-    \App\Core\Session::flash('success', 'आपका बायोडाटा सफलतापूर्वक सुरक्षित हो गया है! योग्य रिश्ते नीचे तालिका में देखें।');
-    return Response::redirect('/matches');
+    // Clean community name for dedicated samaj group
+    $cleanSamaj = explode(' ', $caste)[0];
+    $cleanSamaj = explode('(', $cleanSamaj)[0];
+    $cleanSamaj = trim($cleanSamaj);
+    $_SESSION['auth_user_caste'] = $caste;
+    $_SESSION['auth_user_samaj'] = $cleanSamaj;
+    \App\Core\Session::set('auth_user_caste', $caste);
+    \App\Core\Session::set('auth_user_samaj', $cleanSamaj);
+
+    \App\Core\Session::flash('success', "आपका बायोडाटा {$cleanSamaj} समाज ग्रुप में सुरक्षित हो गया है! केवल अपने समाज के रिश्ते नीचे तालिका में देखें।");
+    return Response::redirect('/matches?samaj=' . urlencode($cleanSamaj));
 });
 
 // Royal Biodata (Golden Border & 1-Click PDF Download Routes)
@@ -541,10 +550,15 @@ $router->get('/biodata/download/{id}', function (Request $request) {
 
 // Fourth Page: Activity & Matches Tracker / तालिका वाला पेज
 $matchesHandler = function (Request $request) {
+    $requestedSamaj = trim($request->input('samaj', ''));
+    if (!$requestedSamaj) {
+        $requestedSamaj = \App\Core\Session::get('auth_user_samaj') ?: ($_SESSION['auth_user_samaj'] ?? 'ब्राह्मण');
+    }
     Response::view('home/matches', [
         'page_title'   => 'Dheeraja Royal Matrimony™ | Activity & Matches Tracker (तालिका)',
         'flashSuccess' => \App\Core\Session::get('_flash')['success'] ?? null,
         'flashError'   => \App\Core\Session::get('_flash')['error'] ?? null,
+        'user_samaj'   => $requestedSamaj,
     ], null);
     unset($_SESSION['_flash']);
 };
