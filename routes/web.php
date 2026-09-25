@@ -131,14 +131,21 @@ $router->get('/biodata', function (Request $request) {
 
 $router->post('/biodata/save', function (Request $request) {
     $userId = (int)\App\Core\Session::get('auth_user_id', 3);
-    $firstName = trim($request->input('first_name', 'वर'));
-    $lastName  = trim($request->input('last_name', 'सदस्य'));
+    $fullName = trim($request->input('full_name', ''));
+    if ($fullName) {
+        $parts = explode(' ', $fullName, 2);
+        $firstName = $parts[0];
+        $lastName  = $parts[1] ?? 'शर्मा';
+    } else {
+        $firstName = trim($request->input('first_name', 'वर'));
+        $lastName  = trim($request->input('last_name', 'सदस्य'));
+    }
     $gender    = $request->input('gender', 'male');
     $dob       = $request->input('dob', '1998-05-15');
     $heightCm  = (int)$request->input('height_cm', 173);
     $maritalStatus = $request->input('marital_status', 'never_married');
-    $city      = trim($request->input('city', 'जयपुर'));
-    $state     = trim($request->input('state', 'राजस्थान'));
+    $city      = trim($request->input('city', $request->input('current_city', 'जयपुर')));
+    $state     = trim($request->input('state', $request->input('current_state', 'राजस्थान')));
     $aboutMe   = trim($request->input('about_me', 'जीवनसाथी की खोज में...'));
 
     // Education & Career
