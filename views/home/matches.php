@@ -176,15 +176,15 @@
       background: linear-gradient(145deg, #C084FC 0%, #9333EA 60%, #6D28D9 100%);
     }
 
-    /* 4. Contact / Accept (Warm Amber/Gold 3D Button) */
+    /* 4. WhatsApp / Contact VIP (3D WhatsApp Emerald Green Button) */
     .btn-contact {
-      background: linear-gradient(145deg, #F59E0B 0%, #D97706 60%, #92400E 100%);
-      border-color: #78350F;
+      background: linear-gradient(145deg, #25D366 0%, #16A34A 60%, #065F46 100%);
+      border-color: #064E3B;
       color: #FFFFFF !important;
-      box-shadow: 0 3px 7px rgba(217, 119, 6, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      box-shadow: 0 3px 7px rgba(37, 211, 102, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.4);
     }
     .btn-contact:hover {
-      background: linear-gradient(145deg, #FBBF24 0%, #F59E0B 60%, #D97706 100%);
+      background: linear-gradient(145deg, #4ADE80 0%, #22C55E 60%, #15803D 100%);
     }
 
     /* 5. Skip (Steel Slate 3D Button) */
@@ -982,9 +982,9 @@
             <i class="fa-solid fa-dharmachakra text-[10px]"></i>
             <span>Kundali</span>
           </button>
-          <button onclick="openContactModal('Priya Sharma', '+91 98260 41289', 'श्री रमाकांत शर्मा (पिताजी)', 'Indore, Madhya Pradesh')" class="card-btn btn-contact" title="संपर्क विवरण (Contact Details)">
-            <i class="fa-solid fa-phone text-[10px]"></i>
-            <span>Contact</span>
+          <button onclick="handleCardWhatsappClick('Priya Sharma', '+91 98260 41289', 'श्री रमाकांत शर्मा (पिताजी)', '/assets/images/match_priya.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)">
+            <i class="fa-brands fa-whatsapp text-[10px]"></i>
+            <span>WhatsApp 🔒</span>
           </button>
           <button onclick="skipCard(this, 'Priya Sharma')" class="card-btn btn-skip" title="छोड़ें (Skip)">
             <i class="fa-solid fa-xmark text-[10px]"></i>
@@ -1116,9 +1116,9 @@
             <i class="fa-solid fa-dharmachakra text-[10px]"></i>
             <span>Kundali</span>
           </button>
-          <button onclick="openContactModal('Neha Verma', '+91 97654 82910', 'श्री सतीश वर्मा (पिताजी)', 'Pune, Maharashtra')" class="card-btn btn-contact" title="संपर्क विवरण (Contact Details)">
-            <i class="fa-solid fa-phone text-[10px]"></i>
-            <span>Contact</span>
+          <button onclick="handleCardWhatsappClick('Neha Verma', '+91 97654 82910', 'श्री सतीश वर्मा (पिताजी)', '/assets/images/match_neha.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)">
+            <i class="fa-brands fa-whatsapp text-[10px]"></i>
+            <span>WhatsApp 🔒</span>
           </button>
           <button onclick="skipCard(this, 'Neha Verma')" class="card-btn btn-skip" title="छोड़ें (Skip)">
             <i class="fa-solid fa-xmark text-[10px]"></i>
@@ -1250,9 +1250,9 @@
             <i class="fa-solid fa-dharmachakra text-[10px]"></i>
             <span>Kundali</span>
           </button>
-          <button onclick="openContactModal('Anjali Singh', '+91 94140 76321', 'ठाकुर भंवर सिंह (पिताजी)', 'Jaipur, Rajasthan')" class="card-btn btn-contact" title="संपर्क विवरण (Contact Details)">
-            <i class="fa-solid fa-phone text-[10px]"></i>
-            <span>Contact</span>
+          <button onclick="handleCardWhatsappClick('Anjali Singh', '+91 94140 76321', 'ठाकुर भंवर सिंह (पिताजी)', '/assets/images/match_anjali.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)">
+            <i class="fa-brands fa-whatsapp text-[10px]"></i>
+            <span>WhatsApp 🔒</span>
           </button>
           <button onclick="skipCard(this, 'Anjali Singh')" class="card-btn btn-skip" title="छोड़ें (Skip)">
             <i class="fa-solid fa-xmark text-[10px]"></i>
@@ -1384,9 +1384,9 @@
             <i class="fa-solid fa-dharmachakra text-[10px]"></i>
             <span>Kundali</span>
           </button>
-          <button onclick="openContactModal('Ritika Patel', '+91 98980 54312', 'श्री दिनेश पटेल (पिताजी)', 'Ahmedabad, Gujarat')" class="card-btn btn-contact" title="संपर्क विवरण (Contact Details)">
-            <i class="fa-solid fa-phone text-[10px]"></i>
-            <span>Contact</span>
+          <button onclick="handleCardWhatsappClick('Ritika Patel', '+91 98980 54312', 'श्री दिनेश पटेल (पिताजी)', '/assets/images/match_ritika.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)">
+            <i class="fa-brands fa-whatsapp text-[10px]"></i>
+            <span>WhatsApp 🔒</span>
           </button>
           <button onclick="skipCard(this, 'Ritika Patel')" class="card-btn btn-skip" title="छोड़ें (Skip)">
             <i class="fa-solid fa-xmark text-[10px]"></i>
@@ -1453,9 +1453,9 @@
             <i class="fa-solid fa-dharmachakra text-[10px]"></i>
             <span>Kundali</span>
           </button>
-          <button onclick="openContactModal('Pooja Maheshwari', '+91 98251 67890', 'श्री घनश्याम दास सोमानी (पिताजी)', 'Surat, Gujarat')" class="card-btn btn-contact" title="संपर्क विवरण">
-            <i class="fa-solid fa-phone text-[10px]"></i>
-            <span>Contact</span>
+          <button onclick="handleCardWhatsappClick('Pooja Maheshwari', '+91 98251 67890', 'श्री घनश्याम दास सोमानी (पिताजी)', '/assets/images/match_priya.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)">
+            <i class="fa-brands fa-whatsapp text-[10px]"></i>
+            <span>WhatsApp 🔒</span>
           </button>
           <button onclick="skipCard(this, 'Pooja Maheshwari')" class="card-btn btn-skip" title="छोड़ें">
             <i class="fa-solid fa-xmark text-[10px]"></i>
@@ -1511,7 +1511,7 @@
           <button onclick="openRoyalBiodataModal('Sneha Agarwal')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
           <button onclick="sendInterest(this, 'Sneha Agarwal')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
           <button onclick="openKundaliModal('Sneha Agarwal', 29, 'Bansal', 'Agarwal', 'Jaipur')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
-          <button onclick="openContactModal('Sneha Agarwal', '+91 94140 33445', 'श्री विष्णु कुमार बंसल (पिताजी)', 'Jaipur, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="handleCardWhatsappClick('Sneha Agarwal', '+91 94140 33445', 'श्री विष्णु कुमार बंसल (पिताजी)', '/assets/images/match_neha.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)"><i class="fa-brands fa-whatsapp text-[10px]"></i><span>WhatsApp 🔒</span></button>
           <button onclick="skipCard(this, 'Sneha Agarwal')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
         </div>
       </article>
@@ -1563,7 +1563,7 @@
           <button onclick="openRoyalBiodataModal('Divya Jain')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
           <button onclick="sendInterest(this, 'Divya Jain')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
           <button onclick="openKundaliModal('Divya Jain', 27, 'Oswal', 'Jain', 'Udaipur')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
-          <button onclick="openContactModal('Divya Jain', '+91 94142 88990', 'श्री शांतिलाल जैन (पिताजी)', 'Udaipur, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="handleCardWhatsappClick('Divya Jain', '+91 94142 88990', 'श्री शांतिलाल जैन (पिताजी)', '/assets/images/match_priya.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)"><i class="fa-brands fa-whatsapp text-[10px]"></i><span>WhatsApp 🔒</span></button>
           <button onclick="skipCard(this, 'Divya Jain')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
         </div>
       </article>
@@ -1615,7 +1615,7 @@
           <button onclick="openRoyalBiodataModal('Pooja Chaudhary')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
           <button onclick="sendInterest(this, 'Pooja Chaudhary')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
           <button onclick="openKundaliModal('Pooja Chaudhary', 31, 'Punia', 'Jat', 'Sikar')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
-          <button onclick="openContactModal('Pooja Chaudhary', '+91 94145 11223', 'श्री रामनिवास पूनिया (पिताजी)', 'Sikar, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="handleCardWhatsappClick('Pooja Chaudhary', '+91 94145 11223', 'श्री रामनिवास पूनिया (पिताजी)', '/assets/images/match_priya.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)"><i class="fa-brands fa-whatsapp text-[10px]"></i><span>WhatsApp 🔒</span></button>
           <button onclick="skipCard(this, 'Pooja Chaudhary')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
         </div>
       </article>
@@ -1667,7 +1667,7 @@
           <button onclick="openRoyalBiodataModal('Kavita Yadav')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
           <button onclick="sendInterest(this, 'Kavita Yadav')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
           <button onclick="openKundaliModal('Kavita Yadav', 26, 'Kaushik', 'Yadav', 'Alwar')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
-          <button onclick="openContactModal('Kavita Yadav', '+91 94148 44556', 'श्री ओमप्रकाश यादव (पिताजी)', 'Alwar, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="handleCardWhatsappClick('Kavita Yadav', '+91 94148 44556', 'श्री ओमप्रकाश यादव (पिताजी)', '/assets/images/match_priya.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)"><i class="fa-brands fa-whatsapp text-[10px]"></i><span>WhatsApp 🔒</span></button>
           <button onclick="skipCard(this, 'Kavita Yadav')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
         </div>
       </article>
@@ -1719,7 +1719,7 @@
           <button onclick="openRoyalBiodataModal('Aarti Gurjar')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
           <button onclick="sendInterest(this, 'Aarti Gurjar')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
           <button onclick="openKundaliModal('Aarti Gurjar', 28, 'Bainsla', 'Gurjar', 'Ajmer')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
-          <button onclick="openContactModal('Aarti Gurjar', '+91 94147 66778', 'श्री कन्हैया लाल बैंसला (पिताजी)', 'Ajmer, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="handleCardWhatsappClick('Aarti Gurjar', '+91 94147 66778', 'श्री कन्हैया लाल बैंसला (पिताजी)', '/assets/images/match_anjali.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)"><i class="fa-brands fa-whatsapp text-[10px]"></i><span>WhatsApp 🔒</span></button>
           <button onclick="skipCard(this, 'Aarti Gurjar')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
         </div>
       </article>
@@ -1771,7 +1771,7 @@
           <button onclick="openRoyalBiodataModal('Meenakshi Soni')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
           <button onclick="sendInterest(this, 'Meenakshi Soni')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
           <button onclick="openKundaliModal('Meenakshi Soni', 29, 'Soni', 'Soni', 'Jodhpur')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
-          <button onclick="openContactModal('Meenakshi Soni', '+91 94149 88112', 'श्री बद्री प्रसाद सोनी (पिताजी)', 'Jodhpur, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="handleCardWhatsappClick('Meenakshi Soni', '+91 94149 88112', 'श्री बद्री प्रसाद सोनी (पिताजी)', '/assets/images/match_priya.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)"><i class="fa-brands fa-whatsapp text-[10px]"></i><span>WhatsApp 🔒</span></button>
           <button onclick="skipCard(this, 'Meenakshi Soni')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
         </div>
       </article>
@@ -1823,7 +1823,7 @@
           <button onclick="openRoyalBiodataModal('Sunita Saini')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
           <button onclick="sendInterest(this, 'Sunita Saini')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
           <button onclick="openKundaliModal('Sunita Saini', 27, 'Maurya', 'Saini', 'Alwar')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
-          <button onclick="openContactModal('Sunita Saini', '+91 94141 99001', 'श्री प्रभुदयाल मौर्य (पिताजी)', 'Alwar, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="handleCardWhatsappClick('Sunita Saini', '+91 94141 99001', 'श्री प्रभुदयाल मौर्य (पिताजी)', '/assets/images/match_neha.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)"><i class="fa-brands fa-whatsapp text-[10px]"></i><span>WhatsApp 🔒</span></button>
           <button onclick="skipCard(this, 'Sunita Saini')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
         </div>
       </article>
@@ -1875,7 +1875,7 @@
           <button onclick="openRoyalBiodataModal('Rekha Bishnoi')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
           <button onclick="sendInterest(this, 'Rekha Bishnoi')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
           <button onclick="openKundaliModal('Rekha Bishnoi', 32, 'Saharan', 'Bishnoi', 'Jodhpur')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
-          <button onclick="openContactModal('Rekha Bishnoi', '+91 94143 55667', 'श्री रामेश्वर लाल सहारण (पिताजी)', 'Jodhpur, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="handleCardWhatsappClick('Rekha Bishnoi', '+91 94143 55667', 'श्री रामेश्वर लाल सहारण (पिताजी)', '/assets/images/match_priya.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)"><i class="fa-brands fa-whatsapp text-[10px]"></i><span>WhatsApp 🔒</span></button>
           <button onclick="skipCard(this, 'Rekha Bishnoi')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
         </div>
       </article>
@@ -1927,7 +1927,7 @@
           <button onclick="openRoyalBiodataModal('Simran Kaur')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
           <button onclick="sendInterest(this, 'Simran Kaur')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
           <button onclick="openKundaliModal('Simran Kaur', 29, 'Sandhu', 'Sikh', 'Chandigarh')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
-          <button onclick="openContactModal('Simran Kaur', '+91 98140 22334', 'स सरदार हरप्रीत सिंह संधू (पिताजी)', 'Chandigarh, Punjab')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="handleCardWhatsappClick('Simran Kaur', '+91 98140 22334', 'स सरदार हरप्रीत सिंह संधू (पिताजी)', '/assets/images/match_priya.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)"><i class="fa-brands fa-whatsapp text-[10px]"></i><span>WhatsApp 🔒</span></button>
           <button onclick="skipCard(this, 'Simran Kaur')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
         </div>
       </article>
@@ -1979,7 +1979,7 @@
           <button onclick="openRoyalBiodataModal('Khushi Advani')" class="card-btn btn-biodata"><i class="fa-solid fa-file-invoice text-[10px]"></i><span>बायोडाटा</span></button>
           <button onclick="sendInterest(this, 'Khushi Advani')" class="card-btn btn-interest"><i class="fa-solid fa-heart text-[10px]"></i><span>Interest</span></button>
           <button onclick="openKundaliModal('Khushi Advani', 28, 'Advani', 'Sindhi', 'Jaipur')" class="card-btn btn-kundali"><i class="fa-solid fa-dharmachakra text-[10px]"></i><span>Kundali</span></button>
-          <button onclick="openContactModal('Khushi Advani', '+91 98290 66554', 'श्री किशन लाल अडवाणी (पिताजी)', 'Jaipur, Rajasthan')" class="card-btn btn-contact"><i class="fa-solid fa-phone text-[10px]"></i><span>Contact</span></button>
+          <button onclick="handleCardWhatsappClick('Khushi Advani', '+91 98290 66554', 'श्री किशन लाल अडवाणी (पिताजी)', '/assets/images/match_priya.jpg')" class="card-btn btn-contact" title="WhatsApp पर बात करें (VIP 🔒)"><i class="fa-brands fa-whatsapp text-[10px]"></i><span>WhatsApp 🔒</span></button>
           <button onclick="skipCard(this, 'Khushi Advani')" class="card-btn btn-skip"><i class="fa-solid fa-xmark text-[10px]"></i><span>Skip</span></button>
         </div>
       </article>
@@ -2231,13 +2231,13 @@
         <div class="p-3 rounded-2xl bg-amber-50/60 border border-amber-200 flex items-center justify-between">
           <div>
             <span class="text-[10px] text-amber-800 font-bold uppercase tracking-wider block">सत्यापित मोबाइल नंबर</span>
-            <p class="text-base font-extrabold text-[#064E3B] font-mono tracking-wider mt-0.5" id="contactPhoneNumber">+91 98260 41289</p>
-            <span class="text-[10px] text-emerald-700 font-bold flex items-center space-x-1 mt-0.5">
-              <i class="fa-solid fa-shield-check"></i>
-              <span>Dheeraja Verified Member</span>
-            </span>
+            <p class="text-base font-extrabold text-[#064E3B] font-mono tracking-wider mt-0.5" id="contactPhoneNumber">+91 98260 •••••</p>
+            <div id="contactVipStatusBadge" class="text-[10.5px] text-amber-800 font-bold flex items-center space-x-1 mt-0.5">
+              <i class="fa-solid fa-lock text-amber-600"></i>
+              <span>VIP अनलॉक आवश्यक</span>
+            </div>
           </div>
-          <button onclick="copyPhone()" class="px-2.5 py-1.5 rounded-lg bg-white border border-amber-300 text-amber-800 text-[10px] font-bold hover:bg-amber-100 transition shadow-2xs">
+          <button onclick="copyPhone()" class="px-2.5 py-1.5 rounded-lg bg-white border border-amber-300 text-amber-800 text-[10px] font-bold hover:bg-amber-100 transition shadow-2xs cursor-pointer">
             <i class="fa-solid fa-copy mr-1"></i> कॉपी करें
           </button>
         </div>
@@ -2249,14 +2249,126 @@
 
         <!-- 2 Big Action Buttons: WhatsApp & Direct Call -->
         <div class="grid grid-cols-2 gap-2 pt-1">
-          <a id="btnWhatsappCall" href="https://wa.me/919826041289?text=Namaste!%20I%20viewed%20your%20profile%20on%20Dheeraja%20Matrimony" target="_blank" class="py-2.5 px-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white text-xs font-bold flex items-center justify-center space-x-1.5 shadow-md transition active:scale-95">
+          <button id="btnWhatsappCall" type="button" onclick="handleWhatsappClickFromContactModal()" class="py-2.5 px-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white text-xs font-bold flex items-center justify-center space-x-1.5 shadow-md transition active:scale-95 cursor-pointer">
             <i class="fa-brands fa-whatsapp text-sm"></i>
-            <span>व्हाट्सएप संदेश</span>
-          </a>
-          <a id="btnPhoneCall" href="tel:+919826041289" class="py-2.5 px-3 rounded-xl bg-[#064E3B] hover:bg-[#055F46] text-white text-xs font-bold flex items-center justify-center space-x-1.5 shadow-md transition active:scale-95">
+            <span>WhatsApp 🔒</span>
+          </button>
+          <button id="btnPhoneCall" type="button" onclick="handlePhoneClickFromContactModal()" class="py-2.5 px-3 rounded-xl bg-[#064E3B] hover:bg-[#055F46] text-white text-xs font-bold flex items-center justify-center space-x-1.5 shadow-md transition active:scale-95 cursor-pointer">
             <i class="fa-solid fa-phone text-xs"></i>
-            <span>सीधे कॉल करें</span>
-          </a>
+            <span>सीधे कॉल 🔒</span>
+          </button>
+        </div>
+
+        <!-- Free In-App Chat Alternative -->
+        <div class="pt-2 border-t border-stone-200">
+          <button type="button" onclick="closeContactModal(); openChatModal(currentContactData.name, currentContactData.photo, true);" class="w-full py-2 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-[#064E3B] font-extrabold text-[11px] flex items-center justify-center space-x-1.5 transition cursor-pointer">
+            <i class="fa-solid fa-comment-dots text-emerald-700"></i>
+            <span>💬 ऐप के अंदर मुफ्त में चैट करें (Free In-App Chat)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 2.5: VIP WHATSAPP & CONTACT UNLOCK PAYWALL ==================== -->
+  <div id="vipWhatsappPayModal" class="modal-backdrop fixed inset-0 z-[155] bg-black/75 backdrop-blur-xs flex items-center justify-center p-3">
+    <div class="bg-white rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl border-2 border-amber-400 flex flex-col animate-bounce-in">
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-emerald-950 via-emerald-900 to-emerald-950 text-white p-3.5 flex items-center justify-between border-b-2 border-amber-400">
+        <div class="flex items-center space-x-2">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-emerald-950 flex items-center justify-center font-black text-base shadow-xs">
+            <i class="fa-brands fa-whatsapp text-lg"></i>
+          </div>
+          <div>
+            <div class="text-[9.5px] uppercase font-black tracking-wider text-amber-300">धीरजा VIP सेवा • डायरेक्ट संपर्क</div>
+            <h3 class="font-cinzel text-xs font-bold text-white">WhatsApp नंबर अनलॉक करें</h3>
+          </div>
+        </div>
+        <button onclick="closeVipWhatsappModal()" class="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xs transition cursor-pointer">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="p-3.5 space-y-3 text-stone-800 text-xs">
+        <!-- Target Candidate Brief -->
+        <div class="flex items-center space-x-2.5 p-2.5 rounded-2xl bg-emerald-50/80 border border-emerald-200">
+          <img id="vipTargetPhoto" src="/assets/images/match_priya.jpg" alt="Target" class="w-12 h-12 rounded-xl object-cover border border-amber-300 shrink-0">
+          <div class="min-w-0 flex-1">
+            <h4 class="text-sm font-black text-stone-900 leading-tight truncate" id="vipTargetName">Priya Sharma</h4>
+            <p class="text-[10.5px] text-stone-600 leading-tight mt-0.5 truncate" id="vipTargetFather">श्री रमाकांत शर्मा (पिताजी)</p>
+            <div class="flex items-center space-x-1 mt-1">
+              <span class="text-[9.5px] font-mono text-emerald-800 font-extrabold bg-emerald-100 px-1.5 py-0.5 rounded border border-emerald-300">
+                🔒 WhatsApp: <span id="vipMaskedPhone">+91 98260 •••••</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Why VIP explanation -->
+        <div class="bg-amber-50/80 rounded-2xl p-2.5 border border-amber-300 space-y-1">
+          <div class="text-[11px] font-extrabold text-amber-950 flex items-center gap-1.5">
+            <i class="fa-solid fa-lock text-amber-600"></i>
+            <span>व्हाट्सएप पर बात करना VIP सर्विस क्यों है?</span>
+          </div>
+          <p class="text-[10px] text-stone-600 leading-relaxed">
+            परिवारों और कन्या पक्ष की पूर्ण सुरक्षा हेतु सीधा WhatsApp व कॉलिंग नंबर केवल अधिकृत VIP सदस्यों को ही दिया जाता है।
+          </p>
+        </div>
+
+        <!-- Plan Options Selection -->
+        <div class="space-y-1.5">
+          <div class="text-[10px] font-extrabold text-stone-700 uppercase tracking-wider">अनलॉक प्लान चुनें (1-क्लिक Pay):</div>
+          
+          <!-- Plan Option 1: ₹499 -->
+          <label class="flex items-center justify-between p-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-50/50 cursor-pointer transition hover:bg-emerald-50">
+            <div class="flex items-center space-x-2">
+              <input type="radio" name="vip_plan_choice" value="499" checked class="text-emerald-700 focus:ring-emerald-500">
+              <div>
+                <span class="text-xs font-black text-emerald-950 block">सिल्वर पास (Silver Pass)</span>
+                <span class="text-[10px] text-stone-500">5 परिवारों के सीधे WhatsApp नंबर अनलॉक</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-xs font-black text-emerald-900 block">₹499</span>
+              <span class="text-[9px] text-stone-400 line-through">₹999</span>
+            </div>
+          </label>
+
+          <!-- Plan Option 2: ₹999 -->
+          <label class="flex items-center justify-between p-2.5 rounded-xl border border-stone-200 bg-white cursor-pointer transition hover:border-amber-400 hover:bg-amber-50/30">
+            <div class="flex items-center space-x-2">
+              <input type="radio" name="vip_plan_choice" value="999" class="text-emerald-700 focus:ring-emerald-500">
+              <div>
+                <span class="text-xs font-black text-stone-900 block flex items-center gap-1">
+                  <span>गोल्ड पास (Gold Pass)</span>
+                  <span class="text-[8.5px] bg-amber-400 text-emerald-950 px-1 rounded font-bold">लोकप्रिय</span>
+                </span>
+                <span class="text-[10px] text-stone-500">15 WhatsApp नंबर + 3 माह VIP मुहर</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-xs font-black text-amber-700 block">₹999</span>
+              <span class="text-[9px] text-stone-400 line-through">₹1999</span>
+            </div>
+          </label>
+        </div>
+
+        <!-- 1-Click Pay & Unlock Button -->
+        <button type="button" onclick="executeVipUnlockPayment()" class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-emerald-950 font-black text-xs shadow-md transition active:scale-95 flex items-center justify-center space-x-1.5 cursor-pointer">
+          <i class="fa-solid fa-lock-open text-xs"></i>
+          <span>Pay करें व WhatsApp तुरंत खोलें (UPI / QR)</span>
+        </button>
+
+        <!-- FREE Alternative Callout -->
+        <div class="pt-1.5 border-t border-stone-200 text-center">
+          <p class="text-[10.5px] text-stone-600 mb-1">
+            💡 <strong>बिना पेमेंट किए बात करना चाहते हैं?</strong>
+          </p>
+          <button type="button" onclick="switchFromPayToFreeChat()" class="w-full py-2 px-3 rounded-xl bg-stone-100 hover:bg-emerald-50 border border-emerald-300 text-emerald-900 font-extrabold text-[11px] flex items-center justify-center space-x-1.5 transition cursor-pointer">
+            <i class="fa-solid fa-comment-dots text-emerald-700"></i>
+            <span>💬 ऐप के अंदर मुफ्त में चैट करें (Free In-App Chat)</span>
+          </button>
         </div>
       </div>
     </div>
@@ -2899,23 +3011,125 @@
       }, 600);
     }
 
-    // Contact Details Modal Controls
-    function openContactModal(name, phone, father, loc) {
-      document.getElementById('contactCandidateName').textContent = name;
-      document.getElementById('contactGuardianName').textContent = father;
-      document.getElementById('contactLocationText').textContent = '📍 ' + loc;
-      document.getElementById('contactPhoneNumber').textContent = phone;
+    // VIP & WhatsApp Contact System (Freemium & VIP Paywall)
+    let isVipUser = false; // default freemium status
+    let currentContactData = { name: 'Priya Sharma', phone: '+91 98260 41289', father: 'श्री रमाकांत शर्मा (पिताजी)', loc: 'Indore, MP', photo: '/assets/images/match_priya.jpg' };
+
+    function openContactModal(name, phone, father, loc, photo) {
+      currentContactData = {
+        name: name || 'कैंडिडेट',
+        phone: phone || '+91 98260 41289',
+        father: father || 'श्री रमाकांत शर्मा (पिताजी)',
+        loc: loc || 'Indore, MP',
+        photo: photo || '/assets/images/match_priya.jpg'
+      };
+
+      document.getElementById('contactCandidateName').textContent = currentContactData.name;
+      document.getElementById('contactGuardianName').textContent = currentContactData.father;
+      document.getElementById('contactLocationText').textContent = '📍 ' + currentContactData.loc;
+
+      const phoneEl = document.getElementById('contactPhoneNumber');
+      const badgeVip = document.getElementById('contactVipStatusBadge');
       
-      const cleanPhone = phone.replace(/[^0-9]/g, '');
-      document.getElementById('btnWhatsappCall').href = `https://wa.me/${cleanPhone}?text=Namaste!%20I%20saw%20your%20profile%20of%20${encodeURIComponent(name)}%20on%20Dheeraja%20Matrimony.`;
-      document.getElementById('btnPhoneCall').href = `tel:${phone}`;
+      if (isVipUser) {
+        phoneEl.textContent = currentContactData.phone;
+        if (badgeVip) badgeVip.innerHTML = '<i class="fa-solid fa-crown text-amber-500 mr-1"></i><span class="text-emerald-700 font-extrabold">VIP सदस्य • अनलॉक</span>';
+      } else {
+        const masked = currentContactData.phone.length > 7 ? currentContactData.phone.substring(0, 8) + ' •••••' : '+91 98260 •••••';
+        phoneEl.textContent = masked;
+        if (badgeVip) badgeVip.innerHTML = '<i class="fa-solid fa-lock text-amber-600 mr-1"></i><span class="text-amber-900 font-extrabold cursor-pointer" onclick="openVipWhatsappPayModal()">VIP अनलॉक आवश्यक</span>';
+      }
 
       document.getElementById('contactModal').classList.add('open');
     }
+
     function closeContactModal() {
       document.getElementById('contactModal').classList.remove('open');
     }
+
+    function handleWhatsappClickFromContactModal() {
+      if (isVipUser) {
+        const cleanPhone = currentContactData.phone.replace(/[^0-9]/g, '');
+        window.open(`https://wa.me/${cleanPhone}?text=Namaste!%20I%20saw%20your%20profile%20of%20${encodeURIComponent(currentContactData.name)}%20on%20Dheeraja%20Matrimony.`, '_blank');
+      } else {
+        closeContactModal();
+        openVipWhatsappPayModal(currentContactData.name, currentContactData.phone, currentContactData.father, currentContactData.photo);
+      }
+    }
+
+    function handlePhoneClickFromContactModal() {
+      if (isVipUser) {
+        window.location.href = `tel:${currentContactData.phone}`;
+      } else {
+        closeContactModal();
+        openVipWhatsappPayModal(currentContactData.name, currentContactData.phone, currentContactData.father, currentContactData.photo);
+      }
+    }
+
+    function handleCardWhatsappClick(name, phone, father, photo) {
+      if (isVipUser) {
+        const cleanPhone = phone.replace(/[^0-9]/g, '');
+        window.open(`https://wa.me/${cleanPhone}?text=Namaste!%20I%20saw%20your%20profile%20of%20${encodeURIComponent(name)}%20on%20Dheeraja%20Matrimony.`, '_blank');
+      } else {
+        openVipWhatsappPayModal(name, phone, father, photo);
+      }
+    }
+
+    function openVipWhatsappPayModal(name, phone, father, photo) {
+      const cName = name || currentContactData.name || 'कैंडिडेट';
+      const cPhone = phone || currentContactData.phone || '+91 98260 41289';
+      const cFather = father || currentContactData.father || 'श्री रमाकांत शर्मा (पिताजी)';
+      const cPhoto = photo || currentContactData.photo || '/assets/images/match_priya.jpg';
+
+      currentContactData = { name: cName, phone: cPhone, father: cFather, loc: currentContactData.loc || '', photo: cPhoto };
+
+      const nameEl = document.getElementById('vipTargetName');
+      if (nameEl) nameEl.textContent = cName;
+
+      const fatherEl = document.getElementById('vipTargetFather');
+      if (fatherEl) fatherEl.textContent = cFather;
+
+      const photoEl = document.getElementById('vipTargetPhoto');
+      if (photoEl) photoEl.src = cPhoto;
+
+      const maskedPhone = cPhone.length > 7 ? cPhone.substring(0, 8) + ' •••••' : '+91 98260 •••••';
+      const maskedPhoneEl = document.getElementById('vipMaskedPhone');
+      if (maskedPhoneEl) maskedPhoneEl.textContent = maskedPhone;
+
+      document.getElementById('vipWhatsappPayModal').classList.add('open');
+    }
+
+    function closeVipWhatsappModal() {
+      document.getElementById('vipWhatsappPayModal').classList.remove('open');
+    }
+
+    function switchFromPayToFreeChat() {
+      closeVipWhatsappModal();
+      openChatModal(currentContactData.name, currentContactData.photo, true);
+      showToast('मुफ्त संदेश फोल्डर 💬', `${currentContactData.name} के साथ ऐप में 100% फ्री सुरक्षित चैट शुरू हो गई है।`, 'fa-comment-dots');
+    }
+
+    function executeVipUnlockPayment() {
+      const selectedPlan = document.querySelector('input[name="vip_plan_choice"]:checked')?.value || '499';
+      showToast('सुरक्षित पेमेंट गेटवे 💳', `₹${selectedPlan} का पेमेंट प्रोसेस हो रहा है (UPI / QR)...`, 'fa-shield-halved');
+      
+      setTimeout(() => {
+        isVipUser = true;
+        closeVipWhatsappModal();
+        showToast('VIP सदस्यता सक्रिय! 🎉', `बधाई हो! अब आप सीधे WhatsApp व फोन कॉल कर सकते हैं।`, 'fa-crown');
+        
+        // Open WhatsApp directly
+        const cleanPhone = currentContactData.phone.replace(/[^0-9]/g, '');
+        window.open(`https://wa.me/${cleanPhone}?text=Namaste!%20I%20saw%20your%20profile%20of%20${encodeURIComponent(currentContactData.name)}%20on%20Dheeraja%20Matrimony.`, '_blank');
+      }, 1200);
+    }
+
     function copyPhone() {
+      if (!isVipUser) {
+        showToast('VIP सुविधा 🔒', 'पूरा नंबर कॉपी करने के लिए VIP प्लान अनलॉक करें।', 'fa-lock');
+        openVipWhatsappPayModal();
+        return;
+      }
       const phone = document.getElementById('contactPhoneNumber').textContent;
       navigator.clipboard.writeText(phone);
       showToast('नंबर कॉपी हुआ 📞', `${phone} क्लिपबोर्ड पर सुरक्षित हो गया है।`, 'fa-copy');
