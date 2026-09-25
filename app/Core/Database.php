@@ -42,6 +42,11 @@ class Database
         return $res ?: null;
     }
 
+    public static function fetch(string $sql, array $params = []): ?array
+    {
+        return self::fetchOne($sql, $params);
+    }
+
     public static function lastInsertId(): string
     {
         return self::connect()->lastInsertId();

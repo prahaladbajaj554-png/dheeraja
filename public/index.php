@@ -9,6 +9,12 @@ error_reporting(E_ALL);
 // Set default timezone
 date_default_timezone_set('Asia/Kolkata');
 
+// 0. Static file serving for PHP built-in server
+$requestedFile = __DIR__ . urldecode(parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH));
+if (is_file($requestedFile)) {
+    return false;
+}
+
 // 1. Require Autoloader
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 

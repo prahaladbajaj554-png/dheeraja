@@ -128,23 +128,31 @@
   <div id="appShell">
     
     <!-- Top Native Mobile Header -->
-    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md text-stone-900 px-4 py-3 border-b border-amber-200/80 flex items-center justify-between shadow-sm">
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md text-stone-900 px-4 py-2.5 border-b border-amber-200/80 flex items-center justify-between shadow-sm">
       <div class="flex items-center space-x-2.5">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-maroon-950 flex items-center justify-center font-bold text-sm shadow-sm">
-          <i class="fa-solid fa-crown"></i>
-        </div>
+        <a href="/cover" class="w-9 h-9 rounded-xl overflow-hidden border border-[#E6C254] flex items-center justify-center shadow-xs flex-shrink-0 bg-white">
+          <img src="/assets/images/dheeraja_dm_logo.jpg" alt="Dheeraja Logo" class="w-full h-full object-contain">
+        </a>
         <div>
-          <h1 class="font-cinzel font-bold text-sm text-maroon-800 tracking-wider">DHEERAJA</h1>
-          <p class="text-[9px] text-stone-500 font-bold uppercase tracking-widest">Matrimony App</p>
+          <h1 class="font-cinzel font-extrabold text-sm text-[#064E3B] tracking-wider flex items-center">
+            <span>DHEERAJA™</span>
+            <i class="fa-solid fa-crown text-[#F5D061] text-[9px] ml-1"></i>
+          </h1>
+          <p class="text-[9px] text-[#059669] font-bold uppercase tracking-widest -mt-0.5">Royal Matrimony App</p>
         </div>
       </div>
 
       <!-- Right Header Actions -->
       <div class="flex items-center space-x-2">
+        <!-- Return to Main Site Button -->
+        <a href="/" title="Back to Main Landing Page" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center text-xs transition">
+          <i class="fa-solid fa-house"></i>
+        </a>
+
         <!-- VIP Plan Badge -->
         <button onclick="openPlanModal()" class="vip-shimmer text-maroon-950 px-2.5 py-1 rounded-full text-[10px] font-bold shadow-sm flex items-center space-x-1 cursor-pointer">
           <i class="fa-solid fa-gem text-[10px]"></i>
-          <span>FREE VIP ACTIVE</span>
+          <span>FREE VIP</span>
         </button>
 
         <!-- WhatsApp Communities Quick Button -->
@@ -211,6 +219,22 @@
       <button onclick="openWhatsAppModal()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] shadow-sm transition active:scale-95 flex-shrink-0">
         Browse &rarr;
       </button>
+    </div>
+
+    <!-- Featured Royal Wedding Couple Banner -->
+    <div class="mx-3 mt-3 rounded-2xl overflow-hidden border border-amber-300/90 shadow-sm relative bg-stone-900">
+      <div class="h-44 relative overflow-hidden">
+        <img src="/assets/images/user_wedding_hero.jpg" alt="Dheeraja Shubh Vivah" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent"></div>
+        <div class="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-amber-400 text-maroon-950 font-bold text-[9px] shadow-sm flex items-center space-x-1">
+          <i class="fa-solid fa-crown text-[8px]"></i>
+          <span>SHUBH VIVAH STORY</span>
+        </div>
+        <div class="absolute bottom-2.5 left-3 right-3 text-white">
+          <div class="font-cinzel font-bold text-xs">Aditya & Pooja • Married Recently</div>
+          <p class="text-[10px] text-amber-200 mt-0.5">"Matched through Dheeraja Matrimony Vivah Sahayak & Kundali Milan"</p>
+        </div>
+      </div>
     </div>
 
     <!-- Recommended Matches Feed (Card Stack with Gestures) -->

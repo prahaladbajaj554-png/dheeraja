@@ -122,7 +122,10 @@ class SettingsController extends Controller
             'whatsapp_phone_number_id'     => setting('whatsapp_phone_number_id', ''),
             'whatsapp_business_account_id' => setting('whatsapp_business_account_id', ''),
             'firebase_server_key'          => setting('firebase_server_key', ''),
-            'firebase_project_id'          => setting('firebase_project_id', '')
+            'firebase_project_id'          => setting('firebase_project_id', ''),
+            'social_whatsapp_url'          => setting('social_whatsapp_url', 'https://chat.whatsapp.com/invite/dheerajamatrimony'),
+            'social_instagram_url'         => setting('social_instagram_url', 'https://instagram.com/dheerajamatrimony'),
+            'social_facebook_url'          => setting('social_facebook_url', 'https://facebook.com/dheerajamatrimony')
         ];
 
         $this->view('admin/settings/api', [
@@ -139,7 +142,8 @@ class SettingsController extends Controller
             'upi_merchant_vpa', 'upi_merchant_name',
             'sms_gateway_provider', 'sms_api_key', 'sms_sender_id',
             'whatsapp_cloud_api_token', 'whatsapp_phone_number_id', 'whatsapp_business_account_id',
-            'firebase_server_key', 'firebase_project_id'
+            'firebase_server_key', 'firebase_project_id',
+            'social_whatsapp_url', 'social_instagram_url', 'social_facebook_url'
         ];
 
         foreach ($keys as $k) {

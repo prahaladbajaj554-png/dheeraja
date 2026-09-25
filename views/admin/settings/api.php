@@ -198,6 +198,48 @@
       </div>
     </div>
 
+    <!-- 5. Official Social Media & WhatsApp Community Channels -->
+    <div class="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-sm space-y-5">
+      <div class="flex items-center justify-between border-b border-amber-100 pb-3">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center text-base">
+            <i class="fa-solid fa-share-nodes"></i>
+          </div>
+          <div>
+            <h3 class="font-cinzel font-bold text-sm text-stone-900">Cover Page External Channels (WhatsApp, Instagram, Facebook)</h3>
+            <p class="text-[11px] text-stone-400">Manage direct external buttons that work outside the app on the cover page</p>
+          </div>
+        </div>
+        <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Direct Actions</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1 flex items-center">
+            <i class="fa-brands fa-whatsapp text-emerald-600 mr-1.5"></i> WhatsApp Community / Helpline Link
+          </label>
+          <input type="url" name="social_whatsapp_url" value="<?= htmlspecialchars($settings['social_whatsapp_url'] ?? '') ?>" placeholder="https://chat.whatsapp.com/..."
+                 class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:border-amber-500 font-mono text-xs">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1 flex items-center">
+            <i class="fa-brands fa-instagram text-pink-600 mr-1.5"></i> Instagram Official Profile URL
+          </label>
+          <input type="url" name="social_instagram_url" value="<?= htmlspecialchars($settings['social_instagram_url'] ?? '') ?>" placeholder="https://instagram.com/..."
+                 class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:border-amber-500 font-mono text-xs">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1 flex items-center">
+            <i class="fa-brands fa-facebook text-blue-600 mr-1.5"></i> Facebook Page / Group URL
+          </label>
+          <input type="url" name="social_facebook_url" value="<?= htmlspecialchars($settings['social_facebook_url'] ?? '') ?>" placeholder="https://facebook.com/..."
+                 class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:border-amber-500 font-mono text-xs">
+        </div>
+      </div>
+    </div>
+
     <!-- Save Button Floating Footer -->
     <div class="sticky bottom-4 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-amber-200 shadow-xl flex items-center justify-between z-20">
       <div class="text-xs text-stone-500 flex items-center space-x-2">
