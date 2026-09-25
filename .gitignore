@@ -1,0 +1,23 @@
+# Environment
+.env
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Storage & Logs (keep folder structure with .gitkeep)
+storage/logs/*.log
+!storage/logs/.gitkeep
+storage/cache/*
+!storage/cache/.gitkeep
+storage/sessions/*
+!storage/sessions/.gitkeep
+storage/uploads/*
+!storage/uploads/.gitkeep
+
+# IDE configs
+.vscode/
+.idea/
+
+# Testing
+cookies.txt
+scratch/
