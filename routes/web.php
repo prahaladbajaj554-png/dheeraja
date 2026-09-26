@@ -548,22 +548,326 @@ $router->get('/biodata/download/{id}', function (Request $request) {
     Response::redirect('/biodata/royal/' . $request->param('id') . '?download=1');
 });
 
+// Helper to fetch and format dynamic candidate profiles from MySQL database
+if (!function_exists('fetchDynamicCandidatesData')) {
+    function fetchDynamicCandidatesData(string $requestedSamaj = 'सिंधी', int $limit = 100, int $offset = 0): array {
+        $casteDictionary = [
+            'सिंधी' => ['hi' => 'सिंधी', 'en' => 'Sindhi'],
+            'sindhi' => ['hi' => 'सिंधी', 'en' => 'Sindhi'],
+            'brahmin' => ['hi' => 'ब्राह्मण', 'en' => 'Brahmin'],
+            'rajput' => ['hi' => 'राजपूत', 'en' => 'Rajput'],
+            'marwari' => ['hi' => 'मारवाड़ी', 'en' => 'Marwari'],
+            'maheshwari' => ['hi' => 'माहेश्वरी', 'en' => 'Maheshwari'],
+            'agarwal' => ['hi' => 'अग्रवाल', 'en' => 'Agarwal'],
+            'jain' => ['hi' => 'जैन', 'en' => 'Jain'],
+            'sikh' => ['hi' => 'सिख', 'en' => 'Sikh'],
+            'patel' => ['hi' => 'पटेल', 'en' => 'Patel'],
+            'jat' => ['hi' => 'जाट', 'en' => 'Jat'],
+            'yadav' => ['hi' => 'यादव', 'en' => 'Yadav'],
+            'gurjar' => ['hi' => 'गुर्जर', 'en' => 'Gurjar'],
+            'soni' => ['hi' => 'सोनी', 'en' => 'Soni'],
+            'saini' => ['hi' => 'सैनी', 'en' => 'Saini'],
+            'bishnoi' => ['hi' => 'बिश्नोई', 'en' => 'Bishnoi'],
+            'kayastha' => ['hi' => 'कायस्थ', 'en' => 'Kayastha'],
+            'vaishya' => ['hi' => 'वैश्य', 'en' => 'Vaishya'],
+            'baniya' => ['hi' => 'बनिया', 'en' => 'Baniya'],
+            'reddy' => ['hi' => 'रेड्डी', 'en' => 'Reddy'],
+            'bengali' => ['hi' => 'बंगाली', 'en' => 'Bengali'],
+            'सामान्य' => ['hi' => 'सामान्य', 'en' => 'General'],
+        ];
+
+        $sql = "SELECT u.id, u.matrimony_id, u.phone, u.email, u.is_vip, u.is_kyc_verified, u.is_photo_verified,
+                       p.first_name, p.last_name, p.gender, p.dob, p.height_cm, p.current_city, p.current_state, p.about_me,
+                       p.marital_status, p.eating_habits, p.complexion,
+                       ec.highest_education, ec.college_university, ec.employed_in, ec.occupation, ec.organization_name, ec.annual_income_inr, ec.work_city,
+                       ad.religion, ad.caste, ad.sub_caste, ad.gotra, ad.rashi, ad.nakshatra, ad.manglik, ad.birth_time, ad.birth_city,
+                       fd.father_name, fd.father_occupation, fd.mother_name, fd.family_type, fd.native_city, fd.native_state,
+                       up.file_path as profile_photo
+                FROM users u
+                JOIN profiles p ON p.user_id = u.id
+                LEFT JOIN education_careers ec ON ec.user_id = u.id
+                LEFT JOIN astrology_details ad ON ad.user_id = u.id
+                LEFT JOIN family_details fd ON fd.user_id = u.id
+                LEFT JOIN user_photos up ON up.user_id = u.id AND up.is_profile_picture = 1
+                WHERE u.status = 'active' AND u.id != 1
+                ORDER BY (ad.caste = :samaj OR ad.caste LIKE :samaj_like) DESC, u.is_vip DESC, u.id DESC
+                LIMIT {$limit} OFFSET {$offset}";
+
+        $raw = Database::fetchAll($sql, [
+            'samaj' => $requestedSamaj,
+            'samaj_like' => '%' . $requestedSamaj . '%'
+        ]);
+
+        $candidates = [];
+        $catalog = [];
+
+        foreach ($raw as $c) {
+            $id = (int)$c['id'];
+            $first = trim($c['first_name'] ?? '');
+            $last = trim($c['last_name'] ?? '');
+            $name = trim($first . ' ' . $last) ?: 'विशिष्ट सदस्य';
+            $gender = strtolower($c['gender'] ?? 'female');
+
+            // Age
+            $age = 25;
+            if (!empty($c['dob']) && $c['dob'] !== '0000-00-00') {
+                try {
+                    $dobDate = new \DateTime($c['dob']);
+                    $age = (new \DateTime())->diff($dobDate)->y;
+                } catch (\Exception $e) {}
+            }
+
+            // Height
+            $heightCm = (int)($c['height_cm'] ?? 165);
+            if ($heightCm <= 0) $heightCm = 165;
+            $totalInches = (int)round($heightCm / 2.54);
+            $feet = (int)floor($totalInches / 12);
+            $inches = $totalInches % 12;
+            $heightFormatted = "{$feet}'{$inches}\"";
+
+            // City & State
+            $city = trim($c['current_city'] ?? 'Jaipur');
+            $state = trim($c['current_state'] ?? 'Rajasthan');
+            $location = $city . ($state ? ', ' . $state : '');
+
+            // Caste mapping
+            $rawCaste = trim($c['caste'] ?? 'सामान्य');
+            $casteKey = strtolower($rawCaste);
+            $dict = $casteDictionary[$casteKey] ?? ['hi' => $rawCaste, 'en' => $rawCaste];
+            $casteBadge = $dict['hi'];
+            $casteSearch = $dict['hi'] . ' ' . $dict['en'] . ' ' . $rawCaste;
+
+            // Gotra
+            $gotra = trim($c['gotra'] ?? ($c['sub_caste'] ?? 'कश्यप'));
+            if (!$gotra) $gotra = 'कश्यप';
+
+            // Manglik
+            $rawManglik = strtolower(trim($c['manglik'] ?? 'no'));
+            if (str_contains($rawManglik, 'yes') || str_contains($rawManglik, 'manglik')) {
+                $manglikCode = 'manglik';
+                $manglikLabel = 'मांगलिक';
+            } elseif (str_contains($rawManglik, 'anshik')) {
+                $manglikCode = 'anshik';
+                $manglikLabel = 'आंशिक मांगलिक';
+            } else {
+                $manglikCode = 'non_manglik';
+                $manglikLabel = 'अमांगलिक';
+            }
+
+            // Income
+            $annualIncome = (int)($c['annual_income_inr'] ?? 0);
+            $incomeLpa = $annualIncome > 0 ? round($annualIncome / 100000, 1) : 0;
+
+            // Profession & Education
+            $occ = trim($c['occupation'] ?? 'कार्यरत');
+            $edu = trim($c['highest_education'] ?? 'स्नातक (Graduate)');
+            $occLower = strtolower($occ . ' ' . $edu);
+            $profCode = 'business_finance';
+            $occLabel = $occ;
+            if (str_contains($occLower, 'software') || str_contains($occLower, 'tech') || str_contains($occLower, 'developer') || str_contains($occLower, 'engineer') || str_contains($occLower, 'it')) {
+                $profCode = 'it_software';
+                $occLabel = 'IT व सॉफ्टवेयर';
+            } elseif (str_contains($occLower, 'doctor') || str_contains($occLower, 'dentist') || str_contains($occLower, 'mds') || str_contains($occLower, 'surgeon') || str_contains($occLower, 'bds') || str_contains($occLower, 'orthodontist')) {
+                $profCode = 'doctor_healthcare';
+                $occLabel = 'चिकित्सक व स्वास्थ्य';
+            } elseif (str_contains($occLower, 'ca') || str_contains($occLower, 'cfa') || str_contains($occLower, 'bank') || str_contains($occLower, 'finance') || str_contains($occLower, 'investment')) {
+                $profCode = 'ca_finance';
+                $occLabel = 'CA, वित्त व बैंकिंग';
+            } elseif (str_contains($occLower, 'ras') || str_contains($occLower, 'ias') || str_contains($occLower, 'govt') || str_contains($occLower, 'सरकारी')) {
+                $profCode = 'govt_service';
+                $occLabel = 'सरकारी / सिविल सेवा';
+            } elseif (str_contains($occLower, 'design') || str_contains($occLower, 'fashion') || str_contains($occLower, 'stylist') || str_contains($occLower, 'jewellery') || str_contains($occLower, 'ux')) {
+                $profCode = 'design_architecture';
+                $occLabel = 'डिज़ाइन व फैशन';
+            } elseif (str_contains($occLower, 'lecturer') || str_contains($occLower, 'professor') || str_contains($occLower, 'teacher') || str_contains($occLower, 'b.ed')) {
+                $profCode = 'education_teaching';
+                $occLabel = 'शिक्षण व प्राध्यापक';
+            }
+
+            // Photo
+            $photo = trim($c['profile_photo'] ?? '');
+            if (!$photo) {
+                $photo = ($gender === 'female') ? '/uploads/photos/user_20_photo_1.svg' : '/uploads/photos/user_10_photo_1.svg';
+            }
+
+            // Phone & Father Info
+            $phone = trim($c['phone'] ?? '+91 98290 12345');
+            $fatherName = trim($c['father_name'] ?? '');
+            $fatherOcc = trim($c['father_occupation'] ?? '');
+            $fatherInfo = $fatherName ? ($fatherName . ($fatherOcc ? ' (' . $fatherOcc . ')' : '')) : 'श्री परिवार प्रमुख (व्यापार/सेवा)';
+
+            // Deterministic features
+            $gunaScore = 27 + (($id * 7) % 7);
+            $isOnline = ($id % 2 === 0 || $id >= 40);
+            $viewCount = 2 + (($id * 3) % 15);
+            $activityTime = ($id % 3 === 0) ? 'Today, 10:15 AM' : (($id % 2 === 0) ? 'Yesterday, 04:30 PM' : '2 days ago');
+
+            // Categories
+            $cats = ['all'];
+            if ($id % 2 === 0 || $id >= 40) $cats[] = 'viewed_me';
+            if ($id % 3 === 0) $cats[] = 'mutual';
+            if ($id % 5 === 0) $cats[] = 'shortlisted';
+            if ($id % 4 === 0) $cats[] = 'interests_received';
+            if ($c['is_kyc_verified'] || $c['is_photo_verified']) $cats[] = 'verified';
+
+            $cand = [
+                'id' => $id,
+                'matrimony_id' => $c['matrimony_id'] ?? ('DM' . (10000 + $id)),
+                'name' => $name,
+                'first_name' => $first,
+                'last_name' => $last,
+                'gender' => $gender,
+                'age' => $age,
+                'dob' => $c['dob'] ?? '1998-05-14',
+                'height_cm' => $heightCm,
+                'height_formatted' => $heightFormatted,
+                'height_inches' => $totalInches,
+                'city' => $city,
+                'state' => $state,
+                'location' => $location,
+                'caste' => $rawCaste,
+                'caste_badge' => $casteBadge,
+                'caste_search' => $casteSearch,
+                'sub_caste' => $c['sub_caste'] ?? '',
+                'gotra' => $gotra,
+                'rashi' => $c['rashi'] ?? '',
+                'manglik_code' => $manglikCode,
+                'manglik_label' => $manglikLabel,
+                'education' => $edu,
+                'college' => $c['college_university'] ?? '',
+                'occupation' => $occ,
+                'occupation_label' => $occLabel,
+                'profession_code' => $profCode,
+                'annual_income_inr' => $annualIncome,
+                'income_lpa' => $incomeLpa,
+                'photo' => $photo,
+                'phone' => $phone,
+                'father_name' => $fatherName ?: 'श्री परिवार प्रमुख',
+                'father_occ' => $fatherOcc ?: 'व्यावसायिक / सेवा',
+                'father_info' => $fatherInfo,
+                'mother_name' => $c['mother_name'] ?? 'श्रीमती गृहलक्ष्मी',
+                'family_type' => $c['family_type'] ?? 'nuclear',
+                'native_city' => $c['native_city'] ?? $city,
+                'native_state' => $c['native_state'] ?? $state,
+                'is_vip' => (bool)$c['is_vip'],
+                'is_verified' => (bool)($c['is_kyc_verified'] || $c['is_photo_verified']),
+                'is_royal' => (bool)$c['is_vip'],
+                'is_online' => $isOnline,
+                'guna_score' => $gunaScore,
+                'view_count' => $viewCount,
+                'activity_time' => $activityTime,
+                'categories' => implode(',', $cats),
+                'marital' => $c['marital_status'] ?? 'never_married',
+                'diet' => $c['eating_habits'] ?? 'vegetarian',
+                'complexion' => $c['complexion'] ?? 'fair',
+                'about_me' => $c['about_me'] ?? '',
+            ];
+
+            $candidates[] = $cand;
+
+            // Build Royal Catalog Entry
+            $genderPrefix = ($gender === 'male') ? 'सौभाग्यकांक्षी (चि.)' : 'सौभाग्यकांक्षिणी (सौ.)';
+            $catalog[$name] = [
+                'id' => $cand['matrimony_id'],
+                'slug' => strtolower(preg_replace('/[^a-zA-Z0-9]+/', '-', $name)),
+                'name' => $name,
+                'raw_name' => $name,
+                'gender_prefix' => $genderPrefix,
+                'dob' => !empty($c['dob']) ? date('d M Y', strtotime($c['dob'])) : '14 मई 1998',
+                'birth_time' => !empty($c['birth_time']) ? $c['birth_time'] : 'प्रातः 08:30 बजे',
+                'birth_place' => $location,
+                'age_height' => "{$age} वर्ष | {$heightFormatted}",
+                'caste' => "{$casteBadge} ({$rawCaste})",
+                'caste_full' => "{$casteBadge} (सनातन हिन्दू)",
+                'religion' => 'सनातन हिन्दू',
+                'gotra' => "{$gotra} ({$casteBadge} समाज)",
+                'origin_gotra' => 'शांडिल्य / भारद्वाज',
+                'rashi' => !empty($c['rashi']) ? $c['rashi'] : 'मेष / वृषभ',
+                'manglik' => $manglikLabel,
+                'guna_score' => "{$gunaScore} / 36 गुण उत्तम",
+                'education' => $edu,
+                'college' => !empty($c['college_university']) ? $c['college_university'] : 'विश्वविद्यालय सम्बद्ध',
+                'occupation' => $occ,
+                'company' => !empty($c['organization_name']) ? $c['organization_name'] : 'प्रतिष्ठित संस्थान',
+                'income' => "₹ {$incomeLpa} LPA",
+                'income_full' => "₹ " . number_format($annualIncome) . "/- प्रतिवर्ष ({$incomeLpa} LPA)",
+                'work_city' => $city,
+                'marital' => 'अविवाहित (Never Married)',
+                'diet' => 'शुद्ध शाकाहारी',
+                'complexion' => 'गोरा (Fair & Radiant)',
+                'father_name' => $cand['father_name'],
+                'father_occ' => $cand['father_occ'],
+                'mother_name' => $cand['mother_name'],
+                'siblings' => '1 भाई, 1 बहन',
+                'native' => $cand['native_city'] . ', ' . $cand['native_state'],
+                'family_type' => 'एकल व संभ्रांत परिवार (Nuclear)',
+                'contact_person' => $cand['father_name'],
+                'phone' => $phone,
+                'address' => $location,
+                'photo' => $photo
+            ];
+        }
+
+        return ['candidates' => $candidates, 'catalog' => $catalog];
+    }
+}
+
 // Fourth Page: Activity & Matches Tracker / तालिका वाला पेज
 $matchesHandler = function (Request $request) {
     $requestedSamaj = trim($request->input('samaj', ''));
     if (!$requestedSamaj) {
-        $requestedSamaj = \App\Core\Session::get('auth_user_samaj') ?: ($_SESSION['auth_user_samaj'] ?? 'ब्राह्मण');
+        $requestedSamaj = \App\Core\Session::get('auth_user_samaj') ?: ($_SESSION['auth_user_samaj'] ?? '');
     }
+    if (!$requestedSamaj) {
+        $authId = (int)(\App\Core\Session::get('auth_user_id') ?: ($_SESSION['auth_user_id'] ?? 0));
+        if ($authId > 0) {
+            $userAstro = Database::fetch("SELECT caste FROM astrology_details WHERE user_id = :uid", ['uid' => $authId]);
+            if ($userAstro && !empty($userAstro['caste'])) {
+                $requestedSamaj = $userAstro['caste'];
+            }
+        }
+    }
+    if (!$requestedSamaj) {
+        $requestedSamaj = 'सिंधी';
+    }
+
+    // Dynamic database load of active candidate biodatas
+    $data = fetchDynamicCandidatesData($requestedSamaj, 100, 0);
+
     Response::view('home/matches', [
-        'page_title'   => 'Dheeraja Royal Matrimony™ | Activity & Matches Tracker (तालिका)',
-        'flashSuccess' => \App\Core\Session::get('_flash')['success'] ?? null,
-        'flashError'   => \App\Core\Session::get('_flash')['error'] ?? null,
-        'user_samaj'   => $requestedSamaj,
+        'page_title'      => 'Dheeraja Royal Matrimony™ | Activity & Matches Tracker (तालिका)',
+        'flashSuccess'    => \App\Core\Session::get('_flash')['success'] ?? null,
+        'flashError'      => \App\Core\Session::get('_flash')['error'] ?? null,
+        'user_samaj'      => $requestedSamaj,
+        'candidates'      => $data['candidates'],
+        'biodata_catalog' => $data['catalog'],
+        'total_count'     => count($data['candidates']),
     ], null);
     unset($_SESSION['_flash']);
 };
 $router->get('/matches', $matchesHandler);
 $router->post('/matches', $matchesHandler);
+
+// Dynamic Infinite Scroll / AJAX Load More Endpoint
+$router->get('/matches/load-more', function (Request $request) {
+    $samaj = trim($request->input('samaj', 'all'));
+    $page = max(1, (int)$request->input('page', 1));
+    $limit = max(1, min(50, (int)$request->input('limit', 12)));
+    $offset = ($page - 1) * $limit;
+
+    $data = fetchDynamicCandidatesData($samaj, $limit, $offset);
+
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode([
+        'success'    => true,
+        'page'       => $page,
+        'limit'      => $limit,
+        'candidates' => $data['candidates'],
+        'catalog'    => $data['catalog'],
+        'has_more'   => count($data['candidates']) === $limit,
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+});
 
 // Matches Interactive Action: Express Interest
 $router->post('/matches/interest', function (Request $request) {
